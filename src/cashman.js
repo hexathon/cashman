@@ -1,11 +1,6 @@
+import BaseModel from '../BaseModel';
+
 var labyrinth  = {};
-class BaseModel {
-    constructor() {}
-    moveUp() {}
-    moveDown() {}
-    moveLeft() {}
-    moveRight() {}
-}
 
 const KEY_LEFT = 37;
 const KEY_UP = 38;
