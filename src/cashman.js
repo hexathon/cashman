@@ -1,6 +1,8 @@
 import BaseModel from '../BaseModel';
 
-var labyrinth  = {};
+var labyrinth  = {
+    getCashmanInitialPosition: function () {}
+};
 
 const KEY_LEFT = 37;
 const KEY_UP = 38;
@@ -19,23 +21,56 @@ class CashMan extends BaseModel {
         window.addEventListener('keydown', (event) => {
             switch (event.keyCode) {
                 case KEY_UP:
-                    super.moveUp();
+                    this.moveUp();
                     break;
                 case KEY_DOWN:
-                    super.moveDown();
+                    this.moveDown();
                     break;
                 case KEY_RIGHT:
-                    super.moveRight();
+                    this.moveRight();
                     break;
                 case KEY_LEFT:
-                    super.moveLeft();
+                    this.moveLeft();
                     break;
             }
         }, true);
     }
 
+    get x () {
+        return this.x;
+    }
+
+    get y () {
+        return this.y;
+    }
+
     moveUp() {
-        super.moveUp(direction)
+        this.notify('cashman.move.up', super.getPosition());
+        console.log('CashMan is moving up.');
+        super.moveUp()
+    }
+
+    moveDown() {
+        this.notify('cashman.move.down');
+        console.log('CashMan is moving down.');
+        super.moveUp()
+    }
+
+    moveLeft() {
+        this.notify('cashman.move.left');
+        console.log('CashMan is moving left.');
+        super.moveUp()
+    }
+
+    moveRight() {
+        this.notify('cashman.move.right');
+        console.log('CashMan is moving right.');
+        super.moveUp()
+    }
+
+    notify(name) {
+        let event = new CustomEvent(name, data);
+        window.dispatchEvent(event);
     }
 }
 
