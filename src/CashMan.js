@@ -1,8 +1,4 @@
-import BaseModel from '../BaseModel';
-
-var labyrinth  = {
-    getCashmanInitialPosition: function () {}
-};
+import BaseModel from './BaseModel';
 
 const KEY_LEFT = 37;
 const KEY_UP = 38;
