@@ -9,7 +9,7 @@ class BaseModel {
 	}
 
 	move(x,y) {
-		if (window.labyrinth.canIGoThere(direction.x, direction.y)) {
+		if (window.labyrinth.canIGoThere(x, y)) {
 			this.x = x;
 			this.y = y;
 			return true;
