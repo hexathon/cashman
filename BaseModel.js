@@ -4,14 +4,13 @@ function Direction (x, y) {
 }
 
 class BaseModel {
-	let labyrinth = new Labytinth();
 	constructor(x, y) {
 		this.x = x;
 		this.y = y;
 	}
 
 	move(direction) {
-		if (labyrinth.canIGoThere(direction.x, direction.y) {
+		if (window.labyrinth.canIGoThere(direction.x, direction.y) {
 	  	this.x = direction.x;
 	  	this.y = direction.y;
 		}
