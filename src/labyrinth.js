@@ -2,8 +2,23 @@ var labyrinth = {
     pointDistance: 26,
     lineWidth: 6,
     gridOffset: 3,
-    canIGoThere:function(x,y){
-        return this.grid[y][x];
+    canIGoThere:function(x, y){
+        var returnObject = null;
+
+        var teleportLeft = [13, -1];
+        var teleportRight = [13, 21];
+
+        if (teleportLeft[0] === y && teleportLeft[1] === x) {
+            returnObject = {x: teleportRight[1],y: teleportRight[0]};
+        } else if (teleportRight[0] === y && teleportRight[1] === x) {
+            returnObject = {x: teleportLeft[1],y: teleportLeft[0]};
+        } else {
+            if (this.grid[y][x]) {
+                returnObject = {x: x, y: y};
+            }
+        }
+
+        return returnObject;
     },
     init:function(){
         this.drawGrid();
