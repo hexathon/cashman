@@ -28,7 +28,7 @@ CashMan.prototype.constructor = CashMan;
  */
 CashMan.prototype.registerEventListeners = function () {
     window.addEventListener('cashman.execute.move', (event) => {
-        switch (event.dataset.direction) {
+        switch (event.detail.direction) {
             case 'up':
                 this.moveUp();
                 break;
@@ -36,10 +36,10 @@ CashMan.prototype.registerEventListeners = function () {
                 this.moveDown();
                 break;
             case 'left':
-                this.moveRight();
+                this.moveLeft();
                 break;
             case 'right':
-                this.moveLeft();
+                this.moveRight();
                 break;
         }
     }, true);
@@ -47,55 +47,74 @@ CashMan.prototype.registerEventListeners = function () {
 
 CashMan.prototype.moveUp = function () {
     if (BaseModel.moveUp.call(this)) {
-        this.notify('cashman.move.up', BaseModel.getPosition.call(this));
+        this.notify('cashman.move.up', this.getPosition());
         console.log('CashMan is moving up.');
+        this.render();
+    } else {
+        this.notify('cashman.move.failed');
+        console.log('CashMan is moving failed.');
     }
 };
 
 CashMan.prototype.moveDown = function () {
     if (BaseModel.moveDown.call(this)) {
-        this.notify('cashman.move.down', BaseModel.getPosition.call(this));
+        this.notify('cashman.move.down', this.getPosition());
         console.log('CashMan is moving down.');
+        this.render();
+    } else {
+        this.notify('cashman.move.failed');
+        console.log('CashMan is moving failed.');
     }
 };
 
 CashMan.prototype.moveLeft = function () {
     if (BaseModel.moveLeft.call(this)) {
-        this.notify('cashman.move.left', BaseModel.getPosition.call(this));
+        this.notify('cashman.move.left', this.getPosition());
         console.log('CashMan is moving left.');
+        this.render();
+    } else {
+        this.notify('cashman.move.failed');
+        console.log('CashMan is moving failed.');
     }
 };
 
 CashMan.prototype.moveRight = function () {
     if (BaseModel.moveRight.call(this)) {
-        this.notify('cashman.move.right', BaseModel.getPosition.call(this));
+        this.notify('cashman.move.right', this.getPosition());
         console.log('CashMan is moving right.');
+        this.render();
+    } else {
+        this.notify('cashman.move.failed');
+        console.log('CashMan is moving failed.');
     }
 };
 
-CashMan.prototype.notify = function (name) {
-    let event = new CustomEvent(name, data);
+CashMan.prototype.notify = function (name, data) {
+    let event = new CustomEvent(name, {detail: data});
     window.dispatchEvent(event);
 
     if (name.indexOf('move') > -1) {
         // This is a move event
-        let event = new CustomEvent('cashman.move', BaseModel.getPosition.call(this));
+        let event = new CustomEvent('cashman.move', {detail: BaseModel.getPosition.call(this)});
         window.dispatchEvent(event);
     }
 };
 
 CashMan.prototype.render = function () {
+    console.log('Cashman render');
     this.elementInstance = document.createElement('div');
-    this.icon = document.createElement('img');
-    this.icon.src = 'images/celery.svg';
-    this.icon.style.width = '16px';
-    this.icon.style.height = '16px';
     let centerX = labyrinth.positionToPixel(this.x) - (16 / 2);
     let centerY = labyrinth.positionToPixel(this.y) - (16 / 2);
-    this.elementInstance.style.position = 'absolute';
-    this.elementInstance.style.left = centerX + 'px';
-    this.elementInstance.style.top = centerY + 'px';
-
-    this.elementInstance.appendChild(this.icon);
+    let style = [
+        'position: absolute',
+        'background:url(cashman-tiny.png) no-repeat',
+        'height: 28px',
+        'width: 31px',
+        'left: ' + centerX + 'px',
+        'top: ' + centerY + 'px'
+    ];
+    style = style.join(';');
+    console.log(style);
+    this.elementInstance.style = style;
     this.container.appendChild(this.elementInstance);
 };
