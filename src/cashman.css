@@ -4,6 +4,8 @@
     position: absolute;
     top: 12px;
     left: 15px;
+}
+.cashmancontainer.transition {
     transition:left 0.4s linear,top 0.4s linear,transform 0.2s linear;
 }
 .cashman {
@@ -20,64 +22,62 @@
 .cashmancontainer.goingleft {
     transform: scale(-1, 1);
 }
-.cashmancontainer.goingup {
-   transform: rotate(-90deg)
+/*.cashmancontainer.goingup {*/
+/*   transform: rotate(-90deg)*/
+/*}*/
+/*.cashmancontainer.goingdown {*/
+/*    transform: rotate(90deg)*/
+/*}*/
+
+.cashman .pants {
+    width: 40px;
+    height: 20px;
+    background: url(../images/cashman-pants.svg) no-repeat;
+    position:absolute;
+    top:20px;
+    animation-duration: 0.4s;
+    animation-name: closepants;
+    animation-iteration-count: infinite;
+
 }
-.cashmancontainer.goingdown {
-    transform: rotate(90deg)
+.cashman .head {
+    width: 40px;
+    height: 20px;
+    background: url(../images/cashman-head.svg) no-repeat;
+
+    animation-duration: 0.4s;
+    animation-name: closehead;
+    animation-iteration-count: infinite;
 }
 
 
+@keyframes closepants {
+  from {
+    transform: rotate(0deg) translateY(0px)
+  }
+50% {
+  transform: rotate(-10deg) translateY(-3px)
+}
+  to {
+    transform: rotate(0deg) translateY(0px)
 
-    .cashman .pants {
-        width: 40px;
-        height: 20px;
-        background: url(../images/cashman-pants.svg) no-repeat;
-        position:absolute;
-        top:20px;
-        animation-duration: 0.4s;
-        animation-name: closepants;
-        animation-iteration-count: infinite;
-       
-    }
-    .cashman .head {
-        width: 40px;
-        height: 20px;
-        background: url(../images/cashman-head.svg) no-repeat;
-        
-        animation-duration: 0.4s;
-        animation-name: closehead;
-        animation-iteration-count: infinite;
-    }
+  }
+}
 
+@keyframes closehead {
+  from {
+   transform: rotate(0deg) translateY(0px) translateX(0px);
+  }
 
-    @keyframes closepants {
-      from {
-        transform: rotate(0deg) translateY(0px)
-      }
-    50% {
-      transform: rotate(-10deg) translateY(-3px)
-    }
-      to { 
-        transform: rotate(0deg) translateY(0px)
+  50% {
+    transform: rotate(22deg) translateY(6px) translateX(3px);
 
-      }
-    }
+  }
 
-    @keyframes closehead {
-      from {
-       transform: rotate(0deg) translateY(0px) translateX(0px);
-      }
-
-      50% { 
-        transform: rotate(22deg) translateY(6px) translateX(3px);
-
-      }
-
-      to {
-       transform: rotate(0deg) translateY(0px) translateX(0px);
-      }
-    }
+  to {
+   transform: rotate(0deg) translateY(0px) translateX(0px);
+  }
+}
 
 
 #intro h2,
