@@ -32,14 +32,6 @@ class CashMan extends BaseModel {
         }, true);
     }
 
-    get x () {
-        return this.x;
-    }
-
-    get y () {
-        return this.y;
-    }
-
     moveUp() {
         this.notify('cashman.move.up', super.getPosition());
         console.log('CashMan is moving up.');
