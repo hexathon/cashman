@@ -5,6 +5,7 @@
 function Ghost (options) {
     this.x = options.x;
     this.y = options.y;
+    this.color = options.color;
     this.container = options.container;
     this.eatable = false;
 }
@@ -154,7 +155,7 @@ Ghost.prototype.notify = function (name,data) {
 Ghost.prototype.render = function () {
     this.elementInstance = document.createElement('div');
     this.icon = document.createElement('img');
-    this.icon.src = 'images/character-ghost.png';
+    this.icon.src = 'images/character-ghost-'+this.color+'.png';
     this.icon.style.width = '28px';
     this.icon.style.height = '31px';
     let centerX = labyrinth.positionToPixel(this.x) - (28 / 2);
