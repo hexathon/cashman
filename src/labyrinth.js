@@ -2,20 +2,14 @@ var labyrinth = {
     pointDistance: 26,
     lineWidth: 6,
     gridOffset: 3,
-    getGhostInitialPosition:function(){
-        return {x:10,y:10};
-    },
-    getCashmanInitialPosition:function(){
-        return {x:10,y:10};
-    },
     canIGoThere:function(x,y){
         return this.paths[y][x];
     },
     init:function(){
         this.drawGrid();
         this.placeCookies();
-        this.placeGhosts();
-        this.placeCashman();
+        var ghostPosition = this.placeGhosts();
+        this.placeCashman(ghostPosition);
     },
     grid: [
         [0,0,0,0,0,0,0,0,0,0,0],
@@ -96,16 +90,19 @@ var labyrinth = {
         var y = (randomPosition.row * this.pointDistance) - (28 / 2) + this.gridOffset;
 
         for (var i = 0; i < 4; i++) {
-            var cashman = document.createElement("div");
-            cashman.style = "position:absolute;background:url(cashman-tiny.png) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
-            container.appendChild(cashman);
+            var cookie = new PowerPallet({x: randomPosition.column, y: randomPosition.row, container: container});
+            cookie.render();
+            // var cashman = document.createElement("div");
+            // cashman.style = "position:absolute;background:url(cashman-tiny.png) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
+            // container.appendChild(cashman);
         }
 
+        return {x: x, y: y};
     },
-    placeCashman: function(){
+    placeCashman: function(ghostPosition){
         var container = document.getElementById("killzone");
 
-        var randomPosition = this.getRandomPosition();
+        var randomPosition = this.getRandomPosition(ghostPosition);
         var x = (randomPosition.column * this.pointDistance) - (31 / 2) + this.gridOffset;
         var y = (randomPosition.row * this.pointDistance) - (28 / 2) + this.gridOffset;
 
@@ -113,7 +110,7 @@ var labyrinth = {
         cashman.style = "position:absolute;background:url(cashman-tiny.png) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
         container.appendChild(cashman);
     },
-    getRandomPosition: function(){
+    getRandomPosition: function(blackList){
         var row = Math.floor(Math.random() * this.paths.length);
         var column = Math.floor(Math.random() * this.paths[row].length);
 
