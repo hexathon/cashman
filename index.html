@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Cash-Man</title>
 
+    <script src="src/Input/KeyboardInputController.js"></script>
+    <script src="src/Input/InputController.js"></script>
+
     <script src="src/Eatable.js"></script>
     <script src="src/CashDot.js"></script>
     <script src="src/PowerPallet.js"></script>
@@ -16,6 +19,7 @@
     <div id="cookiejar"></div>
     <div id="killzone"></div>
     <script>
+        new InputController({type: 'keyboard'});
         labyrinth.init();
     </script>
 </div>
