@@ -152,18 +152,69 @@ Ghost.prototype.notify = function (name,data) {
     window.dispatchEvent(event);
 };
 
+Ghost.prototype.directionToCoordinates = function (direction) {
+    switch (direction) {
+        case 'up':
+            return {x: this.x, y: this.y - 1};
+        case 'down':
+            return {x: this.x, y: this.y + 1};
+        case 'left':
+            return {x: this.x - 1, y: this.y};
+        case 'right':
+            return {x: this.x + 1, y: this.y};
+    }
+};
+
+
+Ghost.prototype.move = function (direction) {
+    let coordinates = this.directionToCoordinates(direction);
+    let targetX = coordinates.x;
+    let targetY = coordinates.y;
+
+    let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
+    if (newCoordinates !== null) {
+        this.x = newCoordinates.x;
+        this.y = newCoordinates.y;
+
+        this.facing = direction;
+
+        this.updatePosition();
+
+        return true;
+    }
+
+    return false;
+};
+
+Ghost.prototype.calculateCssProperties = function () {
+    let centerX = labyrinth.positionToPixel(this.x) - (16 / 2);
+    let centerY = labyrinth.positionToPixel(this.y) - (16 / 2);
+    let style = [
+        'position: absolute',
+        'height: 28px',
+        'width: 31px',
+        'left: ' + centerX + 'px',
+        'top: ' + centerY + 'px'
+    ];
+    style = style.join(';');
+
+    return style;
+};
+
+Ghost.prototype.updatePosition = function () {
+    this.elementInstance.style = this.calculateCssProperties();
+};
+
 Ghost.prototype.render = function () {
     this.elementInstance = document.createElement('div');
+    this.elementInstance.style = this.calculateCssProperties();
+
     this.icon = document.createElement('img');
     this.icon.src = 'images/character-ghost-'+this.color+'.png';
     this.icon.style.width = '28px';
     this.icon.style.height = '31px';
-    let centerX = labyrinth.positionToPixel(this.x) - (28 / 2);
-    let centerY = labyrinth.positionToPixel(this.y) - (31 / 2);
-    this.elementInstance.style.position = 'absolute';
-    this.elementInstance.style.left = centerX + 'px';
-    this.elementInstance.style.top = centerY + 'px';
 
     this.elementInstance.appendChild(this.icon);
+
     this.container.appendChild(this.elementInstance);
 };
