@@ -3,11 +3,13 @@
  * @constructor
  */
 function Ghost (options) {
-    BaseModel.call(this, options);
+    this.x = options.x;
+    this.y = options.y;
+    this.container = options.container;
     this.eatable = false;
 }
 
-Ghost.prototype = Object.create(BaseModel.prototype);
+Ghost.prototype = Object.create(Ghost.prototype);
 Ghost.prototype.constructor = Ghost;
 
 Ghost.prototype.registerEventListeners = function () {
