@@ -8,7 +8,7 @@
  * @constructor
  */
 function CashMan(options) {
-    this.type = "CashDot";
+    this.type = "CashMan";
     this.facing = 'right';
 
     // Initialize options
