@@ -18,22 +18,22 @@ class BaseModel {
 
 	moveUp() {
 		let direction = new Direction(this.x, (this.y--));
-		move(direction);
+		this.move(direction);
 	}
 
 	moveDown() {
-		let direction = new Direction(this.x, (this.y++));
-		move(direction);
+		let direction = new Direction(this.x, (this.y++));``
+		this.move(direction);
 	}
 
 	moveLeft() {
 		let direction = new Direction((this.x--), this.y);
-		move(direction);
+		this.move(direction);
 	}
 
 	moveRight() {
 		let direction = new Direction((this.x++), this.y);
-		move(direction);
+		this.move(direction);
 	}
 
 }
