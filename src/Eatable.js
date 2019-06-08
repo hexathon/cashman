@@ -22,10 +22,10 @@ Eatable.prototype.registerEventListeners = function () {
 
 Eatable.prototype.getEaten = function (data) {
     if (this.detectCollision(data)) {
-        var event = new CustomEvent('eatable.eaten', {
+        var event = new CustomEvent('eatable.eaten', {detail: {
             value: this.getValue(),
             type: this.getType()
-        });
+        }});
         window.dispatchEvent(event);
 
         this.selfDestruct();
@@ -36,7 +36,7 @@ Eatable.prototype.getEaten = function (data) {
  * Self destruct the eatable
  */
 Eatable.prototype.selfDestruct = function () {
-    var event = new CustomEvent('eatable.selfDestruct', {instance: this});
+    var event = new CustomEvent('eatable.selfDestruct', {detail: {instance: this}});
     window.dispatchEvent(event);
 };
 

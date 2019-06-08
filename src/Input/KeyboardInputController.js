@@ -27,6 +27,6 @@ KeyboardInputController.prototype.move = function (direction) {
         console.info('Received keyboard input for cashman to move: ' + direction);
     }
 
-    var event = new CustomEvent('cashman.execute.move', {direction: direction});
+    var event = new CustomEvent('cashman.execute.move', {detail: {direction: direction}});
     window.dispatchEvent(event);
 };
