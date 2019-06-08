@@ -9,6 +9,10 @@ class BaseModel {
 		this.y = y;
 	}
 
+	getPosition() {
+		return {x:this.x, y:this.y};
+	}
+
 	move(direction) {
 		if (window.labyrinth.canIGoThere(direction.x, direction.y)) {
 	  	this.x = direction.x;
