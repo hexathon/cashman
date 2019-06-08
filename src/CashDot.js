@@ -11,14 +11,11 @@ CashDot.prototype.constructor = CashDot;
 CashDot.prototype.render = function () {
     this.elementInstance = document.createElement('div');
 
-    let centerX = labyrinth.positionToPixel(this.x) + 4;
-    let centerY = labyrinth.positionToPixel(this.y) + 4;
+    let centerX = labyrinth.positionToPixel(this.x) - 4;
+    let centerY = labyrinth.positionToPixel(this.y) - 4;
 
     this.elementInstance.style = "position:absolute;width:8px;height:8px;background:orange;left:" + centerX + "px;top:" + centerY + "px;";
 
     this.elementInstance.appendChild(this.icon);
-    this.container.appendChild(this.elementInstance);
-
-
     this.container.appendChild(this.elementInstance);
 };
