@@ -2,9 +2,9 @@
     width: 35px;
     height: 40px;
     position: absolute;
-    top: 112px;
-    left: 115px;
-    /* background-color:red; */
+    top: 12px;
+    left: 15px;
+    transition:left 1s linear,top 1s linear,transform 1s linear;
 }
 .cashman {
     width: 40px;

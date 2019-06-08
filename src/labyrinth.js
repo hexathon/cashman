@@ -3,7 +3,7 @@ var labyrinth = {
     lineWidth: 6,
     gridOffset: 3,
     canIGoThere:function(x,y){
-        return this.cookies[y][x];
+        return this.grid[y][x];
     },
     init:function(){
         this.drawGrid();

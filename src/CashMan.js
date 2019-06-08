@@ -8,101 +8,90 @@
  * @constructor
  */
 function CashMan(options) {
-    BaseModel.call(this, options);
     this.type = "CashDot";
+    this.facing = 'left';
 
-    // var KEY_LEFT = 37;
-    // var KEY_UP = 38;
-    // var KEY_RIGHT = 39;
-    // var KEY_DOWN = 40;
+    // Initialize options
+    this.x = options.x;
+    this.y = options.y;
+    this.container = options.container;
+
+    console.log(this.x, this.y);
 
     this.registerEventListeners();
 }
-
-// Extending the BaseModel object
-CashMan.prototype = Object.create(BaseModel.prototype);
-CashMan.prototype.constructor = CashMan;
 
 /**
  * Listen to incoming movement controls from the controller
  */
 CashMan.prototype.registerEventListeners = function () {
+    var self = this;
     window.addEventListener('cashman.execute.move', (event) => {
-        switch (event.detail.direction) {
-            case 'up':
-                this.moveUp();
-                break;
-            case 'down':
-                this.moveDown();
-                break;
-            case 'left':
-                this.moveLeft();
-                break;
-            case 'right':
-                this.moveRight();
-                break;
+        let direction = event.detail.direction.toLowerCase();
+        try {
+            self.move(direction);
+        } catch (err) {
+            console.error(err);
         }
     }, true);
 };
 
-CashMan.prototype.moveUp = function () {
-    if (BaseModel.moveUp.call(this)) {
-        this.notify('cashman.move.up', this.getPosition());
-        console.log('CashMan is moving up.');
-        this.render();
-    } else {
-        this.notify('cashman.move.failed');
-        console.log('CashMan is moving failed.');
+CashMan.prototype.move = function (direction) {
+    let coordinates = this.directionToCoordinates(direction);
+    let targetX = coordinates.x;
+    let targetY = coordinates.y;
+
+    console.log(coordinates);
+
+    if (window.labyrinth.canIGoThere(targetX, targetY)) {
+        this.x = targetX;
+        this.y = targetY;
+
+        this.notify('cashman.move.' + direction, this.position());
+        this.facing = direction;
+
+        this.updatePosition();
+
+        return true;
+    }
+
+    this.notify('cashman.move.failed');
+    return false;
+};
+
+CashMan.prototype.directionToCoordinates = function (direction) {
+    switch (direction) {
+        case 'up':
+            return {x: this.x, y: this.y - 1};
+        case 'down':
+            return {x: this.x, y: this.y + 1};
+        case 'left':
+            return {x: this.x - 1, y: this.y};
+        case 'right':
+            return {x: this.x + 1, y: this.y};
     }
 };
 
-CashMan.prototype.moveDown = function () {
-    if (BaseModel.moveDown.call(this)) {
-        this.notify('cashman.move.down', this.getPosition());
-        console.log('CashMan is moving down.');
-        this.render();
-    } else {
-        this.notify('cashman.move.failed');
-        console.log('CashMan is moving failed.');
-    }
-};
-
-CashMan.prototype.moveLeft = function () {
-    if (BaseModel.moveLeft.call(this)) {
-        this.notify('cashman.move.left', this.getPosition());
-        console.log('CashMan is moving left.');
-        this.render();
-    } else {
-        this.notify('cashman.move.failed');
-        console.log('CashMan is moving failed.');
-    }
-};
-
-CashMan.prototype.moveRight = function () {
-    if (BaseModel.moveRight.call(this)) {
-        this.notify('cashman.move.right', this.getPosition());
-        console.log('CashMan is moving right.');
-        this.render();
-    } else {
-        this.notify('cashman.move.failed');
-        console.log('CashMan is moving failed.');
-    }
+CashMan.prototype.position = function () {
+    return {x: this.x, y: this.y};
 };
 
 CashMan.prototype.notify = function (name, data) {
+    if (window.debug) {
+        console.log(name, data);
+    }
+
     let event = new CustomEvent(name, {detail: data});
     window.dispatchEvent(event);
 
     if (name.indexOf('move') > -1) {
         // This is a move event
-        let event = new CustomEvent('cashman.move', {detail: BaseModel.getPosition.call(this)});
+        let event = new CustomEvent('cashman.move', {detail: this.position()});
         window.dispatchEvent(event);
     }
 };
 
-CashMan.prototype.render = function () {
-    console.log('Cashman render');
-    this.elementInstance = document.createElement('div');
+CashMan.prototype.calculateCssProperties = function () {
     let centerX = labyrinth.positionToPixel(this.x) - (16 / 2);
     let centerY = labyrinth.positionToPixel(this.y) - (16 / 2);
     let style = [
@@ -114,7 +103,16 @@ CashMan.prototype.render = function () {
         'top: ' + centerY + 'px'
     ];
     style = style.join(';');
-    console.log(style);
-    this.elementInstance.style = style;
+
+    return style;
+};
+
+CashMan.prototype.render = function () {
+    this.elementInstance = document.createElement('div');
+    this.elementInstance.style = this.calculateCssProperties();
     this.container.appendChild(this.elementInstance);
+};
+
+CashMan.prototype.updatePosition = function () {
+    this.elementInstance.style = this.calculateCssProperties();
 };
