@@ -3,19 +3,20 @@ function KeyboardInputController() {
 }
 
 KeyboardInputController.prototype.registerEventListeners = function () {
+    var self = this;
     window.addEventListener('keydown', function (event) {
         switch (event.key) {
             case "ArrowUp":
-                this.move('up');
+                self.move('up');
                 break;
             case "ArrowDown":
-                this.move('down');
+                self.move('down');
                 break;
             case "ArrowLeft":
-                this.move('left');
+                self.move('left');
                 break;
             case "ArrowRight":
-                this.move('right');
+                self.move('right');
                 break;
         }
     }, true);
