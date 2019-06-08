@@ -10,9 +10,11 @@ class BaseModel {
 
 	move(x,y) {
 		if (window.labyrinth.canIGoThere(direction.x, direction.y)) {
-	  	this.x = x;
-	  	this.y = y;
+			this.x = x;
+			this.y = y;
+			return true;
 		}
+		return false;
 	}
 
 	moveUp() {
