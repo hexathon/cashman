@@ -106,9 +106,8 @@ var labyrinth = {
         var x = (randomPosition.column * this.pointDistance) - (31 / 2) + this.gridOffset;
         var y = (randomPosition.row * this.pointDistance) - (28 / 2) + this.gridOffset;
 
-        var cashman = document.createElement("div");
-        cashman.style = "position:absolute;background:url(cashman-tiny.png) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
-        container.appendChild(cashman);
+        var cashman = new CashMan({x: randomPosition.column, y: randomPosition.row, container: container});
+        cashman.render();
     },
     getRandomPosition: function(blackList){
         var row = Math.floor(Math.random() * this.paths.length);
