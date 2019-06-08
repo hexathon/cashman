@@ -6,7 +6,7 @@ CashDot.prototype = Object.create(Eatable.prototype);
 CashDot.prototype.constructor = CashDot;
 
 /**
- * Render
+ * Render the Cash Dot to the grid
  */
 CashDot.prototype.render = function () {
     this.elementInstance = document.createElement('div');
