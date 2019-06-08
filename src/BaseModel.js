@@ -4,10 +4,6 @@
 	 this.container = options.container;
  }
 
- BaseModel.prototype.getPosition = function () {
-	 return {x: this.x, y: this.y};
- };
-
  BaseModel.prototype.move = function(x,y) {
 	if (window.labyrinth.canIGoThere(x, y)) {
 		this.x = x;
