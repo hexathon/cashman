@@ -3,45 +3,79 @@ var labyrinth = {
     lineWidth: 6,
     gridOffset: 3,
     canIGoThere:function(x,y){
-        return this.paths[y][x];
+        return this.cookies[y][x];
     },
     init:function(){
         this.drawGrid();
         this.placeCookies();
-        var ghostPosition = this.placeGhosts();
-        this.placeCashman(ghostPosition);
+        this.placePowerPallets();
+        this.placeGhosts();
+        this.placeCashman();
     },
     grid: [
-        [0,0,0,0,0,0,0,0,0,0,0],
-        [0,1,1,1,1,1,1,1,1,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,0,1,0,1,0,1,0,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,1,1,1,1,1,1,1,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,0,1,0,1,0,1,0,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,1,1,1,1,1,1,1,1,0],
-        [0,0,0,0,0,0,0,0,0,0,0]
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0],
+        [0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,1,1,0],
+        [0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0],
+        [1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1],
+        [1,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,1,1,1],
+        [0,0,0,0,0,1,0,1,0,1,1,1,0,1,0,1,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1],
+        [0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
+        [1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1],
+        [1,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,1,1,1],
+        [0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0],
+        [0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0],
+        [0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0],
+        [0,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,1,1,0],
+        [0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     ],
-    paths: [
-        [0,0,0,0,0,0,0,0,0,0,0],
-        [0,1,1,1,1,1,1,1,1,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,1,1,1,1,1,1,1,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,0,0,0,1,0,0,0,1,0],
-        [0,1,1,1,1,1,1,1,1,1,0],
-        [0,0,0,0,0,0,0,0,0,0,0]
+    cookies: [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0],
+        [0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,1,1,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,0],
+        [0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0],
+        [0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0],
+        [0,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,1,1,0],
+        [0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     ],
+    powerPallets: [[3,1],[3,19],[20,1],[20,19]],
     drawGrid: function(){
         var container = document.getElementById("maze");
         container.style = "position:absolute;left:0;top:0;";
-        container.width = 266;
-        container.height = 266;
+        container.width = 526;
+        container.height = 708;
 
         var linePatch = this.gridOffset;
         var ctx = container.getContext("2d");
@@ -74,52 +108,49 @@ var labyrinth = {
         var container = document.getElementById("cookiejar");
         container.style = "position:absolute;left:0;top:0;";
 
-        for (var row = 0; row < this.paths.length; row++) {
-            for (var column = 0; column < this.paths[row].length; column++) {
-                if (this.paths[row][column]) {
+        for (var row = 0; row < this.cookies.length; row++) {
+            for (var column = 0; column < this.cookies[row].length; column++) {
+                if (this.cookies[row][column]) {
                     var cookie = new CashDot({x: column, y: row, container: container});
                     cookie.render();
                 }
             }
         }
     },
+    placePowerPallets: function(){
+
+    },
     placeGhosts: function(){
         var container = document.getElementById("killzone");
-        var randomPosition = this.getRandomPosition();
-        var x = (randomPosition.column * this.pointDistance) - (31 / 2) + this.gridOffset;
-        var y = (randomPosition.row * this.pointDistance) - (28 / 2) + this.gridOffset;
+
+        var position = {column: 9, row: 12};
 
         for (var i = 0; i < 4; i++) {
-            var cookie = new PowerPallet({x: randomPosition.column, y: randomPosition.row, container: container});
-            cookie.render();
-            // var cashman = document.createElement("div");
-            // cashman.style = "position:absolute;background:url(cashman-tiny.png) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
-            // container.appendChild(cashman);
-        }
+            var nextRow = (i < 3) ? 0 : 1;
+            var columnOffset = (i < 3) ? i : i - 3;
+            var x = this.positionToPixel(position.column + columnOffset) - (40 / 2);
+            var y = this.positionToPixel(position.row + nextRow) - (40 / 2);
 
-        return {x: x, y: y};
+            var cashman = document.createElement("div");
+            cashman.style = "position:absolute;background:url(ghost-tiny.gif) no-repeat;height:40px;width:40px;left:" + x + "px;top:" + y + "px;";
+            container.appendChild(cashman);
+        }
     },
-    placeCashman: function(ghostPosition){
+    placeCashman: function(){
         var container = document.getElementById("killzone");
 
-        var randomPosition = this.getRandomPosition(ghostPosition);
-        var x = (randomPosition.column * this.pointDistance) - (31 / 2) + this.gridOffset;
-        var y = (randomPosition.row * this.pointDistance) - (28 / 2) + this.gridOffset;
+        var position = {column: 10, row: 20};
+        var x = this.positionToPixel(position.column) - (31 / 2);
+        var y = this.positionToPixel(position.row) - (28 / 2);
 
+<<<<<<< Updated upstream
         var cashman = new CashMan({x: randomPosition.column, y: randomPosition.row, container: container});
         cashman.render();
-    },
-    getRandomPosition: function(blackList){
-        var row = Math.floor(Math.random() * this.paths.length);
-        var column = Math.floor(Math.random() * this.paths[row].length);
-
-        if (!this.canIGoThere(column, row)) {
-            var position = this.getRandomPosition();
-            row = position.row;
-            column = position.column;
-        }
-
-        return {row: row, column: column};
+=======
+        var cashman = document.createElement("div");
+        cashman.style = "position:absolute;background:url(cashman-tiny.gif) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
+        container.appendChild(cashman);
+>>>>>>> Stashed changes
     },
     positionToPixel: function(position){
         return (position * this.pointDistance) + this.gridOffset;
