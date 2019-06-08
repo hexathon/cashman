@@ -1,69 +1,85 @@
-import BaseModel from './BaseModel';
+/**
+ * Mr. Cash Man himself.
+ *
+ * Usage:
+ * var cashMan = new CashMan({x: positionX, y: positionY, container: containingLayer});
+ *
+ * @param options
+ * @constructor
+ */
+function CashMan(options) {
+    BaseModel.call(this, options);
+    this.type = "CashDot";
 
-const KEY_LEFT = 37;
-const KEY_UP = 38;
-const KEY_RIGHT = 39;
-const KEY_DOWN = 40;
+    // var KEY_LEFT = 37;
+    // var KEY_UP = 38;
+    // var KEY_RIGHT = 39;
+    // var KEY_DOWN = 40;
 
-export class CashMan extends BaseModel {
-    constructor() {
-        let position = labyrinth.getCashmanInitialPosition();
-        super(position);
+    this.registerEventListeners();
+}
 
-        this.registerEventListeners();
-    }
+// Extending the BaseModel object
+CashMan.prototype = Object.create(BaseModel.prototype);
+CashMan.prototype.constructor = CashMan;
 
-    registerEventListeners() {
-        window.addEventListener('keydown', (event) => {
-            switch (event.keyCode) {
-                case KEY_UP:
-                    this.moveUp();
-                    break;
-                case KEY_DOWN:
-                    this.moveDown();
-                    break;
-                case KEY_RIGHT:
-                    this.moveRight();
-                    break;
-                case KEY_LEFT:
-                    this.moveLeft();
-                    break;
-            }
-        }, true);
-    }
+/**
+ * Listen to incoming movement controls from the controller
+ */
+CashMan.prototype.registerEventListeners = function () {
+    window.addEventListener('cashman.execute.move', (event) => {
+        switch (event.dataset.direction) {
+            case 'up':
+                this.moveUp();
+                break;
+            case 'down':
+                this.moveDown();
+                break;
+            case 'left':
+                this.moveRight();
+                break;
+            case 'right':
+                this.moveLeft();
+                break;
+        }
+    }, true);
+};
 
-    moveUp() {
+CashMan.prototype.moveUp = function () {
+    if (BaseModel.moveUp.call(this)) {
         this.notify('cashman.move.up', super.getPosition());
         console.log('CashMan is moving up.');
-        super.moveUp()
     }
+};
 
-    moveDown() {
+CashMan.prototype.moveDown = function () {
+    if (BaseModel.moveDown.call(this)) {
         this.notify('cashman.move.down', super.getPosition());
         console.log('CashMan is moving down.');
-        super.moveUp()
     }
+};
 
-    moveLeft() {
+CashMan.prototype.moveLeft = function () {
+    if (BaseModel.moveLeft.call(this)) {
         this.notify('cashman.move.left', super.getPosition());
         console.log('CashMan is moving left.');
-        super.moveUp()
     }
+};
 
-    moveRight() {
+CashMan.prototype.moveRight = function () {
+    if (BaseModel.moveRight.call(this)) {
         this.notify('cashman.move.right', super.getPosition());
         console.log('CashMan is moving right.');
-        super.moveUp()
     }
+};
 
-    notify(name) {
-        let event = new CustomEvent(name, data);
+CashMan.prototype.notify = function (name) {
+    let event = new CustomEvent(name, data);
+    window.dispatchEvent(event);
+
+    if (name.indexOf('move') > -1) {
+        // This is a move event
+        let event = new CustomEvent('cashman.move', super.getPosition());
         window.dispatchEvent(event);
-
-        if (name.indexOf('move') > -1) {
-            // This is a move event
-            let event = new CustomEvent('cashman.move', super.getPosition());
-            window.dispatchEvent(event);
-        }
     }
-}
+};
