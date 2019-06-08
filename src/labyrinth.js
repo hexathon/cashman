@@ -111,29 +111,52 @@ var labyrinth = {
         for (var row = 0; row < this.cookies.length; row++) {
             for (var column = 0; column < this.cookies[row].length; column++) {
                 if (this.cookies[row][column]) {
-                    var cookie = new CashDot({x: column, y: row, container: container});
-                    cookie.render();
+                    var positionTaken = false;
+
+                    for (var i = 0; i < this.powerPallets.length; i++) {
+                        var position = this.powerPallets[i];
+                        if (position[0] === row && position[1] === column) {
+                            positionTaken = true;
+
+                            break;
+                        }
+                    }
+
+                    if (!positionTaken) {
+                        var cookie = new CashDot({x: column, y: row, container: container});
+                        cookie.render();
+                    }
                 }
             }
         }
     },
     placePowerPallets: function(){
+        var container = document.getElementById("cookiejar");
 
+        for (var i = 0; i < this.powerPallets.length; i++) {
+            var position = this.powerPallets[i];
+            var cookie = new PowerPallet({x: position[1], y: position[0], container: container});
+            cookie.render();
+        }
     },
     placeGhosts: function(){
         var container = document.getElementById("killzone");
 
-        var position = {column: 9, row: 12};
+        var positions = [
+            {column: 9, row: 12, color: "pink"},
+            {column: 10, row: 12, color: "blue"},
+            {column: 11, row: 12, color: "yellow"},
+            {column: 9, row: 13, color: "red"}
+        ];
 
-        for (var i = 0; i < 4; i++) {
-            var nextRow = (i < 3) ? 0 : 1;
-            var columnOffset = (i < 3) ? i : i - 3;
-            var x = this.positionToPixel(position.column + columnOffset) - (40 / 2);
-            var y = this.positionToPixel(position.row + nextRow) - (40 / 2);
-
-            var cashman = document.createElement("div");
-            cashman.style = "position:absolute;background:url(ghost-tiny.gif) no-repeat;height:40px;width:40px;left:" + x + "px;top:" + y + "px;";
-            container.appendChild(cashman);
+        for (var i = 0; i < positions.length; i++) {
+            var ghost = new Ghost({
+                x: positions[i].column,
+                y: positions[i].row,
+                container: container,
+                color: positions[i].color
+            });
+            ghost.render();
         }
     },
     placeCashman: function(){
