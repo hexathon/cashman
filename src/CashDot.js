@@ -1,9 +1,6 @@
-import Eatable from './Eatable';
-
-class CashDot extends Eatable {
-    constructor(x, y) {
-        super(10, x, y, 'CashDot');
-    }
+function CashDot() {
+    Eatable.call(this);
+    this.type = "CashDot";
 }
-
-export default CashDot;
+CashDot.prototype = Object.create(Eatable.prototype);
+CashDot.prototype.constructor = CashDot;
