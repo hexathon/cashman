@@ -16,6 +16,5 @@ CashDot.prototype.render = function () {
 
     this.elementInstance.style = "position:absolute;width:8px;height:8px;background:orange;left:" + centerX + "px;top:" + centerY + "px;";
 
-    this.elementInstance.appendChild(this.icon);
     this.container.appendChild(this.elementInstance);
 };
