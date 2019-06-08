@@ -40,9 +40,9 @@ CashMan.prototype.move = function (direction) {
     let targetY = coordinates.y;
 
     let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
-    if (newCoordinates) {
-        this.x = targetX;
-        this.y = targetY;
+    if (newCoordinates !== null) {
+        this.x = newCoordinates.x;
+        this.y = newCoordinates.y;
 
         this.notify('cashman.move.' + direction, this.position());
         this.facing = direction;
