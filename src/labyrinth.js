@@ -9,9 +9,9 @@ var labyrinth = {
         var teleportRight = [13, 21];
 
         if (teleportLeft[0] === y && teleportLeft[1] === x) {
-            returnObject = {x: teleportRight[1],y: teleportRight[0]};
+            returnObject = {x: teleportRight[1] - 1,y: teleportRight[0]};
         } else if (teleportRight[0] === y && teleportRight[1] === x) {
-            returnObject = {x: teleportLeft[1],y: teleportLeft[0]};
+            returnObject = {x: teleportLeft[1] + 1,y: teleportLeft[0]};
         } else {
             if (this.grid[y][x]) {
                 returnObject = {x: x, y: y};
