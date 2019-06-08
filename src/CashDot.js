@@ -1,5 +1,5 @@
-function CashDot(x, y, container) {
-    Eatable.call(this, x, y, container);
+function CashDot(options) {
+    Eatable.call(this, options.x, options.y, options.container);
     this.type = "CashDot";
 }
 CashDot.prototype = Object.create(Eatable.prototype);

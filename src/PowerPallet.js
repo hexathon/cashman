@@ -1,5 +1,5 @@
-function Celery(x, y, container) {
-    Eatable.call(this, x, y, container);
+function Celery(options) {
+    Eatable.call(this, options.x, options.y, options.container);
     this.type = "Celery";
     this.value = 50;
 }
