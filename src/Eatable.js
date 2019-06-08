@@ -6,7 +6,7 @@
 function Eatable(type, x, y) {
     this.x = x;
     this.y = y;
-    this.type = 'eatable';
+    this.type = 'Eatable';
     this.value = 10;
 
     this.registerEventListeners();
