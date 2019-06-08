@@ -1,0 +1,82 @@
+.cashmancontainer {
+    width: 35px;
+    height: 40px;
+    position: absolute;
+    top: 112px;
+    left: 115px;
+    /* background-color:red; */
+}
+.cashman {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+.cashmancontainer.goingright {
+    transform: rotate(0deg) 
+}
+.cashmancontainer.goingleft {
+    transform: scale(-1, 1);
+}
+.cashmancontainer.goingup {
+   transform: rotate(-90deg)
+}
+.cashmancontainer.goingdown {
+    transform: rotate(90deg)
+}
+
+
+
+    .cashman .pants {
+        width: 40px;
+        height: 20px;
+        background: url(../images/cashman-pants.svg) no-repeat;
+        position:absolute;
+        top:20px;
+        animation-duration: 0.4s;
+        animation-name: closepants;
+        animation-iteration-count: infinite;
+       
+    }
+    .cashman .head {
+        width: 40px;
+        height: 20px;
+        background: url(../images/cashman-head.svg) no-repeat;
+        
+        animation-duration: 0.4s;
+        animation-name: closehead;
+        animation-iteration-count: infinite;
+    }
+
+
+    @keyframes closepants {
+      from {
+        transform: rotate(0deg) translateY(0px)
+      }
+    50% {
+      transform: rotate(-10deg) translateY(-3px)
+    }
+      to { 
+        transform: rotate(0deg) translateY(0px)
+
+      }
+    }
+
+    @keyframes closehead {
+      from {
+       transform: rotate(0deg) translateY(0px) translateX(0px);
+      }
+
+      50% { 
+        transform: rotate(22deg) translateY(6px) translateX(3px);
+
+      }
+
+      to {
+       transform: rotate(0deg) translateY(0px) translateX(0px);
+      }
+    }
+
+
