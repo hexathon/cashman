@@ -140,17 +140,8 @@ var labyrinth = {
         var container = document.getElementById("killzone");
 
         var position = {column: 10, row: 20};
-        var x = this.positionToPixel(position.column) - (31 / 2);
-        var y = this.positionToPixel(position.row) - (28 / 2);
-
-<<<<<<< Updated upstream
-        var cashman = new CashMan({x: randomPosition.column, y: randomPosition.row, container: container});
+        var cashman = new CashMan({x: position.column, y: position.row, container: container});
         cashman.render();
-=======
-        var cashman = document.createElement("div");
-        cashman.style = "position:absolute;background:url(cashman-tiny.gif) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
-        container.appendChild(cashman);
->>>>>>> Stashed changes
     },
     positionToPixel: function(position){
         return (position * this.pointDistance) + this.gridOffset;
