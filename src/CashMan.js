@@ -9,14 +9,12 @@
  */
 function CashMan(options) {
     this.type = "CashDot";
-    this.facing = 'left';
+    this.facing = 'right';
 
     // Initialize options
     this.x = options.x;
     this.y = options.y;
     this.container = options.container;
-
-    console.log(this.x, this.y);
 
     this.registerEventListeners();
 }
@@ -42,9 +40,9 @@ CashMan.prototype.move = function (direction) {
     let targetY = coordinates.y;
 
     let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
-    if (newCoordinates !== null) {
-        this.x = newCoordinates.x;
-        this.y = newCoordinates.y;
+    if (newCoordinates) {
+        this.x = targetX;
+        this.y = targetY;
 
         this.notify('cashman.move.' + direction, this.position());
         this.facing = direction;
@@ -91,27 +89,25 @@ CashMan.prototype.notify = function (name, data) {
 };
 
 CashMan.prototype.calculateCssProperties = function () {
-    let centerX = labyrinth.positionToPixel(this.x) - (16 / 2);
-    let centerY = labyrinth.positionToPixel(this.y) - (16 / 2);
+    let centerX = labyrinth.positionToPixel(this.x) - (40 / 2);
+    let centerY = labyrinth.positionToPixel(this.y) - (40 / 2);
     let style = [
-        'position: absolute',
-        'background:url(cashman-tiny.png) no-repeat',
-        'height: 28px',
-        'width: 31px',
         'left: ' + centerX + 'px',
         'top: ' + centerY + 'px'
     ];
-    style = style.join(';');
-
-    return style;
+    return style.join(';');
 };
 
 CashMan.prototype.render = function () {
+    console.log(this.container);
     this.elementInstance = document.createElement('div');
+    this.elementInstance.className = "cashmancontainer going" + this.facing;
+    this.elementInstance.innerHTML = "<div class=\"cashman\"><div class=\"pants\"></div><div class=\"head\"></div></div>";
     this.elementInstance.style = this.calculateCssProperties();
     this.container.appendChild(this.elementInstance);
 };
 
 CashMan.prototype.updatePosition = function () {
     this.elementInstance.style = this.calculateCssProperties();
+    this.elementInstance.className = this.elementInstance.className.replace(/going\w*/, 'going' + this.facing);
 };
