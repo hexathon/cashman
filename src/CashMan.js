@@ -5,7 +5,7 @@ const KEY_UP = 38;
 const KEY_RIGHT = 39;
 const KEY_DOWN = 40;
 
-class CashMan extends BaseModel {
+export class CashMan extends BaseModel {
     constructor() {
         let position = labyrinth.getCashmanInitialPosition();
         super(position);
@@ -39,19 +39,19 @@ class CashMan extends BaseModel {
     }
 
     moveDown() {
-        this.notify('cashman.move.down');
+        this.notify('cashman.move.down', super.getPosition());
         console.log('CashMan is moving down.');
         super.moveUp()
     }
 
     moveLeft() {
-        this.notify('cashman.move.left');
+        this.notify('cashman.move.left', super.getPosition());
         console.log('CashMan is moving left.');
         super.moveUp()
     }
 
     moveRight() {
-        this.notify('cashman.move.right');
+        this.notify('cashman.move.right', super.getPosition());
         console.log('CashMan is moving right.');
         super.moveUp()
     }
@@ -59,7 +59,11 @@ class CashMan extends BaseModel {
     notify(name) {
         let event = new CustomEvent(name, data);
         window.dispatchEvent(event);
+
+        if (name.indexOf('move') > -1) {
+            // This is a move event
+            let event = new CustomEvent('cashman.move', super.getPosition());
+            window.dispatchEvent(event);
+        }
     }
 }
-
-export default CashMan;
