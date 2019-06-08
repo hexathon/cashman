@@ -1,6 +1,7 @@
 var labyrinth = {
     pointDistance: 26,
     lineWidth: 6,
+    doorWidth: 2,
     gridOffset: 3,
     canIGoThere:function(x, y){
         var returnObject = null;
@@ -92,6 +93,7 @@ var labyrinth = {
         container.width = 526;
         container.height = 708;
 
+        var doors = [[11,9],[11,10]];
         var linePatch = this.gridOffset;
         var ctx = container.getContext("2d");
         ctx.lineWidth = this.lineWidth;
@@ -99,6 +101,17 @@ var labyrinth = {
         for (var row = 0; row < this.grid.length; row++) {
             for (var column = 0; column < this.grid[row].length; column++) {
                 if (!this.grid[row][column]) {
+                    var isDoor = false;
+                    for (var i = 0; i < doors.length; i++) {
+                        if (doors[i][1] === column && doors[i][0] === row) {
+                            isDoor = true;
+
+                            break;
+                        }
+                    }
+
+                    ctx.lineWidth = (isDoor) ? this.doorWidth : this.lineWidth;
+
                     var x = this.positionToPixel(column);
                     var y = this.positionToPixel(row);
 
