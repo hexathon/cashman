@@ -47,28 +47,28 @@ CashMan.prototype.registerEventListeners = function () {
 
 CashMan.prototype.moveUp = function () {
     if (BaseModel.moveUp.call(this)) {
-        this.notify('cashman.move.up', super.getPosition());
+        this.notify('cashman.move.up', BaseModel.getPosition.call(this));
         console.log('CashMan is moving up.');
     }
 };
 
 CashMan.prototype.moveDown = function () {
     if (BaseModel.moveDown.call(this)) {
-        this.notify('cashman.move.down', super.getPosition());
+        this.notify('cashman.move.down', BaseModel.getPosition.call(this));
         console.log('CashMan is moving down.');
     }
 };
 
 CashMan.prototype.moveLeft = function () {
     if (BaseModel.moveLeft.call(this)) {
-        this.notify('cashman.move.left', super.getPosition());
+        this.notify('cashman.move.left', BaseModel.getPosition.call(this));
         console.log('CashMan is moving left.');
     }
 };
 
 CashMan.prototype.moveRight = function () {
     if (BaseModel.moveRight.call(this)) {
-        this.notify('cashman.move.right', super.getPosition());
+        this.notify('cashman.move.right', BaseModel.getPosition.call(this));
         console.log('CashMan is moving right.');
     }
 };
@@ -79,7 +79,7 @@ CashMan.prototype.notify = function (name) {
 
     if (name.indexOf('move') > -1) {
         // This is a move event
-        let event = new CustomEvent('cashman.move', super.getPosition());
+        let event = new CustomEvent('cashman.move', BaseModel.getPosition.call(this));
         window.dispatchEvent(event);
     }
 };
