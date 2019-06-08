@@ -18,17 +18,17 @@
  };
 
  BaseModel.prototype.moveUp = function() {
-		this.move(this.x, (this.y--));
+ 	return this.move(this.x, (this.y--));
  };
 
  BaseModel.prototype.moveDown = function() {
-		this.move(this.x, (this.y++));
+ 	return this.move(this.x, (this.y++));
  };
 
  BaseModel.prototype.moveLeft = function() {
-		this.move((this.x--), this.y);
+ 	return this.move((this.x--), this.y);
  };
 
  BaseModel.prototype.moveRight = function() {
-		this.move((this.x++), this.y);
+ 	return this.move((this.x++), this.y);
  };
