@@ -2,14 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cash-Man</title>
     <script src="src/labyrinth.js"></script>
 </head>
 <body>
-<canvas id="labyrinthcanvas" width="270" height="270"></canvas>
-<div style="position:absolute;top:26px;left:26px;background:url(cashman-tiny.png) no-repeat;height:27px;width:40px "></div>
-<script>
-    labyrinth.drawGrid();
-</script>
+<div style="position:relative;vertical-align:center;margin:50px auto 0;width:266px;">
+    <canvas id="maze"></canvas>
+    <div id="cookiejar"></div>
+    <div id="killzone">
+        <div style="position:absolute;top:16px;left:19px;background:url(cashman-tiny.png) no-repeat;height:27px;width:40px "></div>
+    </div>
+    <script>
+        labyrinth.init();
+    </script>
+</div>
 </body>
 </html>
