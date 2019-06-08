@@ -4,17 +4,18 @@
  */
 function Ghost (options) {
     BaseModel.call(this, options);
+    this.eatable = false;
 }
 
 Ghost.prototype = Object.create(BaseModel.prototype);
 Ghost.prototype.constructor = Ghost;
-
 
 Ghost.prototype.registerEventListeners = function () {
 
     window.addEventListener('cashman.move', (event) => {
         this.cashmanPos = event.dataset;
     this.isCashmanMoving =  true;
+    this.eat();
     this.keepMoving();
 }, true);
 
@@ -26,7 +27,7 @@ Ghost.prototype.registerEventListeners = function () {
         this.gameOver =  true;
 }, true);
 
-    window.addEventListener('powerpallet.active', (event) => {
+    window.addEventListener('powerpallet.activate', (event) => {
         this.eatable =  true;
 }, true);
 
@@ -52,7 +53,7 @@ Ghost.prototype.keepMoving = function () {
 };
 
 
-Ghost.prototype.collideCashman = function () {
+Ghost.prototype.cashmanCollision = function () {
 
     var myPos = this.getPosition();
 
@@ -60,13 +61,19 @@ Ghost.prototype.collideCashman = function () {
         return true;
     }
     return  false;
-    /* if (this.eatable) {
-         let event = new CustomEvent("ghost.eat.me", myPos);
-     } else {
-         let event = new CustomEvent("ghost.eat.you", myPos);
-     }
-     window.dispatchEvent(event);*/
 
+}
+
+Ghost.prototype.eat = function () {
+
+   if (this.cashmanCollision()){
+       if (this.eatable){
+           this.notify('ghost.eat.me');
+       } else {
+           this.notify('ghost.eat.cashman');
+           this.gameOver = true;
+       }
+   }
 
 }
 
@@ -137,7 +144,7 @@ Ghost.prototype.dissapear = function() {
     this.active = false;
 }
 
-Ghost.prototype.notify = function (name) {
+Ghost.prototype.notify = function (name,data) {
     let event = new CustomEvent(name, data);
     window.dispatchEvent(event);
 };
