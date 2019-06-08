@@ -99,9 +99,8 @@ CashMan.prototype.calculateCssProperties = function () {
 };
 
 CashMan.prototype.render = function () {
-    console.log(this.container);
     this.elementInstance = document.createElement('div');
-    this.elementInstance.className = "cashmancontainer going" + this.facing;
+    this.elementInstance.className = "cashmancontainer transition going" + this.facing;
     this.elementInstance.innerHTML = "<div class=\"cashman\"><div class=\"pants\"></div><div class=\"head\"></div></div>";
     this.elementInstance.style = this.calculateCssProperties();
     this.container.appendChild(this.elementInstance);
@@ -109,5 +108,7 @@ CashMan.prototype.render = function () {
 
 CashMan.prototype.updatePosition = function () {
     this.elementInstance.style = this.calculateCssProperties();
-    this.elementInstance.className = this.elementInstance.className.replace(/going\w*/, 'going' + this.facing);
+    if (this.facing !== 'up' && this.facing !== 'down') {
+        this.elementInstance.className = this.elementInstance.className.replace(/going\w*/, 'going' + this.facing);
+    }
 };
