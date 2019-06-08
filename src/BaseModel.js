@@ -1,8 +1,3 @@
-function Direction (x, y) {
-	this.x = x;
-	this.y = y;
-}
-
 class BaseModel {
 	constructor(x, y) {
 		this.x = x;
@@ -13,31 +8,27 @@ class BaseModel {
 		return {x:this.x, y:this.y};
 	}
 
-	move(direction) {
+	move(x,y) {
 		if (window.labyrinth.canIGoThere(direction.x, direction.y)) {
-	  	this.x = direction.x;
-	  	this.y = direction.y;
+	  	this.x = x;
+	  	this.y = y;
 		}
 	}
 
 	moveUp() {
-		let direction = new Direction(this.x, (this.y--));
-		this.move(direction);
+		this.move(this.x, (this.y--));
 	}
 
 	moveDown() {
-		let direction = new Direction(this.x, (this.y++));``
-		this.move(direction);
+		this.move(this.x, (this.y++));
 	}
 
 	moveLeft() {
-		let direction = new Direction((this.x--), this.y);
-		this.move(direction);
+		this.move((this.x--), this.y);
 	}
 
 	moveRight() {
-		let direction = new Direction((this.x++), this.y);
-		this.move(direction);
+		this.move((this.x++), this.y);
 	}
 
 }
