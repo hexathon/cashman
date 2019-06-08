@@ -3,12 +3,12 @@
  * Probably with the exception for eatable Ghosts..
  * @constructor
  */
-function Eatable(x, y, container) {
-    this.x = x;
-    this.y = y;
+function Eatable(options) {
+    this.x = options.x;
+    this.y = options.y;
     this.type = 'Eatable';
     this.value = 10;
-    this.container = container;
+    this.container = options.container;
 
     this.registerEventListeners();
 }
