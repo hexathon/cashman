@@ -1,6 +1,7 @@
 var labyrinth = {
     pointDistance: 26,
     lineWidth: 6,
+    gridOffset: 3,
     getGhostInitialPosition:function(){
         return {x:10,y:10};
     },
@@ -48,16 +49,15 @@ var labyrinth = {
         container.width = 266;
         container.height = 266;
 
-        var gridOffset = (this.lineWidth / 2);
-        var linePatch = gridOffset;
+        var linePatch = this.gridOffset;
         var ctx = container.getContext("2d");
         ctx.lineWidth = this.lineWidth;
 
         for (var row = 0; row < this.grid.length; row++) {
             for (var column = 0; column < this.grid[row].length; column++) {
                 if (!this.grid[row][column]) {
-                    var x = (column * this.pointDistance) + gridOffset;
-                    var y = row * this.pointDistance + gridOffset;
+                    var x = this.positionToPixel(column);
+                    var y = this.positionToPixel(row);
 
                     if (column + 1 < this.grid[row].length && !this.grid[row][column + 1]) {
                         ctx.beginPath();
@@ -80,27 +80,52 @@ var labyrinth = {
         var container = document.getElementById("cookiejar");
         container.style = "position:absolute;left:0;top:0;";
 
-        var gridOffset = (this.lineWidth / 2);
-
         for (var row = 0; row < this.paths.length; row++) {
             for (var column = 0; column < this.paths[row].length; column++) {
                 if (this.paths[row][column]) {
-                    var cookieOffset = 8 / 2;
-                    var x = (column * this.pointDistance) + gridOffset - cookieOffset;
-                    var y = row * this.pointDistance + gridOffset - cookieOffset;
-
-                    // new CashDot({x: x, y: y, container: container});
-                    var cookie = document.createElement("div");
-                    cookie.style = "position:absolute;width:8px;height:8px;background:orange;left:" + x + "px;top:" + y + "px;";
-                    container.appendChild(cookie);
+                    var cookie = new CashDot({x: column, y: row, container: container});
+                    cookie.render();
                 }
             }
         }
     },
     placeGhosts: function(){
+        var container = document.getElementById("killzone");
+        var randomPosition = this.getRandomPosition();
+        var x = (randomPosition.column * this.pointDistance) - (31 / 2) + this.gridOffset;
+        var y = (randomPosition.row * this.pointDistance) - (28 / 2) + this.gridOffset;
+
+        for (var i = 0; i < 4; i++) {
+            var cashman = document.createElement("div");
+            cashman.style = "position:absolute;background:url(cashman-tiny.png) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
+            container.appendChild(cashman);
+        }
 
     },
     placeCashman: function(){
+        var container = document.getElementById("killzone");
 
+        var randomPosition = this.getRandomPosition();
+        var x = (randomPosition.column * this.pointDistance) - (31 / 2) + this.gridOffset;
+        var y = (randomPosition.row * this.pointDistance) - (28 / 2) + this.gridOffset;
+
+        var cashman = document.createElement("div");
+        cashman.style = "position:absolute;background:url(cashman-tiny.png) no-repeat;height:28px;width:31px;left:" + x + "px;top:" + y + "px;";
+        container.appendChild(cashman);
+    },
+    getRandomPosition: function(){
+        var row = Math.floor(Math.random() * this.paths.length);
+        var column = Math.floor(Math.random() * this.paths[row].length);
+
+        if (!this.canIGoThere(column, row)) {
+            var position = this.getRandomPosition();
+            row = position.row;
+            column = position.column;
+        }
+
+        return {row: row, column: column};
+    },
+    positionToPixel: function(position){
+        return (position * this.pointDistance) + this.gridOffset;
     }
 };
