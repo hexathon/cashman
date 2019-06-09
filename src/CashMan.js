@@ -39,8 +39,14 @@ CashMan.prototype.registerEventListeners = function () {
         }
     }, true);
 
-    window.addEventListener('game.reset', (event) => {
+    window.addEventListener('game.reset', () => {
         this.reset();
+    }, true);
+
+    window.addEventListener('cashman.whereAreYou', (event) => {
+        if (typeof event.detail.callback === 'function') {
+            event.detail.callback(this.position());
+        }
     }, true);
 };
 
@@ -69,6 +75,7 @@ CashMan.prototype.move = function (direction) {
         return true;
     }
 
+    this.notify('cashman.stop', {position: this.position()});
     this.moving = false;
     this.updatePosition();
     return false;
