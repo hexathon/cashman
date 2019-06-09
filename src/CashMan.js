@@ -38,11 +38,13 @@
     CashMan.prototype.registerEventListeners = function () {
         var self = this;
         global.addEventListener('game.input', throttle(function (event) {
-            let direction = event.detail.direction;
-            let nextDirection = event.detail.nextDirection;
+            if (self.state !== STATE_KILLED) {
+                let direction = event.detail.direction;
+                let nextDirection = event.detail.nextDirection;
 
-            if (!self.move(nextDirection)) {
-                self.move(direction);
+                if (!self.move(nextDirection)) {
+                    self.move(direction);
+                }
             }
         }, 200), true);
 
@@ -176,6 +178,7 @@
     };
 
     CashMan.prototype.setState = function (state) {
+        this.state = state;
         var className = this.elementInstance.className;
         if (className.indexOf('state-') > -1) {
             // Replace the previously set state
