@@ -139,14 +139,9 @@ CashMan.prototype.render = function () {
             <div class="head">
                 <img src="./images/cashman-head.svg">
             </div>
-<<<<<<< Updated upstream
-        </div>`;
-    this.calculateCssProperties();
-=======
         </div>
         `;
     this.elementInstance.style = this.calculateCssProperties();
->>>>>>> Stashed changes
     this.container.appendChild(this.elementInstance);
 };
 
