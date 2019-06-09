@@ -13,9 +13,6 @@ function Ghost (options) {
     this.registerEventListeners();
 }
 
-Ghost.prototype = Object.create(Ghost.prototype);
-Ghost.prototype.constructor = Ghost;
-
 Ghost.prototype.registerEventListeners = function () {
 
     window.addEventListener('cashman.move.right', (event) => {
@@ -107,20 +104,15 @@ Ghost.prototype.followCashman =  function () {
 }
 
 Ghost.prototype.getOppositeDirection = function() {
-    var self = this;
-    switch(self.facing){
+    switch(this.facing){
         case 'left':
             return 'right';
-            break;
         case 'right':
             return 'left';
-            break;
         case 'up':
             return 'down';
-            break;
         case 'down':
             return 'up';
-            break;
     }
 }
 
