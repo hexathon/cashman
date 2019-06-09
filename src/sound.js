@@ -27,7 +27,9 @@ var soundmanager = {
             this.stop();
             this.sounds[soundname].currentTime=0;
             this.sounds[soundname].loop=shouldloop;
-            this.sounds[soundname].play();
+            this.sounds[soundname].play().catch(() => {
+                // Ignore any audio play errors
+            });
             this.lastplayed=soundname;
         }
     },
