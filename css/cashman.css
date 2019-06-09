@@ -18,15 +18,15 @@ body.dark {
     vertical-align: center;
     width: 760px;
 }
-.dark .gamecontainer a {
-    border-color: #fff;
-    color: #fff;
-}
 .gamecontainer a {
     border: 1px solid #000;
     text-decoration: none;
     padding: 5px;
     color: #000;
+}
+.dark #intro .gamecontainer a {
+    border-color: #fff;
+    color: #fff;
 }
 
 .cashmancontainer {
