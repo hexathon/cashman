@@ -1,7 +1,8 @@
 function chasehimchasehimchasehim(){
     let newdirection = nextStepOnShortestRouteToDestination({
         end: { x: window.tomssecretcashmanref_donttellrobin.position().x, y: window.tomssecretcashmanref_donttellrobin.position().y },
-        start: { x: this.x, y: this.y }
+        start: { x: this.x, y: this.y },
+        color: this.color
     });
     if(this.eatable){
         let possibleMoves = this.getPossibleTurns(this.eatable);
@@ -43,7 +44,7 @@ function nextStepOnShortestRouteToDestination(params) {
             var newy = y;
             if (newy < grid.length && newx < grid[newy].length && grid[newy][newx] && !beenthere[newy][newx]) {//step right
                 if (newx == endpoint.x && newy == endpoint.y) {
-                    drawroutes([route])
+                    drawroutes([route],params.color)
                     return "left"
                 }
                 var newroute = route.slice();
@@ -56,7 +57,7 @@ function nextStepOnShortestRouteToDestination(params) {
             var newy = y
             if (newy < grid.length && newx < grid[newy].length && grid[newy][newx] && !beenthere[newy][newx]) {//step right
                 if (newx == endpoint.x && newy == endpoint.y) {
-                    drawroutes([route])
+                    drawroutes([route], params.color)
                     return "right"
                 }
                 var newroute = route.slice();
@@ -69,7 +70,7 @@ function nextStepOnShortestRouteToDestination(params) {
             var newy = y - 1
             if (newy < grid.length && newx < grid[newy].length && grid[newy][newx] && !beenthere[newy][newx]) {//step right
                 if (newx == endpoint.x && newy == endpoint.y) {
-                    drawroutes([route])
+                    drawroutes([route], params.color)
                     return "down"
                 }
                 var newroute = route.slice();
@@ -82,7 +83,7 @@ function nextStepOnShortestRouteToDestination(params) {
             var newy = y + 1
             if (newy < grid.length && newx < grid[newy].length && grid[newy][newx] && !beenthere[newy][newx]) {//step right
                 if (newx == endpoint.x && newy == endpoint.y) {
-                    drawroutes([route])
+                    drawroutes([route], params.color)
                     return "up"
                 }
                 var newroute = route.slice();
@@ -108,15 +109,24 @@ function nextStepOnShortestRouteToDestination(params) {
     }
 }
 
+function clearroutes(){
+    for(var i=0;i<arrroutecanvases.length;i++){
+        var canvas = arrroutecanvases[i];
+        canvas.parentNode.removeChild(canvas);
+    }
+    arrroutecanvases=[];
 
-function drawroutes(routes){
-    if(window.drawroute){
+}
+var arrroutecanvases = []
+function drawroutes(routes,color){
+    if(document.location.search.indexOf("drawroute=true")>-1){
         var container;
-        container = document.getElementById("routingcanvas");
+        container = document.getElementById("routingcanvas"+color);
         if(!container){
             container = document.createElement("canvas");
-            container.id="routingcanvas";
+            container.id="routingcanvas"+color;
             document.getElementById("maze").parentNode.insertBefore(container, document.getElementById("maze"));
+            arrroutecanvases.push(container);
         }
         container.style = "position:absolute;left:0;top:0;z-index:100";
         container.width = 486;
@@ -124,7 +134,7 @@ function drawroutes(routes){
         var ctx = container.getContext("2d");
         ctx.clearRect(0, 0, ctx.width, ctx.height);
         ctx.lineWidth = 3;
-        ctx.strokeStyle = "#FF0000";
+        ctx.strokeStyle = color;
         var pointDistance=24;
         var offsetx = 3;
         var offsety = 3;

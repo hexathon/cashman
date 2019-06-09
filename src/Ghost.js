@@ -222,6 +222,9 @@ Ghost.prototype.moveRandomly = function() {
     if(!this.eatable){
         movements[pos] = chasehimchasehimchasehim.apply(this,arguments)
     }
+    else{
+        clearroutes();
+    }
     switch (movements[pos]) {
         case 'left':
             moved = this.move('left');
