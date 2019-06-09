@@ -16,6 +16,7 @@
     <script src="src/PowerPallet.js"></script>
     <script src="src/Ghost.js"></script>
     <script src="src/scoring.js"></script>
+    <script src="src/game.js"></script>
     <script src="src/labyrinth.js"></script>
     <script src="src/ghostbehaviour.js"></script>
     <script src="src/sound.js"></script>
@@ -32,6 +33,12 @@
         <h3 id="boardHigh">0</h3>
         <h2>Score</h2>
         <h3 id="boardScore">0</h3>
+        <button class="die">RIP</button>
+        <button class="win">WIN</button>
+    </div>
+    <div id="gameover">
+        <h1>Game Over</h1>
+        <h4 class="counter"></h4>
     </div>
     <div id="intro">
         <h2>Hi-Score</h2>
@@ -45,7 +52,7 @@
         new InputController({type: 'keyboard'});
 
         // Start the labyrinth
-        labyrinth.init();
+        game.init();
         soundmanager.init();
     </script>
 </div>

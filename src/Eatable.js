@@ -18,7 +18,7 @@ function Eatable(options) {
 Eatable.prototype.registerEventListeners = function () {
     // Listen to the move event of Cash Man
     window.addEventListener('cashman.move', (event) => {
-        this.getEaten(event.detail);
+        this.getEaten(event.detail.position);
     }, true);
 };
 

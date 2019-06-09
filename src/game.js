@@ -1,0 +1,56 @@
+var game = {
+    resetTimer: null,
+    init: function(){
+        this.drawIntro();
+        this.drawGameOver();
+
+        labyrinth.init();
+
+        this.start();
+    },
+    drawIntro: function(){
+        var self = this;
+        var container = document.getElementById("intro");
+        var button = container.getElementsByTagName("button").item(0);
+
+        button.addEventListener("click", function(){
+            self.showGame();
+        });
+    },
+    drawGameOver: function() {
+        var container = document.getElementById("gameover");
+        container.style = "position:absolute;left:148px;top:238px;width:228px;height:200px;";
+    },
+    start: function(){
+        document.getElementById("intro").style.display = "block";
+        document.getElementById("scoreboard").style.display = "none";
+        document.getElementById("cookiejar").style.display = "none";
+        document.getElementById("killzone").style.display = "none";
+        document.getElementById("maze").style.display = "none";
+        document.getElementById("gameover").style.display = "none";
+    },
+    showGame: function(){
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("scoreboard").style.display = "block";
+        document.getElementById("cookiejar").style.display = "block";
+        document.getElementById("killzone").style.display = "block";
+        document.getElementById("maze").style.display = "block";
+    },
+    handleGameOver: function(){
+        var self = this;
+
+        document.getElementById("gameover").style.display = "block";
+        document.getElementById("gameover").getElementsByClassName("counter").item(0).innerHTML = "5";
+
+        window.setTimeout(function () {
+            window.clearInterval(self.resetTimer);
+
+            self.start();
+        }, 5000);
+
+        this.resetTimer = window.setInterval(function () {
+            var elmt = document.getElementById("gameover").getElementsByClassName("counter").item(0);
+            elmt.innerHTML = parseInt(elmt.innerHTML) - 1;
+        }, 1000);
+    },
+};
