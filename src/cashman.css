@@ -6,7 +6,7 @@
     left: 15px;
 }
 .transition {
-    transition:left 0.15s linear, top 0.15s linear;
+    transition:left .15s linear, top .15s linear;
 }
 .cashman {
     width: 40px;
@@ -22,12 +22,12 @@
 .cashmancontainer.goingleft {
     transform: scale(-1, 1);
 }
-/*.cashmancontainer.goingup {*/
-/*   transform: rotate(-90deg)*/
-/*}*/
-/*.cashmancontainer.goingdown {*/
-/*    transform: rotate(90deg)*/
-/*}*/
+.cashmancontainer.goingup {
+   transform: rotate(-90deg)
+}
+.cashmancontainer.goingdown {
+    transform: rotate(90deg)
+}
 
 .cashman .pants {
     width: 40px;
