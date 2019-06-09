@@ -23,8 +23,13 @@ Ghost.prototype.registerEventListeners = function () {
     }, true);
 
     window.addEventListener('game.start', (event) => {
-         this.moveRandomly();
+        this.gameOver = false;
+        this.moveRandomly();
         // this.keepMoving();
+    }, true);
+
+    window.addEventListener('game.stop', (event) => {
+        this.gameOver = true;
     }, true);
 
     window.addEventListener('game.reset', (event) => {
@@ -36,11 +41,9 @@ Ghost.prototype.registerEventListeners = function () {
         if (event.detail.type === 'PowerPallet') {
             var self = this;
             this.eatable =  true;
-            this.speed = 300;
             setTimeout(function(){
                 self.eatable =  false;
-                this.speed = 200;
-                console.log("eatable pp");
+                self.speed = 200;
             }, 5000);
         }
     }, true);
@@ -254,7 +257,6 @@ Ghost.prototype.updatePosition = function () {
 Ghost.prototype.reset = function () {
     this.x = this.options.x;
     this.y = this.options.y;
-    this.gameOver = false;
 };
 
 Ghost.prototype.render = function () {
