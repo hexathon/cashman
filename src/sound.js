@@ -32,7 +32,7 @@ var soundmanager = {
         }
     },
     gestsoundstate:function(){
-        return !localStorage.getItem('cashman.volume')==="0";
+        return !(localStorage.getItem('cashman.volume')==="0");
     }
 }.init();
 
