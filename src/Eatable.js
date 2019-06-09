@@ -20,6 +20,10 @@ Eatable.prototype.registerEventListeners = function () {
     window.addEventListener('cashman.move', (event) => {
         this.getEaten(event.detail.position);
     }, true);
+
+    window.addEventListener('game.reset', (event) => {
+        this.reset();
+    }, true);
 };
 
 Eatable.prototype.getEaten = function (data) {
@@ -45,8 +49,13 @@ Eatable.prototype.selfDestruct = function () {
 
     this.eaten = true;
     window.setTimeout(function () {
-        self.elementInstance.remove();
+        self.elementInstance.style.display = "none";
     }, 120)
+};
+
+Eatable.prototype.reset = function(){
+    this.eaten = false;
+    this.elementInstance.style.display = "block";
 };
 
 /**
