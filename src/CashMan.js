@@ -30,7 +30,7 @@ function CashMan(options) {
  */
 CashMan.prototype.registerEventListeners = function () {
     var self = this;
-    window.addEventListener('cashman.execute.move', (event) => {
+    window.addEventListener('game.input', (event) => {
         let direction = event.detail.direction;
         let nextDirection = event.detail.nextDirection;
 

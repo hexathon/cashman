@@ -1,8 +1,9 @@
 function KeyboardInputController() {
     this.registerEventListeners();
 
-    this.nextKeyState = 'down';
-    this.currentKeyState = 'down';
+    this.nextDirection = 'down';
+    this.currentDirection = 'down';
+    this.stop = false;
 
     this.start();
 }
@@ -10,51 +11,59 @@ function KeyboardInputController() {
 KeyboardInputController.prototype.start = function () {
     var self = this;
 
-    window.addEventListener('cashman.move', function (event) {
-        self.currentKeyState = event.detail.direction;
+    window.addEventListener('cashman.move', (event) => {
+        this.currentDirection = event.detail.direction;
     }, true);
 
-    window.addEventListener('game.reset', function () {
-        self.nextKeyState = 'down';
-        self.currentKeyState = 'down';
+    window.addEventListener('game.reset', () => {
+        this.nextDirection = 'down';
+        this.currentDirection = 'down';
+    }, true);
+
+    window.addEventListener('game.start', () => {
+        loop();
+    }, true);
+
+    window.addEventListener('game.stop', () => {
+        this.stop = true;
     }, true);
 
     function loop() {
         // Arrow key is pressed
-        self.move();
-        setTimeout(loop, 200);
+        if (!self.stop) {
+            self.input();
+            setTimeout(loop, 200);
+        }
     }
-    loop();
 };
 
 KeyboardInputController.prototype.registerEventListeners = function () {
-    var self = this;
-    window.addEventListener('keydown', function (event) {
+    window.addEventListener('keydown', (event) => {
         switch (event.key) {
             case 'ArrowUp':
-                self.nextKeyState = 'up';
+                this.nextDirection = 'up';
                 break;
             case 'ArrowDown':
-                self.nextKeyState = 'down';
+                this.nextDirection = 'down';
                 break;
             case 'ArrowLeft':
-                self.nextKeyState = 'left';
+                this.nextDirection = 'left';
                 break;
             case 'ArrowRight':
-                self.nextKeyState = 'right';
+                this.nextDirection = 'right';
                 break;
         }
     }, true);
 };
 
-KeyboardInputController.prototype.move = function () {
+KeyboardInputController.prototype.input = function () {
     if (window.debug) {
-        console.info('Received keyboard input for cashman to move: ' + this.currentKeyState, this.nextKeyState);
+        console.info('Received keyboard input for cashman to move: ' + this.currentDirection, this.nextDirection);
     }
 
-    var event = new CustomEvent('cashman.execute.move', {detail: {
-        direction: this.currentKeyState,
-        nextDirection: this.nextKeyState
+    var event = new CustomEvent('game.input', {detail: {
+        direction: this.currentDirection,
+        nextDirection: this.nextDirection
     }});
     window.dispatchEvent(event);
 };
