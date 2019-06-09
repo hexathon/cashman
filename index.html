@@ -22,10 +22,16 @@
     <link rel="stylesheet" href="src/cashman.css" media="all" />
 </head>
 <body>
-<div style="position:relative;vertical-align:center;margin:50px auto 0;width:266px;">
+<div style="position:relative;vertical-align:center;margin:50px auto 0;width:760px;">
     <canvas id="maze"></canvas>
     <div id="cookiejar"></div>
     <div id="killzone"></div>
+    <div id="scoreboard">
+        <h2>Hi-Score</h2>
+        <h3 id="boardHigh">0</h3>
+        <h2>Score</h2>
+        <h3 id="boardScore">0</h3>
+    </div>
     <script>
         // Initialize the input controller
         new InputController({type: 'keyboard'});

@@ -23,6 +23,7 @@ var labyrinth = {
     },
     init:function(){
         this.drawGrid();
+        this.drawScoreBoard();
         this.placeCookies();
         this.placePowerPallets();
         this.placeGhosts();
@@ -134,6 +135,10 @@ var labyrinth = {
             }
         }
     },
+    drawScoreBoard: function(){
+        var container = document.getElementById("scoreboard");
+        container.style = "position:absolute;left:560px;top:0;width:200px;";
+    },
     placeCookies: function(){
         var container = document.getElementById("cookiejar");
         container.style = "position:absolute;left:0;top:0;";
@@ -162,6 +167,7 @@ var labyrinth = {
     },
     placePowerPallets: function(){
         var container = document.getElementById("cookiejar");
+        container.style = "position:absolute;left:0;top:0;";
 
         for (var i = 0; i < this.powerPallets.length; i++) {
             var position = this.powerPallets[i];
@@ -171,6 +177,7 @@ var labyrinth = {
     },
     placeGhosts: function(){
         var container = document.getElementById("killzone");
+        container.style = "position:absolute;left:0;top:0;";
 
         var positions = [
             {column: 9, row: 12, color: "pink"},
@@ -191,6 +198,7 @@ var labyrinth = {
     },
     placeCashman: function(){
         var container = document.getElementById("killzone");
+        container.style = "position:absolute;left:0;top:0;";
 
         var position = {column: 10, row: 20};
         var cashman = new CashMan({x: position.column, y: position.row, container: container});

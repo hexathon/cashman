@@ -80,3 +80,11 @@
     }
 
 
+#scoreboard h2 {
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+#scoreboard h3 {
+    margin-top: 0;
+}
