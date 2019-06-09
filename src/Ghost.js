@@ -12,7 +12,7 @@ function Ghost (options) {
     this.eatable = false;
     this.speed = window.game.getSpeed();
     this.alive = true;
-    this.stupidity = 5//1 is going for it directly and 10 is going completely random
+    this.stupidity = Math.floor(Math.random()*8)//1 is going for it directly and 10 is going completely random
 
     this.registerEventListeners();
 }
@@ -219,7 +219,7 @@ Ghost.prototype.moveRandomly = function() {
     var movements = self.getPossibleTurns();
     var pos = Math.floor((Math.random() * movements.length));
     var moved = false;
-    if(this.color==="pink"){
+    if(!this.eatable){
         movements[pos] = chasehimchasehimchasehim.apply(this,arguments)
     }
     switch (movements[pos]) {
