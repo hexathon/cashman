@@ -11,6 +11,7 @@ function Ghost (options) {
     this.gameOver = false;
     this.eatable = false;
     this.speed = window.game.getSpeed();
+    this.alive = true;
 
     this.registerEventListeners();
 }
@@ -41,13 +42,15 @@ Ghost.prototype.registerEventListeners = function () {
         if (event.detail.type === 'PowerPallet') {
             var self = this;
             this.eatable =  true;
-            this.speed = this.speed + (this.speed * 0.2);
+            this.speed = window.game.getSpeed() + (window.game.getSpeed() * 0.35);
             self.icon.src = 'images/character-ghost-killable.png';
             setTimeout(function(){
-                self.eatable =  false;
-                self.icon.src = 'images/character-ghost-' + self.color + '.png';
+                 self.eatable =  false;
+                 if(self.alive) {
+                     self.icon.src = 'images/character-ghost-' + self.color + '.png';
+                 }
                 self.speed = window.game.getSpeed();
-            }, 5000);
+            }, 7000);
         }
     }, true);
 };
@@ -87,7 +90,11 @@ Ghost.prototype.eat = function () {
 
    if (this.cashmanCollision()){
        if (this.eatable){
+           console.log("to be killed")
            this.notify('ghost.killed');
+           // this.alive = false;
+           this.reset();
+
        } else {
            this.notify('ghost.kill');
            this.gameOver = true;
@@ -95,6 +102,35 @@ Ghost.prototype.eat = function () {
    }
 };
 
+Ghost.prototype.goBackToTheCage = function () {
+
+    var nextPos = nextStepOnShortestRouteToDestination(
+        { end: {x:this.options.x, y: this.options.y},
+        start: {x:this.x, y:this.y}}
+        );
+    console.log(nextPos, this.x, this.y, this.cashmanPos);
+    if ( nextPos.x === this.x && nextPos.y === this.y )
+    {
+        this.alive = true;
+        return this.moveRandomly();
+    }
+
+        if (this.x > nextPos.x) {
+            this.move('left');
+        } else {
+            this.move('right');
+        }
+        if (this.y > nextPos.y) {
+            this.move('up');
+        } else {
+            this.move('down');
+        }
+        var self = this;
+
+        setTimeout(function(){
+            self.goBackToTheCage();
+        }, this.speed/6);
+}
 /**
  * Follow cashman through the best route...
  */
@@ -177,7 +213,11 @@ Ghost.prototype.moveRandomly = function() {
     this.eat();
     if(!this.gameOver) {
         setTimeout(function(){
-            self.moveRandomly();
+             // if (self.alive) {
+                self.moveRandomly();
+            // } else {
+            //     self.goBackToTheCage();
+            // }
         }, this.speed);
     }
 };
