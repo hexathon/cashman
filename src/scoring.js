@@ -70,5 +70,10 @@ var scoring = {
     drawScoreBoard: function(){
         var container = document.getElementById("scoreboard");
         container.style = "position:absolute;left:520px;top:0;width:240px;height:630px;";
+
+        var button = container.getElementsByClassName("darkmode").item(0);
+        button.addEventListener("click", function(){
+            toggleClass(document.body, 'dark');
+        });
     },
 };

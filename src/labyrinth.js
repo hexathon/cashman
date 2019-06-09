@@ -97,6 +97,9 @@ var labyrinth = {
     drawGrid: function(color){
         var container = document.getElementById("maze");
         container.style = "position:absolute;left:0;top:0;";
+        if (document.body.className.indexOf('dark') > -1) {
+            container.style = 'background: #333;'
+        }
         container.width = 486;
         container.height = 630;
 
