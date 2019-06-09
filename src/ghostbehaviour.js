@@ -3,8 +3,10 @@ function chasehimchasehimchasehim(){
         end: { x: window.tomssecretcashmanref_donttellrobin.position().x, y: window.tomssecretcashmanref_donttellrobin.position().y },
         start: { x: this.x, y: this.y }
     });
-    if(this.eatable)newdirection=flipdirection(newdirection)
-    this.move(newdirection);
+    if(this.eatable){
+        newdirection=flipdirection(newdirection);
+    }
+    return newdirection;
 }
 
 
@@ -81,7 +83,7 @@ function nextStepOnShortestRouteToDestination(params) {
             }
         }
         if (newroutes.length === 0) {
-            return null;
+            return "right";
         }
         else {
             return makenextstep(newroutes);
@@ -89,7 +91,7 @@ function nextStepOnShortestRouteToDestination(params) {
     }
     
     if(params.start.x===params.end.x && params.start.y===params.end.y){
-        return params.start;   
+        return "right";   
     }
     else{
         var result = makenextstep([[params.end]]);
@@ -134,16 +136,19 @@ function drawroutes(routes){
 function flipdirection(direction){
     switch(direction){
         case "left":
-            return "right";
-            break;
-            case "right":
-            return "left";
-            break;
-            case "up":
-            return "down";
-            break;
-            case "down":
-            return "up";
-            break;
+            direction= "right";
+        break;
+        case "right":
+            direction= "left";
+        break;
+        case "up":
+            direction= "down";
+        break;
+        case "down":
+            direction= "up";
+        break;
+       
     }
+     console.log(direction);
+     return direction;
 }

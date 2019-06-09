@@ -228,25 +228,22 @@ Ghost.prototype.moveRandomly = function() {
     var pos = Math.floor((Math.random() * movements.length));
     var moved = false;
     if(this.color==="pink"){
-        chasehimchasehimchasehim.apply(this,arguments)
+        movements[pos] = chasehimchasehimchasehim.apply(this,arguments)
     }
-    else{
-        switch (movements[pos]) {
-            case 'left':
-                moved = this.move('left');
-                break;
-            case 'right':
-                moved = this.move('right');
-                break;
-            case 'up':
-                moved = this.move('up');
-                break;
-            case 'down':
-                moved = this.move('down');
-                break;
-        }    
-    }
-
+    switch (movements[pos]) {
+        case 'left':
+            moved = this.move('left');
+            break;
+        case 'right':
+            moved = this.move('right');
+            break;
+        case 'up':
+            moved = this.move('up');
+            break;
+        case 'down':
+            moved = this.move('down');
+            break;
+    }    
     if(!this.gameOver) {
         setTimeout(function(){
              // if (self.alive) {
