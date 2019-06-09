@@ -9,8 +9,8 @@ function chasehimchasehimchasehim(){
     else if(newposition.y<this.y){newdirection='down'}
     else if(newposition.y>this.y){newdirection='up'};
     this.move(newdirection);
-    console.log("x:"+this.x+" y:"+this.y)
-    console.log(newdirection)
+    //console.log("x:"+this.x+" y:"+this.y)
+    //console.log(newdirection)
     
 }
 
