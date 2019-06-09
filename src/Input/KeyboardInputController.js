@@ -44,15 +44,19 @@ KeyboardInputController.prototype.registerEventListeners = function () {
         switch (event.key) {
             case 'ArrowUp':
                 this.nextDirection = 'up';
+                event.preventDefault();
                 break;
             case 'ArrowDown':
                 this.nextDirection = 'down';
+                event.preventDefault();
                 break;
             case 'ArrowLeft':
                 this.nextDirection = 'left';
+                event.preventDefault();
                 break;
             case 'ArrowRight':
                 this.nextDirection = 'right';
+                event.preventDefault();
                 break;
         }
     }, true);
