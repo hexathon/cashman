@@ -42,7 +42,7 @@ Ghost.prototype.registerEventListeners = function () {
             var self = this;
             this.eatable =  true;
             this.speed = this.speed + (this.speed * 0.2);
-            this.icon.src = 'images/edible-ghost.png';
+            self.icon.src = 'images/character-ghost-killable.png';
             setTimeout(function(){
                 self.eatable =  false;
                 self.icon.src = 'images/character-ghost-' + self.color + '.png';
