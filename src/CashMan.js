@@ -125,3 +125,9 @@ CashMan.prototype.updatePosition = function () {
 
     this.elementInstance.className = className.trim();
 };
+
+CashMan.prototype.reset = function (opts) {
+    this.facing = 'right';
+    this.x = opts.x;
+    this.y = opts.y;
+};
