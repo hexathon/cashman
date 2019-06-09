@@ -26,6 +26,12 @@ var scoring = {
 
             event.preventDefault();
         });
+
+        if (soundmanager.gestsoundstate()) {
+            button.innerText = "ON";
+        } else {
+            button.innerText = "OFF";
+        }
     },
     updateScore: function(score){
         this.globalScore += score;
