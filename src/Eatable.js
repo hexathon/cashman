@@ -7,8 +7,10 @@ function Eatable(options) {
     this.x = options.x;
     this.y = options.y;
     this.type = 'Eatable';
-    this.value = 10;
+    this.value = 0;
     this.container = options.container;
+    this.elementInstance = null;
+    this.eaten = false;
 
     this.registerEventListeners();
 }
@@ -16,19 +18,19 @@ function Eatable(options) {
 Eatable.prototype.registerEventListeners = function () {
     // Listen to the move event of Cash Man
     window.addEventListener('cashman.move', (event) => {
-        this.getEaten(event);
+        this.getEaten(event.detail);
     }, true);
 };
 
 Eatable.prototype.getEaten = function (data) {
-    if (this.detectCollision(data)) {
+    if (!this.eaten && this.detectCollision(data)) {
+        this.selfDestruct();
+
         var event = new CustomEvent('eatable.eaten', {detail: {
             value: this.getValue(),
             type: this.getType()
         }});
         window.dispatchEvent(event);
-
-        this.selfDestruct();
     }
 };
 
@@ -38,14 +40,9 @@ Eatable.prototype.getEaten = function (data) {
 Eatable.prototype.selfDestruct = function () {
     var event = new CustomEvent('eatable.selfDestruct', {detail: {instance: this}});
     window.dispatchEvent(event);
-};
 
-/**
- * If CashMan's current position === eatable position, inform that it is beeing eaten and self destruct.
- * @param event
- */
-Eatable.prototype.detectCollision = function (event) {
-    return event.x === this.x && event.y === this.y;
+    this.elementInstance.remove();
+    this.eaten = true;
 };
 
 /**
