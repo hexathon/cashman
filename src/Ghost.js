@@ -18,7 +18,6 @@ Ghost.prototype.constructor = Ghost;
 Ghost.prototype.registerEventListeners = function () {
 
     window.addEventListener('cashman.move.right', (event) => {
-        console.log('catch him');
         this.cashmanPos = event.dataset;
     this.isCashmanMoving =  true;
     this.eat();
@@ -107,36 +106,36 @@ Ghost.prototype.followCashman =  function () {
  * Move in no sence way in the labyrinth
  */
 Ghost.prototype.moveRandomly = function() {
+    var self = this;
     var movements = ["left", "right", "up", "down"];
     var pos = Math.floor((Math.random() * movements.length));
 
     var moved = false;
 
-    console.log(this.x, this.y);
     switch (movements[pos]) {
         case 'left':
             moved = this.move('left');
-            console.log('move randomly l');
             break;
         case 'right':
             moved = this.move('right');
-            console.log('move randomly r');
             break;
         case 'up':
             moved = this.move('up');
-            console.log('move randomly u');
             break;
         case 'down':
             moved = this.move('down');
-            console.log('move randomly d');
             break;
     }
 
+    // setTimeout(function(){
+    //     self.moveRandomly();
+    // }, 500);
+
     if (!moved)
     {
-        Ghost.prototype.moveRandomly();
+        self.moveRandomly();
     }
-    console.log(this.x, this.y);
+
 }
 /**
  * eat Cashman
@@ -185,7 +184,6 @@ Ghost.prototype.move = function (direction) {
         this.facing = direction;
 
         this.updatePosition();
-        console.log(this.x,  this.y);
         return true;
     }
 
