@@ -31,7 +31,11 @@ Ghost.prototype.registerEventListeners = function () {
         // this.keepMoving();
     }, true);
 
-    window.addEventListener('game.stop', (event) => {
+    window.addEventListener('game.over', (event) => {
+        this.gameOver = true;
+    }, true);
+
+    window.addEventListener('game.killed', (event) => {
         this.gameOver = true;
     }, true);
 
