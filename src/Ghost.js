@@ -23,6 +23,7 @@ Ghost.prototype.registerEventListeners = function () {
         this.isCashmanMoving =  true;
     }, true);
 
+
     window.addEventListener('game.start', (event) => {
         this.gameOver = false;
         this.moveRandomly();
@@ -56,6 +57,10 @@ Ghost.prototype.registerEventListeners = function () {
                 self.speed = window.game.getSpeed();
             }, 7000);
         }
+    }, true);
+
+    window.addEventListener('ghost.kill', (event) => {
+        this.hide(5000);
     }, true);
 };
 
@@ -104,6 +109,7 @@ Ghost.prototype.cashmanCollision = function () {
             pixelCashmanPos.x + cashmanWidth > myPos.x &&
             pixelCashmanPos.y < myPos.y + ghostHeight &&
             pixelCashmanPos.y + cashmanHeight > myPos.y) {
+
             return true;
         }
     }
@@ -311,6 +317,15 @@ Ghost.prototype.reset = function () {
     this.y = this.options.y;
     this.updatePosition();
 };
+
+Ghost.prototype.hide = function (time) {
+
+    var self = this;
+    this.elementInstance.style.display = "none";
+    setTimeout(function(){
+        self.elementInstance.style.display = "block";
+    },time);
+}
 
 Ghost.prototype.render = function () {
     this.elementInstance = document.createElement('div');
