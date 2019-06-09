@@ -204,6 +204,12 @@ Ghost.prototype.move = function (direction) {
 
     let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
     if (newCoordinates !== null) {
+        if (Transition.shouldAnimate(this.x, newCoordinates.x)) {
+            Transition.disable(this.elementInstance);
+        } else {
+            Transition.enable(this.elementInstance);
+        }
+
         this.x = newCoordinates.x;
         this.y = newCoordinates.y;
 

@@ -42,12 +42,10 @@ CashMan.prototype.move = function (direction) {
 
     let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
     if (newCoordinates !== null) {
-        if (Math.max(this.x, newCoordinates.x) - Math.min(this.x, newCoordinates.x) > 1) {
-            // We're teleporting, prevent animation
-            this.disableAnimation();
+        if (Transition.shouldAnimate(this.x, newCoordinates.x)) {
+            Transition.disable(this.elementInstance);
         } else {
-            // Not teleporting. Make the movement smooth
-            this.enableAnimation();
+            Transition.enable(this.elementInstance);
         }
 
         this.x = newCoordinates.x;
@@ -65,24 +63,6 @@ CashMan.prototype.move = function (direction) {
     this.moving = false;
     this.updatePosition();
     return false;
-};
-
-CashMan.prototype.disableAnimation = function () {
-    var className = this.elementInstance.className;
-    if (className.indexOf('transition') > -1) {
-        className = className.replace(/transition/, '');
-    }
-
-    this.elementInstance.className = className;
-};
-
-CashMan.prototype.enableAnimation = function () {
-    var className = this.elementInstance.className;
-    if (className.indexOf('transition') === -1) {
-        className += ' transition';
-    }
-
-    this.elementInstance.className = className;
 };
 
 CashMan.prototype.directionToCoordinates = function (direction) {
