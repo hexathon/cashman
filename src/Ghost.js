@@ -142,6 +142,7 @@ Ghost.prototype.goBackToTheCage = function () {
     {
         this.alive = true;
         this.icon.src = 'images/character-ghost-'+this.color+'.png';
+        this.eatable = false;
         return this.moveRandomly();
     }
 
