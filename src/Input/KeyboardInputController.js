@@ -60,6 +60,11 @@ KeyboardInputController.prototype.registerEventListeners = function () {
                 this.nextDirection = 'right';
                 event.preventDefault();
                 break;
+            case ' ':
+                if (document.getElementById("intro").style.display === 'block') {
+                    window.game.showGame();
+                }
+                break;
         }
     }, true);
 
