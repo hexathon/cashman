@@ -38,11 +38,15 @@ Eatable.prototype.getEaten = function (data) {
  * Self destruct the eatable
  */
 Eatable.prototype.selfDestruct = function () {
+    var self = this;
+
     var event = new CustomEvent('eatable.selfDestruct', {detail: {instance: this}});
     window.dispatchEvent(event);
 
-    this.elementInstance.remove();
     this.eaten = true;
+    window.setTimeout(function () {
+        self.elementInstance.remove();
+    }, 120)
 };
 
 /**
