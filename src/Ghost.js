@@ -8,6 +8,7 @@ function Ghost (options) {
     this.color = options.color;
     this.container = options.container;
     this.eatable = false;
+    this.speed = 200;
 
     this.registerEventListeners();
 }
@@ -121,25 +122,20 @@ Ghost.prototype.getOppositeDirection = function() {
 }
 
 Ghost.prototype.getPossibleTurns = function() {
-    var self = this;
-    var movements = ['left','right', 'up','down'];
-    var index = movements.indexOf(self.getOppositeDirection());
+    var movements = [];
+
+    var directions = ['left','right', 'up','down'];
+    var index = directions.indexOf(this.getOppositeDirection());
     if (index > -1) {
-        movements.splice(index, 1);
+        directions.splice(index, 1);
     }
 
-    for (var i=0; i< movements.length; i++){
-        let coordinates = this.directionToCoordinates(movements[i]);
-        let targetX = coordinates.x;
-        let targetY = coordinates.y;
-
-        let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
-        if (newCoordinates === null){
-            movements.splice(movements.indexOf(movements[i]),1);
+    for (var i=0; i< directions.length; i++) {
+        var coords = this.directionToCoordinates(directions[i]);
+        if (window.labyrinth.canIGoThere(coords.x, coords.y) !== null) {
+            movements.push(directions[i]);
         }
     }
-
-    console.log(movements);
 
     return movements;
 }
@@ -170,7 +166,7 @@ Ghost.prototype.moveRandomly = function() {
 
     setTimeout(function(){
         self.moveRandomly();
-    }, 1000);
+    }, this.speed);
     //
     // if (!moved)
     // {
