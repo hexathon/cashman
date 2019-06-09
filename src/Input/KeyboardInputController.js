@@ -21,6 +21,7 @@ KeyboardInputController.prototype.start = function () {
     }, true);
 
     window.addEventListener('game.start', () => {
+        this.stop = false;
         loop();
     }, true);
 
@@ -29,10 +30,11 @@ KeyboardInputController.prototype.start = function () {
     }, true);
 
     function loop() {
+        console.log('Input heartbeat at 100ms');
         // Arrow key is pressed
         if (!self.stop) {
             self.input();
-            setTimeout(loop, 200);
+            setTimeout(loop, 100);
         }
     }
 };
