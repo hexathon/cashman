@@ -58,7 +58,7 @@ var game = {
         document.getElementById("cookiejar").style.display = "block";
         document.getElementById("killzone").style.display = "block";
         document.getElementById("maze").style.display = "block";
-
+        soundmanager.start("intro");
         setTimeout(function () {
             let event = new CustomEvent("game.start");
             window.dispatchEvent(event);

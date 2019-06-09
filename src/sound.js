@@ -4,6 +4,7 @@ var soundmanager = {
         this.sounds.intro = new Audio("sounds/pacman_beginning.wav");
         this.sounds.chomp = new Audio("sounds/pacman_chomp.wav");    
         this.sounds.chomp.loop=true;
+        return this;
     },
     active: null,
     stop: function (soundname) {
@@ -12,8 +13,9 @@ var soundmanager = {
     start: function (soundname) {
         this.sounds[soundname].play();
     }
-}
+}.init();
 
-window.addEventListener('cashman.execute.move', (event) => {
+/*window.addEventListener('cashman.execute.move', (event) => {
       soundmanager.start("chomp");
     }, true);
+    */
