@@ -123,8 +123,10 @@ var game = {
         var event = new CustomEvent('game.stop');
         window.dispatchEvent(event);
 
-        event = new CustomEvent('game.reset');
-        window.dispatchEvent(event);
+        setTimeout(function () {
+            event = new CustomEvent('game.reset');
+            window.dispatchEvent(event);
+        }, 500);
 
         setTimeout(function () {
             event = new CustomEvent("game.start");
