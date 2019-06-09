@@ -42,10 +42,10 @@ window.addEventListener('game.start', (event) => {
       soundmanager.start("intro",false);
 }, true);
 window.addEventListener('cashman.move', (event) => {
-      soundmanager.start("chomp",true);
+      soundmanager.start("chomp",false);
 }, true);
 window.addEventListener('cashman.stopped', (event) => {
-    soundmanager.stop("chomp",true);
+    soundmanager.stop("chomp",false);
 }, true);
 window.addEventListener('game.killed', (event) => {
     soundmanager.start("deathcashman",false);
