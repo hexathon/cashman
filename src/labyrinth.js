@@ -27,6 +27,8 @@ var labyrinth = {
         this.placePowerPallets();
         this.placeGhosts();
         this.placeCashman();
+
+        scoring.init();
     },
     grid: [
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],

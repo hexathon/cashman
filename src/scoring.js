@@ -1,0 +1,5 @@
+var scoring = {
+    init: function(){
+
+    }
+};
