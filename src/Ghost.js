@@ -41,6 +41,9 @@ Ghost.prototype.registerEventListeners = function () {
         this.eatable =  false;
 }, true);
 
+    window.addEventListener('game.start', (event) => {
+        this.moveRandomly();
+    }, true);
 };
 
 
