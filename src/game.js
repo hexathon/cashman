@@ -21,7 +21,10 @@ var game = {
             this.eaten++;
 
             if (this.eaten === this.eatables) {
-                this.handleLevelComplete();
+                var self = this;
+                setTimeout(function () {
+                    self.handleLevelComplete();
+                }, 300);
             }
         }, true);
     },
