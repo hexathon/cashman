@@ -102,14 +102,36 @@ Ghost.prototype.followCashman =  function () {
     }
 }
 
+Ghost.prototype.getOppositeDirection = function() {
+    var self = this;
+    switch(self.facing){
+        case 'left':
+            return 'right';
+            break;
+        case 'right':
+            return 'left';
+            break;
+        case 'up':
+            return 'down';
+            break;
+        case 'down':
+            return 'up';
+            break;
+    }
+}
 /**
  * Move in no sence way in the labyrinth
  */
 Ghost.prototype.moveRandomly = function() {
     var self = this;
     var movements = ["left", "right", "up", "down"];
-    var pos = Math.floor((Math.random() * movements.length));
 
+    var index = movements.indexOf(self.getOppositeDirection());
+    if (index > -1) {
+        movements.splice(index, 1);
+    }
+
+    var pos = Math.floor((Math.random() * movements.length));
     var moved = false;
 
     switch (movements[pos]) {
@@ -127,14 +149,14 @@ Ghost.prototype.moveRandomly = function() {
             break;
     }
 
-    // setTimeout(function(){
-    //     self.moveRandomly();
-    // }, 500);
-
-    if (!moved)
-    {
+    setTimeout(function(){
         self.moveRandomly();
-    }
+    }, 1000);
+    //
+    // if (!moved)
+    // {
+    //     self.moveRandomly();
+    // }
 
 }
 /**
@@ -169,7 +191,6 @@ Ghost.prototype.directionToCoordinates = function (direction) {
     }
 };
 
-
 Ghost.prototype.move = function (direction) {
 
     let coordinates = this.directionToCoordinates(direction);
@@ -191,8 +212,8 @@ Ghost.prototype.move = function (direction) {
 };
 
 Ghost.prototype.calculateCssProperties = function () {
-    let centerX = labyrinth.positionToPixel(this.x) - (16 / 2);
-    let centerY = labyrinth.positionToPixel(this.y) - (16 / 2);
+    let centerX = labyrinth.positionToPixel(this.x) - (28 / 2);
+    let centerY = labyrinth.positionToPixel(this.y) - (31 / 2);
     let style = [
         'position:absolute',
         'left: ' + centerX + 'px',
@@ -217,4 +238,5 @@ Ghost.prototype.render = function () {
     this.elementInstance.appendChild(this.icon);
 
     this.container.appendChild(this.elementInstance);
+    this.moveRandomly();
 };
