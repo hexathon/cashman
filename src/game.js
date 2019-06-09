@@ -83,7 +83,7 @@ var game = {
         this.eaten = 0;
         this.level++;
 
-        var event = new CustomEvent('game.freeze');
+        var event = new CustomEvent('game.stop');
         window.dispatchEvent(event);
 
         setTimeout(function () {
