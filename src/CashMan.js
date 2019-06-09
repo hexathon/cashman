@@ -175,7 +175,6 @@
     };
 
     CashMan.prototype.setState = function (state) {
-        console.log('set state', state, this.elementInstance.className);
         var className = this.elementInstance.className;
         if (className.indexOf('state-') > -1) {
             // Replace the previously set state

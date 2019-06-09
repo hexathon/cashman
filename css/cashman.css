@@ -29,12 +29,6 @@
     left: 15px;
 }
 
-.cashmancontainer.state-killed{
-  overflow:hidden;
-} 
-
-
-
 .transition {
     /*transition: left .15s linear, top .15s linear;*/
 }
@@ -73,7 +67,6 @@
     left: 1px;
 }
 
-
 #deadcashman {
    visibility:hidden;
     width: 40px;
@@ -84,12 +77,16 @@
     background:url(../images/headstone.png) -1px 0px
 }
 
-.cashmancontainer.killed #cashman{
+.cashmancontainer.state-killed {
+    overflow:hidden;
+}
+
+.cashmancontainer.state-killed #cashman {
   top:40px!important;
   transition: top 1.5s linear
 }
 
-.cashmancontainer.killed #deadcashman{
+.cashmancontainer.state-killed #deadcashman {
   visibility:visible;
   top:1px;
   transition: top 1s linear;
