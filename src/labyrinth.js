@@ -244,6 +244,7 @@ var labyrinth = {
 
         var cashman = new CashMan({x: position.column, y: position.row, container: container});
         cashman.render();
+        window.tomssecretcashmanref_donttellrobin = cashman;
     },
     positionToPixel: function(position){
         return (position * this.pointDistance) + this.gridOffset;

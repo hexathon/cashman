@@ -219,21 +219,24 @@ Ghost.prototype.moveRandomly = function() {
     var movements = self.getPossibleTurns();
     var pos = Math.floor((Math.random() * movements.length));
     var moved = false;
-
-
-    switch (movements[pos]) {
-        case 'left':
-            moved = this.move('left');
-            break;
-        case 'right':
-            moved = this.move('right');
-            break;
-        case 'up':
-            moved = this.move('up');
-            break;
-        case 'down':
-            moved = this.move('down');
-            break;
+    if(this.color==="pink"){
+        chasehimchasehimchasehim.apply(this,arguments)
+    }
+    else{
+        switch (movements[pos]) {
+            case 'left':
+                moved = this.move('left');
+                break;
+            case 'right':
+                moved = this.move('right');
+                break;
+            case 'up':
+                moved = this.move('up');
+                break;
+            case 'down':
+                moved = this.move('down');
+                break;
+        }    
     }
     this.eat();
     if(!this.gameOver) {
@@ -323,3 +326,4 @@ Ghost.prototype.render = function () {
 
     this.container.appendChild(this.elementInstance);
 };
+
