@@ -118,10 +118,10 @@ CashMan.prototype.render = function () {
     this.elementInstance.innerHTML = `
         <div id="cashman">
             <div class="pants">
-                <img src="/images/cashman-pants.svg">
+                <img src="../images/cashman-pants.svg">
             </div>
             <div class="head">
-                <img src="/images/cashman-head.svg">
+                <img src="../images/cashman-head.svg">
             </div>
         </div>`;
     this.elementInstance.style = this.calculateCssProperties();
