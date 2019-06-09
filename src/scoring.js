@@ -8,7 +8,7 @@ var scoring = {
             this.updateScore(event.detail.value);
         }, true);
 
-        window.addEventListener('game.start', (event) => {
+        window.addEventListener('game.reset', (event) => {
             this.updateLevel(game.level);
         }, true);
     },
