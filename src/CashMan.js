@@ -17,6 +17,11 @@ function CashMan(options) {
     this.y = options.y;
     this.container = options.container;
 
+    this.initialPosition = {
+        x: options.x,
+        y: options.y
+    };
+
     this.registerEventListeners();
 }
 
@@ -32,6 +37,10 @@ CashMan.prototype.registerEventListeners = function () {
         if (!self.move(nextDirection)) {
             self.move(direction);
         }
+    }, true);
+
+    window.addEventListener('game.reset', (event) => {
+        this.reset();
     }, true);
 };
 
@@ -106,7 +115,15 @@ CashMan.prototype.calculateCssProperties = function () {
 CashMan.prototype.render = function () {
     this.elementInstance = document.createElement('div');
     this.elementInstance.className = "cashmancontainer transition going" + this.facing;
-    this.elementInstance.innerHTML = "<div id=\"cashman\"><div class=\"pants\"></div><div class=\"head\"></div></div>";
+    this.elementInstance.innerHTML = `
+        <div id="cashman">
+            <div class="pants">
+                <img src="/images/cashman-pants.svg">
+            </div>
+            <div class="head">
+                <img src="/images/cashman-head.svg">
+            </div>
+        </div>`;
     this.elementInstance.style = this.calculateCssProperties();
     this.container.appendChild(this.elementInstance);
 };
@@ -126,8 +143,8 @@ CashMan.prototype.updatePosition = function () {
     this.elementInstance.className = className.trim();
 };
 
-CashMan.prototype.reset = function (opts) {
+CashMan.prototype.reset = function () {
     this.facing = 'right';
-    this.x = opts.x;
-    this.y = opts.y;
+    this.x = this.initialPosition.x;
+    this.y = this.initialPosition.y;
 };
