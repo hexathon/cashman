@@ -1,23 +1,19 @@
 var Transition = {
+    defaultSpeed: 0,
     shouldAnimate(current, next) {
         return Math.max(current, next) - Math.min(current, next) > 1;
     },
 
     disable(element) {
-        var className = element.className;
-        if (className.indexOf('transition') > -1) {
-            className = className.replace(/transition/, '');
-        }
-
-        element.className = className;
+        element.style.transition = 'none';
     },
 
-    enable(element) {
-        var className = element.className;
-        if (className.indexOf('transition') === -1) {
-            className += ' transition';
-        }
-
-        element.className = className;
+    enable(element, transitionSpeed) {
+        transitionSpeed = (transitionSpeed - 50) || this.defaultSpeed;
+        element.style.transition = 'left ' + transitionSpeed + 'ms linear, top ' + transitionSpeed + 'ms linear';
     }
 };
+
+window.addEventListener('game.start', function () {
+    Transition.defaultSpeed = window.game.getSpeed();
+});

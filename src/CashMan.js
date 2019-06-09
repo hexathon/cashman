@@ -10,6 +10,7 @@
 function CashMan(options) {
     this.type = "CashMan";
     this.facing = 'right';
+    this.speed = window.game.getSpeed();
     this.moving = false;
     this.stopped = true; // Previous 'moving' state.
 
@@ -44,6 +45,10 @@ CashMan.prototype.registerEventListeners = function () {
         this.reset();
     }, true);
 
+    window.addEventListener('game.start', () => {
+        this.speed = window.game.getSpeed();
+    }, true);
+
     window.addEventListener('cashman.whereAreYou', (event) => {
         if (typeof event.detail.callback === 'function') {
             event.detail.callback(this.position());
@@ -56,12 +61,11 @@ CashMan.prototype.move = function (direction) {
     let targetX = coordinates.x;
     let targetY = coordinates.y;
     let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
-    let hasMoved = (newCoordinates !== null && !(newCoordinates.x === this.x && newCoordinates.y === this.y));
     if (newCoordinates !== null) {
         if (Transition.shouldAnimate(this.x, newCoordinates.x)) {
             Transition.disable(this.elementInstance);
         } else {
-            Transition.enable(this.elementInstance);
+            Transition.enable(this.elementInstance, this.speed);
         }
 
         this.x = newCoordinates.x;
@@ -73,7 +77,6 @@ CashMan.prototype.move = function (direction) {
         this.facing = direction;
 
         this.updatePosition();
-        console.log('Cashman has moved: ', hasMoved);
         return true;
     }
 
@@ -109,7 +112,7 @@ CashMan.prototype.position = function () {
 };
 
 CashMan.prototype.notify = function (name, data) {
-    if (window.cashman.debug) {
+    if (window.debug || window.cashman.debug) {
         console.log(name, data);
     }
 
@@ -120,11 +123,8 @@ CashMan.prototype.notify = function (name, data) {
 CashMan.prototype.calculateCssProperties = function () {
     let centerX = labyrinth.positionToPixel(this.x) - (40 / 2);
     let centerY = labyrinth.positionToPixel(this.y) - (40 / 2);
-    let style = [
-        'left: ' + centerX + 'px',
-        'top: ' + centerY + 'px'
-    ];
-    return style.join(';');
+    this.elementInstance.style.left = centerX + 'px';
+    this.elementInstance.style.top = centerY + 'px';
 };
 
 CashMan.prototype.render = function () {
@@ -139,12 +139,12 @@ CashMan.prototype.render = function () {
                 <img src="./images/cashman-head.svg">
             </div>
         </div>`;
-    this.elementInstance.style = this.calculateCssProperties();
+    this.calculateCssProperties();
     this.container.appendChild(this.elementInstance);
 };
 
 CashMan.prototype.updatePosition = function () {
-    this.elementInstance.style = this.calculateCssProperties();
+    this.calculateCssProperties();
     var className = this.elementInstance.className;
     className = className.replace(/going\w*/, 'going' + this.facing);
     if (this.moving) {

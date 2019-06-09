@@ -26,6 +26,7 @@ Ghost.prototype.registerEventListeners = function () {
     window.addEventListener('game.start', (event) => {
         this.gameOver = false;
         this.moveRandomly();
+        this.speed = window.game.getSpeed();
         // this.keepMoving();
     }, true);
 
@@ -42,7 +43,10 @@ Ghost.prototype.registerEventListeners = function () {
         if (event.detail.type === 'PowerPallet') {
             var self = this;
             this.eatable =  true;
+            console.log('old ghost speed', this.speed);
             this.speed = window.game.getSpeed() + (window.game.getSpeed() * 0.35);
+            console.log('New ghost speed', this.speed);
+            Transition.enable(this.elementInstance, this.speed);
             self.icon.src = 'images/character-ghost-killable.png';
             setTimeout(function(){
                  self.eatable =  false;
@@ -251,7 +255,7 @@ Ghost.prototype.move = function (direction) {
         if (Transition.shouldAnimate(this.x, newCoordinates.x)) {
             Transition.disable(this.elementInstance);
         } else {
-            Transition.enable(this.elementInstance);
+            Transition.enable(this.elementInstance, this.speed);
         }
 
         this.x = newCoordinates.x;
@@ -266,19 +270,16 @@ Ghost.prototype.move = function (direction) {
     return false;
 };
 
-Ghost.prototype.calculateCssProperties = function () {
+Ghost.prototype.setCssPosition = function () {
     let centerX = labyrinth.positionToPixel(this.x) - (28 / 2);
     let centerY = labyrinth.positionToPixel(this.y) - (31 / 2);
-    let style = [
-        'position:absolute',
-        'left: ' + centerX + 'px',
-        'top: ' + centerY + 'px'
-    ];
-    return style.join(';');
+    this.elementInstance.style.position = 'absolute';
+    this.elementInstance.style.left = centerX + 'px';
+    this.elementInstance.style.top = centerY + 'px';
 };
 
 Ghost.prototype.updatePosition = function () {
-    this.elementInstance.style = this.calculateCssProperties();
+    this.setCssPosition();
 };
 
 Ghost.prototype.reset = function () {
@@ -290,7 +291,7 @@ Ghost.prototype.reset = function () {
 Ghost.prototype.render = function () {
     this.elementInstance = document.createElement('div');
     this.elementInstance.className = 'ghost-instance transition';
-    this.elementInstance.style = this.calculateCssProperties();
+    this.setCssPosition();
 
     this.icon = document.createElement('img');
     this.icon.src = 'images/character-ghost-'+this.color+'.png';
