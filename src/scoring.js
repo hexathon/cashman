@@ -70,17 +70,5 @@ var scoring = {
     drawScoreBoard: function(){
         var container = document.getElementById("scoreboard");
         container.style = "position:absolute;left:520px;top:0;width:240px;height:630px;";
-
-        var button = container.getElementsByClassName("die").item(0);
-        button.addEventListener("click", function(){
-            var customEvent = new CustomEvent("ghost.kill");
-            window.dispatchEvent(customEvent);
-        });
-
-        button = container.getElementsByClassName("win").item(0);
-        button.addEventListener("click", function(){
-            let event = new CustomEvent("game.won");
-            window.dispatchEvent(event);
-        });
     },
 };
