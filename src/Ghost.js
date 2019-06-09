@@ -10,7 +10,7 @@ function Ghost (options) {
     this.container = options.container;
     this.gameOver = false;
     this.eatable = false;
-    this.speed = 200;
+    this.speed = window.game.getSpeed();
 
     this.registerEventListeners();
 }
@@ -43,7 +43,7 @@ Ghost.prototype.registerEventListeners = function () {
             this.eatable =  true;
             setTimeout(function(){
                 self.eatable =  false;
-                self.speed = 200;
+                self.speed = window.game.getSpeed();
             }, 5000);
         }
     }, true);
