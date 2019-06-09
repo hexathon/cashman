@@ -26,14 +26,18 @@ Ghost.prototype.registerEventListeners = function () {
 
     window.addEventListener('game.start', (event) => {
         this.gameOver = false;
-        this.moveRandomly();
         this.speed = window.game.getSpeed();
+        this.moveRandomly();
         // this.keepMoving();
     }, true);
 
     window.addEventListener('game.over', (event) => {
         this.gameOver = true;
     }, true);
+
+    window.addEventListener('game.won', (event) => {
+        this.gameOver = true;
+}, true);
 
     window.addEventListener('game.killed', (event) => {
         this.gameOver = true;
@@ -52,11 +56,10 @@ Ghost.prototype.registerEventListeners = function () {
             this.speed = window.game.getSpeed() + (window.game.getSpeed() * 0.35);
             Transition.enable(this.elementInstance, this.speed);
             self.icon.src = 'images/character-ghost-killable.png';
+
             setTimeout(function(){
                  self.eatable =  false;
-                 if(self.alive) {
-                     self.icon.src = 'images/character-ghost-' + self.color + '.png';
-                 }
+                 self.icon.src = 'images/character-ghost-' + self.color + '.png';
                 self.speed = window.game.getSpeed();
             }, 7000);
         }
@@ -134,8 +137,8 @@ Ghost.prototype.eat = function () {
        if (this.eatable){
            console.log("to be killed")
            this.notify('ghost.killed',{value:200});
-           // this.alive = false;
-           this.reset();
+           this.alive = false;
+           // this.reset();
 
        } else {
            this.notify('ghost.kill');
@@ -151,20 +154,19 @@ Ghost.prototype.goBackToTheCage = function () {
         start: {x:this.x, y:this.y}}
         );
     console.log(nextPos, this.x, this.y, this.cashmanPos);
-    if ( nextPos.x === this.x && nextPos.y === this.y )
+    if ( this.options.x === this.x && this.options.y === this.y )
     {
         this.alive = true;
         return this.moveRandomly();
     }
 
+    this.move(nextPos);
 
-            this.move(nextPos);
+    var self = this;
 
-        var self = this;
-
-        setTimeout(function(){
-            self.goBackToTheCage();
-        }, this.speed/4);
+    setTimeout(function(){
+        self.goBackToTheCage();
+    }, this.speed/4);
 }
 /**
  * Follow cashman through the best route...
@@ -248,12 +250,12 @@ Ghost.prototype.moveRandomly = function() {
     }    
     if(!this.gameOver) {
         setTimeout(function(){
-             // if (self.alive) {
+             if (self.alive) {
                 self.moveRandomly();
-            // } else {
-            //     self.goBackToTheCage();
-            // }
-        }, this.speed);
+            } else {
+                self.goBackToTheCage();
+            }
+        }, window.game.getSpeed());
     }
 };
 
