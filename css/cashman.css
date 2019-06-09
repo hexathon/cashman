@@ -29,7 +29,7 @@
     left: 15px;
 }
 
-.cashmancontainer.killed{
+.cashmancontainer.state-killed{
   overflow:hidden;
 } 
 
@@ -104,7 +104,7 @@
     position:absolute;
     top:20px;
 }
-.cashmancontainer.moving #cashman .pants {
+.cashmancontainer.state-moving #cashman .pants {
     animation-duration: 0.2s;
     animation-name: closepants;
     animation-iteration-count: infinite;
@@ -113,7 +113,7 @@
     width: 40px;
     height: 20px;
 }
-.cashmancontainer.moving #cashman .head {
+.cashmancontainer.state-moving #cashman .head {
     animation-duration: 0.2s;
     animation-name: closehead;
     animation-iteration-count: infinite;
