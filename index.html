@@ -23,9 +23,10 @@
     <script src="src/sound.js"></script>
 
     <link rel="stylesheet" href="css/cashman.css" media="all" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-<div style="position:relative;vertical-align:center;margin:50px auto 0;width:760px;">
+<div class="gamecontainer">
     <canvas id="maze"></canvas>
     <div id="cookiejar"></div>
     <div id="killzone"></div>
@@ -39,15 +40,15 @@
         <button class="die">RIP</button>
         <button class="win">WIN</button>
     </div>
-    <div id="gameover">
-        <h1>Game Over</h1>
-        <h4 class="counter"></h4>
+    <div id="mazemessage">
+        <h2></h2>
+        <h3></h3>
     </div>
     <div id="intro">
         <h2>Hi-Score</h2>
         <h3 id="boardHigh">0</h3>
         <h1>Cash-Man</h1>
-        <button>Start</button>
+        <a href="#">Start</a>
         <h4>Celery</h4>
     </div>
     <script>

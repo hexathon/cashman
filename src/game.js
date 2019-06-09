@@ -3,13 +3,13 @@ var game = {
     level: 1,
     eatables: 192,
     eaten: 0,
+    lives: 1,
     getSpeed: function(){
         return 200 - (this.level * 2);
     },
     init: function(){
         this.registerEventListeners();
         this.drawIntro();
-        this.drawGameOver();
 
         labyrinth.init();
         scoring.init();
@@ -27,19 +27,46 @@ var game = {
                 }, 300);
             }
         }, true);
+
+        window.addEventListener('ghost.kill', (event) => {
+            this.lives--;
+
+            if (this.lives > 0) {
+                let event = new CustomEvent("game.killed");
+                window.dispatchEvent(event);
+            } else {
+                let event = new CustomEvent("game.over");
+                window.dispatchEvent(event);
+            }
+        }, true);
+
+        window.addEventListener('game.killed', (event) => {
+            this.showNextLife();
+
+            setTimeout(function () {
+                let event = new CustomEvent("game.start");
+                window.dispatchEvent(event);
+            }, 2000);
+        }, true);
+
+        window.addEventListener('game.start', (event) => {
+            this.hideNextLife();
+        }, true);
+    },
+    showNextLife: function(){
+        labyrinth.showMessage("Get ready", "Keep in munching");
+    },
+    hideNextLife: function(){
+        labyrinth.hideMessage();
     },
     drawIntro: function(){
         var self = this;
         var container = document.getElementById("intro");
-        var button = container.getElementsByTagName("button").item(0);
+        var button = container.getElementsByTagName("a").item(0);
 
         button.addEventListener("click", function(){
             self.showGame();
         });
-    },
-    drawGameOver: function() {
-        var container = document.getElementById("gameover");
-        container.style = "position:absolute;left:148px;top:238px;width:228px;height:200px;";
     },
     start: function(){
         this.level = 1;
@@ -50,7 +77,7 @@ var game = {
         document.getElementById("cookiejar").style.display = "none";
         document.getElementById("killzone").style.display = "none";
         document.getElementById("maze").style.display = "none";
-        document.getElementById("gameover").style.display = "none";
+        document.getElementById("mazemessage").style.display = "none";
     },
     showGame: function(){
         document.getElementById("intro").style.display = "none";
@@ -58,7 +85,11 @@ var game = {
         document.getElementById("cookiejar").style.display = "block";
         document.getElementById("killzone").style.display = "block";
         document.getElementById("maze").style.display = "block";
+
+        labyrinth.showMessage("Get ready", "");
+
         soundmanager.start("intro");
+
         setTimeout(function () {
             let event = new CustomEvent("game.start");
             window.dispatchEvent(event);
@@ -67,8 +98,7 @@ var game = {
     handleGameOver: function(){
         var self = this;
 
-        document.getElementById("gameover").style.display = "block";
-        document.getElementById("gameover").getElementsByClassName("counter").item(0).innerHTML = "5";
+        labyrinth.showMessage("Game Over", "Cya next time");
 
         let event = new CustomEvent("game.stop");
         window.dispatchEvent(event);
@@ -80,12 +110,7 @@ var game = {
             window.dispatchEvent(event);
 
             self.start();
-        }, 5000);
-
-        this.resetTimer = window.setInterval(function () {
-            var elmt = document.getElementById("gameover").getElementsByClassName("counter").item(0);
-            elmt.innerHTML = parseInt(elmt.innerHTML) - 1;
-        }, 1000);
+        }, 4000);
     },
     handleLevelComplete: function () {
         this.eaten = 0;

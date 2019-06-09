@@ -1,3 +1,17 @@
+.gamecontainer {
+    font-family: 'Press Start 2P', cursive;
+    position: relative;
+    vertical-align: center;
+    margin: 50px auto 0;
+    width: 760px;
+}
+.gamecontainer a {
+    border: 1px solid #000;
+    text-decoration: none;
+    padding: 5px;
+    color: #000;
+}
+
 .cashmancontainer {
     width: 35px;
     height: 40px;
@@ -81,6 +95,9 @@
   }
 }
 
+#intro {
+    text-align: center;
+}
 
 #intro h2,
 #scoreboard h2 {
@@ -105,7 +122,6 @@
 #intro h4
 {
     text-transform: uppercase;
-    font-weight: bold;
 }
 
 #intro h4 {
@@ -123,22 +139,14 @@
     text-transform: uppercase;
 }
 
-#gameover {
-    border: 1px solid #000;
-    background: #fff;
+#mazemessage h2 {
+    text-transform: uppercase;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
-#gameover h1 {
-    text-align: center;
+#mazemessage h3 {
     text-transform: uppercase;
-    font-weight: bold;
-    margin-top: 76px;
-    font-size: 24px;
-}
-
-#gameover h4 {
-    text-transform: uppercase;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 40px;
+    font-size: 12px;
+    margin-top: 113px;
 }

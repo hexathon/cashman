@@ -139,6 +139,8 @@ var labyrinth = {
                 }
             }
         }
+
+        this.showMessage("", "");
     },
     placeCookies: function(){
         var container = document.getElementById("cookiejar");
@@ -175,6 +177,24 @@ var labyrinth = {
             var cookie = new PowerPallet({x: position[1], y: position[0], container: container});
             cookie.render();
         }
+    },
+    showMessage: function(topMessage, bottomMessage){
+        var container = document.getElementById("mazemessage");
+        container.style = "position:absolute;left:170px;top:246px;text-align:center;width:186px;";
+
+        var topHeader = container.getElementsByTagName("h2").item(0);
+        topHeader.innerText = topMessage;
+
+        var bottomHeader = container.getElementsByTagName("h3").item(0);
+        bottomHeader.innerText = bottomMessage;
+
+        container.style.display = "block";
+    },
+    hideMessage: function(){
+        this.showMessage("", "");
+
+        var container = document.getElementById("mazemessage");
+        container.style.display = "none";
     },
     flash: function(){
         var self = this;
