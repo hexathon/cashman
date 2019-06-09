@@ -41,6 +41,7 @@ Ghost.prototype.registerEventListeners = function () {
         if (event.detail.type === 'PowerPallet') {
             var self = this;
             this.eatable =  true;
+            this.speed = this.speed + (this.speed * 0.2);
             setTimeout(function(){
                 self.eatable =  false;
                 self.speed = window.game.getSpeed();
