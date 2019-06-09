@@ -56,8 +56,10 @@ var game = {
         document.getElementById("killzone").style.display = "block";
         document.getElementById("maze").style.display = "block";
 
-        let event = new CustomEvent("game.start");
-        window.dispatchEvent(event);
+        setTimeout(function () {
+            let event = new CustomEvent("game.start");
+            window.dispatchEvent(event);
+        }, 2000);
     },
     handleGameOver: function(){
         var self = this;
@@ -86,12 +88,12 @@ var game = {
         var event = new CustomEvent('game.stop');
         window.dispatchEvent(event);
 
-        setTimeout(function () {
-            event = new CustomEvent('game.reset');
-            window.dispatchEvent(event);
+        event = new CustomEvent('game.reset');
+        window.dispatchEvent(event);
 
+        setTimeout(function () {
             event = new CustomEvent("game.start");
             window.dispatchEvent(event);
-        }, 1000);
+        }, 5000);
     }
 };

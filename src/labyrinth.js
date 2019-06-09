@@ -21,12 +21,18 @@ var labyrinth = {
 
         return returnObject;
     },
-    init:function(){
-        this.drawGrid();
+    init: function(){
+        this.registerEventListeners();
+        this.drawGrid("#454073");
         this.placeCookies();
         this.placePowerPallets();
         this.placeGhosts();
         this.placeCashman();
+    },
+    registerEventListeners: function () {
+        window.addEventListener('game.reset', (event) => {
+            this.flash();
+        }, true);
     },
     grid: [
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -87,7 +93,7 @@ var labyrinth = {
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     ],
     powerPallets: [[3,1],[3,19],[20,1],[20,19]],
-    drawGrid: function(){
+    drawGrid: function(color){
         var container = document.getElementById("maze");
         container.style = "position:absolute;left:0;top:0;";
         container.width = 526;
@@ -96,7 +102,9 @@ var labyrinth = {
         var doors = [[11,9],[11,10]];
         var linePatch = this.gridOffset;
         var ctx = container.getContext("2d");
+        ctx.clearRect(0, 0, ctx.width, ctx.height);
         ctx.lineWidth = this.lineWidth;
+        ctx.strokeStyle = color;
 
         for (var row = 0; row < this.grid.length; row++) {
             for (var column = 0; column < this.grid[row].length; column++) {
@@ -167,6 +175,26 @@ var labyrinth = {
             var cookie = new PowerPallet({x: position[1], y: position[0], container: container});
             cookie.render();
         }
+    },
+    flash: function(){
+        var self = this;
+        var purple = "#454073";
+        var bright = "#eee";
+        var current = bright;
+        var count = 0;
+
+        var myInterval = setInterval(function () {
+            current = (current === purple) ? bright : purple;
+            self.drawGrid(current);
+
+            if (count >= 2000) {
+                clearInterval(myInterval);
+
+                self.drawGrid(purple);
+            }
+
+            count += 120;
+        }, 120);
     },
     placeGhosts: function(){
         var container = document.getElementById("killzone");
