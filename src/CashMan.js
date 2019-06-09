@@ -25,11 +25,11 @@ function CashMan(options) {
 CashMan.prototype.registerEventListeners = function () {
     var self = this;
     window.addEventListener('cashman.execute.move', (event) => {
-        let direction = event.detail.direction.toLowerCase();
-        try {
+        let direction = event.detail.direction;
+        let nextDirection = event.detail.nextDirection;
+
+        if (!self.move(nextDirection)) {
             self.move(direction);
-        } catch (err) {
-            console.error(err);
         }
     }, true);
 };
@@ -44,7 +44,7 @@ CashMan.prototype.move = function (direction) {
         this.x = newCoordinates.x;
         this.y = newCoordinates.y;
 
-        this.notify('cashman.move.' + direction, this.position());
+        this.notify('cashman.move', {position: this.position(), direction: direction});
         this.facing = direction;
 
         this.updatePosition();
@@ -52,8 +52,12 @@ CashMan.prototype.move = function (direction) {
         return true;
     }
 
-    this.notify('cashman.move.failed');
     return false;
+};
+
+CashMan.prototype.isTeleporting = function () {
+    // Remove the 'transition' class
+    this.elementInstance.className.replace(/transition /, '');
 };
 
 CashMan.prototype.directionToCoordinates = function (direction) {
@@ -66,6 +70,8 @@ CashMan.prototype.directionToCoordinates = function (direction) {
             return {x: this.x - 1, y: this.y};
         case 'right':
             return {x: this.x + 1, y: this.y};
+        default:
+            throw new Error('Invalid direction: ' + direction);
     }
 };
 
@@ -80,12 +86,6 @@ CashMan.prototype.notify = function (name, data) {
 
     let event = new CustomEvent(name, {detail: data});
     window.dispatchEvent(event);
-
-    if (name.indexOf('move') > -1) {
-        // This is a move event
-        let event = new CustomEvent('cashman.move', {detail: this.position()});
-        window.dispatchEvent(event);
-    }
 };
 
 CashMan.prototype.calculateCssProperties = function () {
