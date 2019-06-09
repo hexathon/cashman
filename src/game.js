@@ -67,6 +67,9 @@ var game = {
         document.getElementById("gameover").style.display = "block";
         document.getElementById("gameover").getElementsByClassName("counter").item(0).innerHTML = "5";
 
+        let event = new CustomEvent("game.stop");
+        window.dispatchEvent(event);
+
         window.setTimeout(function () {
             window.clearInterval(self.resetTimer);
 
@@ -89,6 +92,9 @@ var game = {
         window.dispatchEvent(event);
 
         event = new CustomEvent('game.reset');
+        window.dispatchEvent(event);
+
+        event = new CustomEvent('game.won');
         window.dispatchEvent(event);
 
         setTimeout(function () {

@@ -30,7 +30,7 @@ var labyrinth = {
         this.placeCashman();
     },
     registerEventListeners: function () {
-        window.addEventListener('game.reset', (event) => {
+        window.addEventListener('game.won', (event) => {
             this.flash();
         }, true);
     },
