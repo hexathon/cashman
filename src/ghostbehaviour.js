@@ -1,3 +1,20 @@
+function chasehimchasehimchasehim(){
+    let newposition = nextStepOnShortestRouteToDestination({
+        end: { x: window.tomssecretcashmanref_donttellrobin.position().x, y: window.tomssecretcashmanref_donttellrobin.position().y },
+        start: { x: this.x, y: this.y }
+    });
+    let newdirection = "unknown";
+    if(newposition.x>this.x){newdirection='right'}
+    else if(newposition.x<this.x){newdirection='left'}
+    else if(newposition.y<this.y){newdirection='down'}
+    else if(newposition.y>this.y){newdirection='up'};
+    this.move(newdirection);
+    console.log("x:"+this.x+" y:"+this.y)
+    console.log(newdirection)
+    
+}
+
+
 function nextStepOnShortestRouteToDestination(params) {
     /* 
     call would look like this:
