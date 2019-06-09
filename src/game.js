@@ -76,8 +76,9 @@ var game = {
         var container = document.getElementById("intro");
         var button = container.getElementsByTagName("a").item(0);
 
-        button.addEventListener("click", function(){
+        button.addEventListener("click", function (event){
             self.showGame();
+            event.preventDefault();
         });
     },
     start: function(){
