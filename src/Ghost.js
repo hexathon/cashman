@@ -141,6 +141,7 @@ Ghost.prototype.goBackToTheCage = function () {
     if ( this.options.x === this.x && this.options.y === this.y )
     {
         this.alive = true;
+        this.icon.src = 'images/character-ghost-'+this.color+'.png';
         return this.moveRandomly();
     }
 
