@@ -35,6 +35,9 @@ var game = {
         document.getElementById("cookiejar").style.display = "block";
         document.getElementById("killzone").style.display = "block";
         document.getElementById("maze").style.display = "block";
+
+        let event = new CustomEvent("game.start");
+        window.dispatchEvent(event);
     },
     handleGameOver: function(){
         var self = this;
