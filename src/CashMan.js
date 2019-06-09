@@ -140,8 +140,8 @@ CashMan.prototype.render = function () {
                 <img src="./images/cashman-head.svg">
             </div>
         </div>
-        `;
-    this.elementInstance.style = this.calculateCssProperties();
+    `;
+    this.calculateCssProperties();
     this.container.appendChild(this.elementInstance);
 };
 
