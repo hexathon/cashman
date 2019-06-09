@@ -90,7 +90,6 @@ Ghost.prototype.eat = function () {
            this.gameOver = true;
        }
    }
-
 };
 
 /**
@@ -180,21 +179,6 @@ Ghost.prototype.moveRandomly = function() {
     }
 };
 
-/**
- * eat Cashman
- */
-Ghost.prototype.eatCashman = function() {
-    //kill cashman
-    this.active =  false;
-};
-
-/**
- * disapear ghost
- */
-Ghost.prototype.dissapear = function() {
-    this.active = false;
-};
-
 Ghost.prototype.notify = function (name,data) {
     let event = new CustomEvent(name, data);
     window.dispatchEvent(event);
@@ -257,6 +241,7 @@ Ghost.prototype.updatePosition = function () {
 Ghost.prototype.reset = function () {
     this.x = this.options.x;
     this.y = this.options.y;
+    this.updatePosition();
 };
 
 Ghost.prototype.render = function () {
