@@ -170,11 +170,6 @@ Ghost.prototype.moveRandomly = function() {
     setTimeout(function(){
         self.moveRandomly();
     }, this.speed);
-    //
-    // if (!moved)
-    // {
-    //     self.moveRandomly();
-    // }
 
 }
 /**
@@ -257,5 +252,4 @@ Ghost.prototype.render = function () {
     this.elementInstance.appendChild(this.icon);
 
     this.container.appendChild(this.elementInstance);
-    this.moveRandomly();
 };
