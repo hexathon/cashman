@@ -24,6 +24,10 @@ Eatable.prototype.registerEventListeners = function () {
     window.addEventListener('game.restart', (event) => {
         this.reset();
     }, true);
+
+    window.addEventListener('game.won', (event) => {
+        this.reset();
+    }, true);
 };
 
 Eatable.prototype.getEaten = function (data) {

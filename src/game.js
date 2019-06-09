@@ -57,19 +57,35 @@ var game = {
             }
         }, true);
 
+        window.addEventListener('game.killed', (event) => {
+            console.log("game.killed");
+        }, true);
+
         window.addEventListener('game.start', (event) => {
+            console.log("game.start");
+
             this.hideNextLife();
         }, true);
 
         window.addEventListener('game.over', (event) => {
+            console.log("game.over");
+
             this.handleGameOver();
         }, true);
 
         window.addEventListener('game.won', (event) => {
+            console.log("game.won");
+
             this.handleLevelComplete();
         }, true);
 
+        window.addEventListener('game.stop', (event) => {
+            console.log("game.stop");
+        }, true);
+
         window.addEventListener('game.restart', (event) => {
+            console.log("game.restart");
+
             this.start();
 
             event = new CustomEvent("game.reset");
@@ -77,6 +93,8 @@ var game = {
         }, true);
 
         window.addEventListener('game.init', (event) => {
+            console.log("game.init");
+
             this.start();
         }, true);
     },
