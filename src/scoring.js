@@ -12,6 +12,7 @@ var scoring = {
             console.log("game.reset");
 
             this.updateLevel(game.level);
+            this.updateLives(game.lives);
         }, true);
 
         window.addEventListener('game.killed', (event) => {
