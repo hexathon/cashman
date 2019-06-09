@@ -7,12 +7,20 @@ var scoring = {
         window.addEventListener('eatable.eaten', (event) => {
             this.updateScore(event.detail.value);
         }, true);
+
+        window.addEventListener('game.start', (event) => {
+            this.updateLevel(game.level);
+        }, true);
     },
     updateScore: function(score){
         this.globalScore += score;
 
         var container = document.getElementById("boardScore");
         container.innerText = this.globalScore;
+    },
+    updateLevel: function(level){
+        var container = document.getElementById("boardLevel");
+        container.innerText = level;
     },
     drawScoreBoard: function(){
         var container = document.getElementById("scoreboard");

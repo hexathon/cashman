@@ -89,6 +89,9 @@ var game = {
         setTimeout(function () {
             event = new CustomEvent('game.reset');
             window.dispatchEvent(event);
+
+            event = new CustomEvent("game.start");
+            window.dispatchEvent(event);
         }, 1000);
     }
 };
