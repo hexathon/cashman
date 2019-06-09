@@ -8,6 +8,10 @@ var scoring = {
             this.updateScore(event.detail.value);
         }, true);
 
+        window.addEventListener('ghost.killed', (event) => {
+            this.updateScore(event.detail.value);
+        }, true);
+
         window.addEventListener('game.reset', (event) => {
             console.log("game.reset");
 
