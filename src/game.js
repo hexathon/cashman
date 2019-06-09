@@ -112,7 +112,11 @@ var game = {
         var button = container.getElementsByTagName("a").item(0);
 
         button.addEventListener("click", function (event){
+            scoring.globalScore = 0;
+            scoring.updateScore(0);
+            
             self.showGame();
+
             event.preventDefault();
         });
     },
