@@ -1,12 +1,29 @@
 var game = {
     resetTimer: null,
+    level: 1,
+    eatables: 192,
+    eaten: 0,
+    getSpeed: function(){
+        return 200 - (this.level * 10);
+    },
     init: function(){
+        this.registerEventListeners();
         this.drawIntro();
         this.drawGameOver();
 
         labyrinth.init();
+        scoring.init();
 
         this.start();
+    },
+    registerEventListeners: function () {
+        window.addEventListener('eatable.eaten', (event) => {
+            this.eaten++;
+
+            if (this.eaten === this.eatables) {
+                this.handleLevelComplete();
+            }
+        }, true);
     },
     drawIntro: function(){
         var self = this;
@@ -22,6 +39,9 @@ var game = {
         container.style = "position:absolute;left:148px;top:238px;width:228px;height:200px;";
     },
     start: function(){
+        this.level = 1;
+        this.eaten = 0;
+
         document.getElementById("intro").style.display = "block";
         document.getElementById("scoreboard").style.display = "none";
         document.getElementById("cookiejar").style.display = "none";
@@ -48,6 +68,9 @@ var game = {
         window.setTimeout(function () {
             window.clearInterval(self.resetTimer);
 
+            let event = new CustomEvent("game.reset");
+            window.dispatchEvent(event);
+
             self.start();
         }, 5000);
 
@@ -56,4 +79,16 @@ var game = {
             elmt.innerHTML = parseInt(elmt.innerHTML) - 1;
         }, 1000);
     },
+    handleLevelComplete: function () {
+        this.eaten = 0;
+        this.level++;
+
+        var event = new CustomEvent('game.freeze');
+        window.dispatchEvent(event);
+
+        setTimeout(function () {
+            event = new CustomEvent('game.reset');
+            window.dispatchEvent(event);
+        }, 1000);
+    }
 };

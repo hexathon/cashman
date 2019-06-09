@@ -23,7 +23,6 @@ var labyrinth = {
     },
     init:function(){
         this.drawGrid();
-        this.drawScoreBoard();
         this.placeCookies();
         this.placePowerPallets();
         this.placeGhosts();
@@ -133,25 +132,6 @@ var labyrinth = {
             }
         }
     },
-    drawScoreBoard: function(){
-        var container = document.getElementById("scoreboard");
-        container.style = "position:absolute;left:560px;top:0;width:200px;";
-
-        scoring.init();
-
-        var self = this;
-        var button = container.getElementsByClassName("die").item(0);
-
-        button.addEventListener("click", function(){
-            game.handleGameOver();
-        });
-
-        button = container.getElementsByClassName("win").item(0);
-
-        button.addEventListener("click", function(){
-            self.handleLevelComplete();
-        });
-    },
     placeCookies: function(){
         var container = document.getElementById("cookiejar");
         container.style = "position:absolute;left:0;top:0;";
@@ -214,6 +194,7 @@ var labyrinth = {
         container.style = "position:absolute;left:0;top:0;";
 
         var position = {column: 10, row: 20};
+
         var cashman = new CashMan({x: position.column, y: position.row, container: container});
         cashman.render();
     },
