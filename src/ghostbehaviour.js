@@ -3,6 +3,7 @@ function chasehimchasehimchasehim(){
         end: { x: window.tomssecretcashmanref_donttellrobin.position().x, y: window.tomssecretcashmanref_donttellrobin.position().y },
         start: { x: this.x, y: this.y }
     });
+    if(this.eatable)newdirection=flipdirection(newdirection)
     this.move(newdirection);
 }
 
@@ -130,3 +131,19 @@ function drawroutes(routes){
     }
 }
 
+function flipdirection(direction){
+    switch(direction){
+        case "left":
+            return "right";
+            break;
+            case "right":
+            return "left";
+            break;
+            case "up":
+            return "down";
+            break;
+            case "down":
+            return "up";
+            break;
+    }
+}
