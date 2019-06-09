@@ -12,11 +12,6 @@ var scoring = {
             this.updateLevel(game.level);
         }, true);
 
-        window.addEventListener('game.restart', (event) => {
-            this.globalScore = 0;
-            this.updateScore(this.globalScore);
-        }, true);
-
         var container = document.getElementById("scoreboard");
         var button = container.getElementsByClassName("soundToggle").item(0).getElementsByTagName("a").item(0);
 
