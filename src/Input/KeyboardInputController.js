@@ -25,7 +25,11 @@ KeyboardInputController.prototype.start = function () {
         loop();
     }, true);
 
-    window.addEventListener('game.stop', () => {
+    window.addEventListener('game.killed', () => {
+        this.stop = true;
+    }, true);
+
+    window.addEventListener('game.won', () => {
         this.stop = true;
     }, true);
 
