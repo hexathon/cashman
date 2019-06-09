@@ -44,9 +44,7 @@ Ghost.prototype.registerEventListeners = function () {
         if (event.detail.type === 'PowerPallet') {
             var self = this;
             this.eatable =  true;
-            console.log('old ghost speed', this.speed);
             this.speed = window.game.getSpeed() + (window.game.getSpeed() * 0.35);
-            console.log('New ghost speed', this.speed);
             Transition.enable(this.elementInstance, this.speed);
             self.icon.src = 'images/character-ghost-killable.png';
             setTimeout(function(){
