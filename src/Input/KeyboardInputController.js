@@ -1,8 +1,8 @@
 function KeyboardInputController() {
     this.registerEventListeners();
 
-    this.nextKeyState = 'left';
-    this.currentKeyState = 'left';
+    this.nextKeyState = 'down';
+    this.currentKeyState = 'down';
 
     this.start();
 }
