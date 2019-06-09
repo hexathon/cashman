@@ -2,7 +2,9 @@ var soundmanager = {
     sounds:{
         silence : {pause:function(){;},fastSeek:function(){;},loop:false},
         intro : new Audio("sounds/pacman_beginning.wav"),
-        chomp : new Audio("sounds/pacman_chomp.wav")
+        chomp : new Audio("sounds/pacman_chomp.wav"),
+        deathcashman : new Audio("sounds/pacman_death.wav"),
+        deathghost : new Audio("sounds/pacman_eatghost.wav")
     },
     lastplayed:"silence",
     init:function(){
@@ -28,9 +30,22 @@ var soundmanager = {
     }
 }.init();
 
+window.addEventListener('game.start', (event) => {
+      soundmanager.start("intro",false);
+}, true);
 window.addEventListener('cashman.move', (event) => {
       soundmanager.start("chomp",true);
 }, true);
 window.addEventListener('cashman.stop', (event) => {
     soundmanager.stop("chomp",true);
+}, true);
+window.addEventListener('game.killed', (event) => {
+    console.log("gamne.killed")
+    soundmanager.start("deathcashman",false);
+}, true);
+window.addEventListener('game.over', (event) => {
+    soundmanager.start("deathcashman",false);
+}, true);
+window.addEventListener('ghost.killed', (event) => {
+    soundmanager.start("deathghost",false);
 }, true);

@@ -92,8 +92,6 @@ var game = {
 
         labyrinth.showMessage("Get ready", "");
 
-        soundmanager.start("intro");
-
         setTimeout(function () {
             let event = new CustomEvent("game.start");
             window.dispatchEvent(event);
