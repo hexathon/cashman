@@ -154,4 +154,6 @@ CashMan.prototype.reset = function () {
     this.facing = 'right';
     this.x = this.initialPosition.x;
     this.y = this.initialPosition.y;
+
+    this.updatePosition();
 };
