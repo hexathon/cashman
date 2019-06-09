@@ -20,10 +20,10 @@ Ghost.prototype.registerEventListeners = function () {
 
     window.addEventListener('cashman.move.right', (event) => {
         this.cashmanPos = event.dataset;
-    this.isCashmanMoving =  true;
-    this.eat();
-    this.keepMoving();
-}, true);
+        this.isCashmanMoving =  true;
+        this.eat();
+        this.keepMoving();
+    }, true);
 
     window.addEventListener('cashman.move.failed', (event) => {
         this.isCashmanMoving =  false;
@@ -242,8 +242,9 @@ Ghost.prototype.updatePosition = function () {
 };
 
 Ghost.prototype.render = function () {
-     this.elementInstance = document.createElement('div');
-     this.elementInstance.style = this.calculateCssProperties();
+    this.elementInstance = document.createElement('div');
+    this.elementInstance.className = 'ghost-instance transition';
+    this.elementInstance.style = this.calculateCssProperties();
 
     this.icon = document.createElement('img');
     this.icon.src = 'images/character-ghost-'+this.color+'.png';
