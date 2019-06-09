@@ -11,6 +11,7 @@ function CashMan(options) {
     this.type = "CashMan";
     this.facing = 'right';
     this.moving = false;
+    this.stopped = true; // Previous 'moving' state.
 
     // Initialize options
     this.x = options.x;
@@ -30,14 +31,14 @@ function CashMan(options) {
  */
 CashMan.prototype.registerEventListeners = function () {
     var self = this;
-    window.addEventListener('game.input', (event) => {
+    window.addEventListener('game.input', throttle(function (event) {
         let direction = event.detail.direction;
         let nextDirection = event.detail.nextDirection;
 
         if (!self.move(nextDirection)) {
             self.move(direction);
         }
-    }, true);
+    }, 200), true);
 
     window.addEventListener('game.reset', () => {
         this.reset();
@@ -54,8 +55,8 @@ CashMan.prototype.move = function (direction) {
     let coordinates = this.directionToCoordinates(direction);
     let targetX = coordinates.x;
     let targetY = coordinates.y;
-
     let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
+    let hasMoved = (newCoordinates !== null && !(newCoordinates.x === this.x && newCoordinates.y === this.y));
     if (newCoordinates !== null) {
         if (Transition.shouldAnimate(this.x, newCoordinates.x)) {
             Transition.disable(this.elementInstance);
@@ -66,13 +67,20 @@ CashMan.prototype.move = function (direction) {
         this.x = newCoordinates.x;
         this.y = newCoordinates.y;
         this.moving = true;
+        this.stopped = false;
 
         this.notify('cashman.move', {position: this.position(), direction: direction});
         this.facing = direction;
 
         this.updatePosition();
-
+        console.log('Cashman has moved: ', hasMoved);
         return true;
+    }
+
+    if (!this.stopped) {
+        // Cashman wasn't moving before.
+        this.notify('cashman.stopped', {position: this.position()});
+        this.stopped = true;
     }
 
     this.notify('cashman.stop', {position: this.position()});
@@ -101,7 +109,7 @@ CashMan.prototype.position = function () {
 };
 
 CashMan.prototype.notify = function (name, data) {
-    if (window.debug) {
+    if (window.cashman.debug) {
         console.log(name, data);
     }
 
