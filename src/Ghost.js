@@ -40,6 +40,7 @@ Ghost.prototype.registerEventListeners = function () {
     }, true);
 
     window.addEventListener('game.reset', (event) => {
+        this.show();
         this.reset();
     }, true);
 
@@ -62,7 +63,7 @@ Ghost.prototype.registerEventListeners = function () {
     }, true);
 
     window.addEventListener('ghost.kill', (event) => {
-        this.hide(5000);
+        this.hide();
     }, true);
 };
 
@@ -95,16 +96,24 @@ Ghost.prototype.cashmanCollision = function () {
         }});
     window.dispatchEvent(event);
 
-    var cashmanWidth = 40;
-    var cashmanHeight = 40;
-    var ghostWidth = 28;
-    var ghostHeight = 31;
+    var cashmanWidth = 8;
+    var cashmanHeight = 8;
+    var ghostWidth = 8;
+    var ghostHeight = 8;
 
-    var myPos = {x:window.labyrinth.positionToPixel(this.x),
-        y:window.labyrinth.positionToPixel(this.y)};
+    let offsetX = labyrinth.positionToPixel(this.x) + ((28 / 2) - ( ghostWidth/2));
+    let offsetY = labyrinth.positionToPixel(this.y) + ((31 / 2) - ( ghostHeight/2));
+    var myPos = {
+        x:offsetX,
+        y:offsetY};
 
-    var pixelCashmanPos = {x:window.labyrinth.positionToPixel(this.cashmanPos.x),
-    y:window.labyrinth.positionToPixel(this.cashmanPos.y)};
+    let offsetCashX = labyrinth.positionToPixel(this.cashmanPos.x) + ((40 / 2) - ( cashmanWidth/2));
+    let offsetCashY = labyrinth.positionToPixel(this.cashmanPos.y) + ((40 / 2) - ( cashmanHeight/2));
+
+    var pixelCashmanPos = {
+        x:offsetCashX,
+        y:offsetCashY
+    };
 
     if(pixelCashmanPos) {
         if (pixelCashmanPos.x < myPos.x + ghostWidth &&
@@ -124,7 +133,7 @@ Ghost.prototype.eat = function () {
    if (this.cashmanCollision()){
        if (this.eatable){
            console.log("to be killed")
-           this.notify('ghost.killed');
+           this.notify('ghost.killed',{value:200});
            // this.alive = false;
            this.reset();
 
@@ -318,13 +327,11 @@ Ghost.prototype.reset = function () {
     this.updatePosition();
 };
 
-Ghost.prototype.hide = function (time) {
-
-    var self = this;
+Ghost.prototype.hide = function () {
     this.elementInstance.style.display = "none";
-    setTimeout(function(){
-        self.elementInstance.style.display = "block";
-    },time);
+}
+Ghost.prototype.show = function () {
+    this.elementInstance.style.display = "block";
 }
 
 Ghost.prototype.render = function () {
