@@ -7,10 +7,13 @@ var soundmanager = {
         deathghost : new Audio("sounds/pacman_eatghost.wav")
     },
     lastplayed:"silence",
-    init:function(){
+    setvolume:function(level){
         for(sound in this.sounds){
-            this.sounds[sound].volume=0.1;
+            this.sounds[sound].volume=level;
         }
+    },
+    init:function(){
+        this.setvolume(localStorage.getItem('cashman.volume') || 0.1);
         return this;
     },
     stop: function (soundname,letitfinish) {
@@ -27,6 +30,9 @@ var soundmanager = {
             this.sounds[soundname].play();
             this.lastplayed=soundname;
         }
+    },
+    gestsoundstate:function(){
+        return !localStorage.getItem('cashman.volume')==="0";
     }
 }.init();
 
@@ -49,3 +55,13 @@ window.addEventListener('game.over', (event) => {
 window.addEventListener('ghost.killed', (event) => {
     soundmanager.start("deathghost",false);
 }, true);
+window.addEventListener('sound.on', (event) => {
+    soundmanager.setvolume(0.1);
+    localStorage.setItem('cashman.volume', '0.1');
+}, true);
+window.addEventListener('sound.off', (event) => {
+    soundmanager.setvolume(0);
+    localStorage.setItem('cashman.volume', '0');
+}, true);
+
+
