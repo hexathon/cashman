@@ -29,7 +29,6 @@ Ghost.prototype.registerEventListeners = function () {
         this.gameOver = false;
         this.speed = window.game.getSpeed();
         this.moveRandomly();
-        // this.keepMoving();
     }, true);
 
     window.addEventListener('game.over', (event) => {
@@ -58,7 +57,8 @@ Ghost.prototype.registerEventListeners = function () {
             Transition.enable(this.elementInstance, this.speed);
             self.icon.src = 'images/character-ghost-killable.png';
 
-            setTimeout(function(){
+            window.clearTimeout(this.powerPalletTimer);
+            this.powerPalletTimer = window.setTimeout(function(){
                  self.eatable =  false;
                  self.icon.src = 'images/character-ghost-' + self.color + '.png';
                 self.speed = window.game.getSpeed();
@@ -71,23 +71,6 @@ Ghost.prototype.registerEventListeners = function () {
     }, true);
 };
 
-
-/**
- *  Move the Ghosts just to follow Cashman if it is in movement or randomly move on the labyrinth.
- */
-Ghost.prototype.keepMoving = function () {
-    var self = this;
-    if (this.isCashmanMoving) {
-        this.followCashman();
-    } else {
-        this.moveRandomly();
-    }
-    if (!this.gameOver) {
-        setTimeout(function(){
-            self.keepMoving();
-        }, this.speed);
-    }
-};
 
 Ghost.prototype.cashmanCollision = function () {
 
@@ -165,9 +148,10 @@ Ghost.prototype.goBackToTheCage = function () {
 
     var self = this;
 
-    setTimeout(function(){
+    window.clearTimeout(this.backToCageTimer);
+    this.backToCageTimer = window.setTimeout(function(){
         self.goBackToTheCage();
-    }, this.speed/4);
+    }, window.game.getSpeed()/4);
 }
 /**
  * Follow cashman through the best route...
@@ -251,7 +235,8 @@ Ghost.prototype.moveRandomly = function() {
             break;
     }    
     if(!this.gameOver) {
-        setTimeout(function(){
+        window.clearTimeout(this.moveTimer);
+        this.moveTimer = window.setTimeout(function(){
              if (self.alive) {
                 self.moveRandomly();
             } else {
@@ -262,7 +247,7 @@ Ghost.prototype.moveRandomly = function() {
 };
 
 Ghost.prototype.notify = function (name,data) {
-    let event = new CustomEvent(name, data);
+    let event = new CustomEvent(name, {detail: data});
     window.dispatchEvent(event);
 };
 
