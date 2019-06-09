@@ -1,32 +1,57 @@
 function KeyboardInputController() {
     this.registerEventListeners();
+
+    this.nextKeyState = 'left';
+    this.currentKeyState = 'left';
+
+    this.start();
 }
+
+KeyboardInputController.prototype.start = function () {
+    var self = this;
+
+    window.addEventListener('cashman.move', function (event) {
+        self.currentKeyState = event.detail.direction;
+    }, true);
+
+    function loop() {
+        // Arrow key is pressed
+        self.move();
+        setTimeout(loop, 200);
+    }
+    loop();
+};
 
 KeyboardInputController.prototype.registerEventListeners = function () {
     var self = this;
     window.addEventListener('keydown', function (event) {
         switch (event.key) {
-            case "ArrowUp":
-                self.move('up');
+            case 'ArrowUp':
+                self.nextKeyState = 'up';
                 break;
-            case "ArrowDown":
-                self.move('down');
+            case 'ArrowDown':
+                self.nextKeyState = 'down';
                 break;
-            case "ArrowLeft":
-                self.move('left');
+            case 'ArrowLeft':
+                self.nextKeyState = 'left';
                 break;
-            case "ArrowRight":
-                self.move('right');
+            case 'ArrowRight':
+                self.nextKeyState = 'right';
                 break;
         }
     }, true);
 };
 
-KeyboardInputController.prototype.move = function (direction) {
+KeyboardInputController.prototype.move = function () {
     if (window.debug) {
-        console.info('Received keyboard input for cashman to move: ' + direction);
+        console.info('Received keyboard input for cashman to move: ' + this.currentKeyState, this.nextKeyState);
     }
 
-    var event = new CustomEvent('cashman.execute.move', {detail: {direction: direction}});
+    var event = new CustomEvent('cashman.execute.move', {detail: {
+        direction: this.currentKeyState,
+        nextDirection: this.nextKeyState
+    }});
     window.dispatchEvent(event);
 };
+
+
