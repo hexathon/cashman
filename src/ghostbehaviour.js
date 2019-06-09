@@ -1,4 +1,4 @@
-function nextStepOnShortestRouteToDesination(params) {
+function nextStepOnShortestRouteToDestination(params) {
     /* 
     call would look like this:
     nextStepOnShortestRouteToDesination({
@@ -8,7 +8,7 @@ function nextStepOnShortestRouteToDesination(params) {
 
 
      */
-    var grid = labyrinth.paths;
+    var grid = labyrinth.grid;
 
     var beenthere = [];
     var endpoint = params.start
@@ -24,11 +24,11 @@ function nextStepOnShortestRouteToDesination(params) {
         var newroutes = [];
         for (var i = 0; i < routes.length; i++) {
             var route = routes[i];
-            var x = route[route.length - 1].x
-            var y = route[route.length - 1].y
+            var x = route[route.length - 1].x;
+            var y = route[route.length - 1].y;
             //go right
-            var newx = x + 1
-            var newy = y
+            var newx = x + 1;
+            var newy = y;
             if (newy < grid.length && newx < grid[newy].length && grid[newy][newx] && !beenthere[newy][newx]) {//step right
                 if (newx == endpoint.x && newy == endpoint.y) return { x, y }
                 var newroute = route.slice();

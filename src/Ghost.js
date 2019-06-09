@@ -8,6 +8,8 @@ function Ghost (options) {
     this.color = options.color;
     this.container = options.container;
     this.eatable = false;
+
+    this.registerEventListeners();
 }
 
 Ghost.prototype = Object.create(Ghost.prototype);
@@ -15,7 +17,8 @@ Ghost.prototype.constructor = Ghost;
 
 Ghost.prototype.registerEventListeners = function () {
 
-    window.addEventListener('cashman.move', (event) => {
+    window.addEventListener('cashman.move.right', (event) => {
+        console.log('catch him');
         this.cashmanPos = event.dataset;
     this.isCashmanMoving =  true;
     this.eat();
@@ -58,7 +61,7 @@ Ghost.prototype.keepMoving = function () {
 
 Ghost.prototype.cashmanCollision = function () {
 
-    var myPos = this.getPosition();
+    var myPos = {x:this.x, y:this.y};
 
     if (this.cashmanPos == myPos) {
         return true;
@@ -86,17 +89,17 @@ Ghost.prototype.eat = function () {
 Ghost.prototype.followCashman =  function () {
 
     //get Next Best Step to follow cashman
-    var nextPos = nextStepOnShortestRouteToDesination({ end: this.cashmanPos, start: this.getPosition()});
+    var nextPos = nextStepOnShortestRouteToDestination({ end: this.cashmanPos, start: {x:this.x, y:this.y}});
 
-    if (this.getPosition().x > nextPos.x) {
-        this.moveLeft();
+    if (this.x > nextPos.x) {
+        this.move('left');
     } else {
-        this.moveRight();
+        this.move('right');
     }
-    if (this.getPosition().y > nextPos.y) {
-        this.moveUp();
+    if (this.y > nextPos.y) {
+        this.move('up');
     } else {
-        this.moveDown();
+        this.move('down');
     }
 }
 
@@ -104,40 +107,42 @@ Ghost.prototype.followCashman =  function () {
  * Move in no sence way in the labyrinth
  */
 Ghost.prototype.moveRandomly = function() {
+    var movements = ["left", "right", "up", "down"];
+    var pos = Math.floor((Math.random() * movements.length));
 
-    var movements = [ "left", "right", "up", "down"];
-    var movLength =  movements.length;
-    var movement =  Math.floor((Math.random() * movLength) + 1);
     var moved = false;
 
-    switch (movement) {
+    console.log(this.x, this.y);
+    switch (movements[pos]) {
         case 'left':
-            moved = this.moveLeft();
-
+            moved = this.move('left');
+            console.log('move randomly l');
             break;
         case 'right':
-            moved = this.moveRight();
-
+            moved = this.move('right');
+            console.log('move randomly r');
             break;
         case 'up':
-            moved = this.moveUp();
-
+            moved = this.move('up');
+            console.log('move randomly u');
             break;
         case 'down':
-            moved = this.moveDown();
-
+            moved = this.move('down');
+            console.log('move randomly d');
             break;
     }
 
-    if(!moved) {
-        this.moveRandomly();
+    if (!moved)
+    {
+        Ghost.prototype.moveRandomly();
     }
+    console.log(this.x, this.y);
 }
 /**
  * eat Cashman
  */
 Ghost.prototype.eatCashman = function() {
-    //kill cashaman
+    //kill cashman
     this.active =  false;
 }
 /**
@@ -155,18 +160,19 @@ Ghost.prototype.notify = function (name,data) {
 Ghost.prototype.directionToCoordinates = function (direction) {
     switch (direction) {
         case 'up':
-            return {x: this.x, y: this.y - 1};
+            return {x: this.x, y:(this.y - 1)};
         case 'down':
-            return {x: this.x, y: this.y + 1};
+            return {x: this.x, y: (this.y + 1)};
         case 'left':
-            return {x: this.x - 1, y: this.y};
+            return {x: (this.x - 1), y: this.y};
         case 'right':
-            return {x: this.x + 1, y: this.y};
+            return {x: (this.x + 1), y: this.y};
     }
 };
 
 
 Ghost.prototype.move = function (direction) {
+
     let coordinates = this.directionToCoordinates(direction);
     let targetX = coordinates.x;
     let targetY = coordinates.y;
@@ -179,7 +185,7 @@ Ghost.prototype.move = function (direction) {
         this.facing = direction;
 
         this.updatePosition();
-
+        console.log(this.x,  this.y);
         return true;
     }
 
@@ -190,15 +196,11 @@ Ghost.prototype.calculateCssProperties = function () {
     let centerX = labyrinth.positionToPixel(this.x) - (16 / 2);
     let centerY = labyrinth.positionToPixel(this.y) - (16 / 2);
     let style = [
-        'position: absolute',
-        'height: 28px',
-        'width: 31px',
+        'position:absolute',
         'left: ' + centerX + 'px',
         'top: ' + centerY + 'px'
     ];
-    style = style.join(';');
-
-    return style;
+    return style.join(';');
 };
 
 Ghost.prototype.updatePosition = function () {
@@ -206,8 +208,8 @@ Ghost.prototype.updatePosition = function () {
 };
 
 Ghost.prototype.render = function () {
-    this.elementInstance = document.createElement('div');
-    this.elementInstance.style = this.calculateCssProperties();
+     this.elementInstance = document.createElement('div');
+     this.elementInstance.style = this.calculateCssProperties();
 
     this.icon = document.createElement('img');
     this.icon.src = 'images/character-ghost-'+this.color+'.png';
