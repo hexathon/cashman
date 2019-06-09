@@ -1,5 +1,5 @@
 var labyrinth = {
-    pointDistance: 26,
+    pointDistance: 24,
     lineWidth: 6,
     doorWidth: 2,
     gridOffset: 3,
@@ -23,7 +23,7 @@ var labyrinth = {
     },
     init: function(){
         this.registerEventListeners();
-        this.drawGrid("#454073");
+        this.drawGrid(game.colors.wall);
         this.placeCookies();
         this.placePowerPallets();
         this.placeGhosts();
@@ -97,8 +97,8 @@ var labyrinth = {
     drawGrid: function(color){
         var container = document.getElementById("maze");
         container.style = "position:absolute;left:0;top:0;";
-        container.width = 526;
-        container.height = 708;
+        container.width = 486;
+        container.height = 630;
 
         var doors = [[11,9],[11,10]];
         var linePatch = this.gridOffset;
@@ -179,7 +179,7 @@ var labyrinth = {
     },
     showMessage: function(topMessage, bottomMessage){
         var container = document.getElementById("mazemessage");
-        container.style = "position:absolute;left:170px;top:246px;text-align:center;width:186px;";
+        container.style = "position:absolute;left:150px;top:226px;text-align:center;width:186px;";
 
         var topHeader = container.getElementsByTagName("h2").item(0);
         topHeader.innerText = topMessage;
@@ -197,19 +197,17 @@ var labyrinth = {
     },
     flash: function(){
         var self = this;
-        var purple = "#454073";
-        var bright = "#eee";
-        var current = bright;
+        var current = game.colors.wallInvert;
         var count = 0;
 
         var myInterval = setInterval(function () {
-            current = (current === purple) ? bright : purple;
+            current = (current === game.colors.wall) ? game.colors.wallInvert : game.colors.wall;
             self.drawGrid(current);
 
             if (count >= 2000) {
                 clearInterval(myInterval);
 
-                self.drawGrid(purple);
+                self.drawGrid(game.colors.wall);
             }
 
             count += 120;

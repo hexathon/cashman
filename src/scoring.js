@@ -16,6 +16,21 @@ var scoring = {
             this.globalScore = 0;
             this.updateScore(this.globalScore);
         }, true);
+
+        var container = document.getElementById("scoreboard");
+        var button = container.getElementsByClassName("soundToggle").item(0).getElementsByTagName("a").item(0);
+
+        button.addEventListener("click", function (event){
+            if (soundmanager.gestsoundstate()) {
+                window.dispatchEvent(new CustomEvent("sound.off", {}));
+                button.innerText = "OFF";
+            } else {
+                window.dispatchEvent(new CustomEvent("sound.on", {}));
+                button.innerText = "ON";
+            }
+
+            event.preventDefault();
+        });
     },
     updateScore: function(score){
         this.globalScore += score;
@@ -29,7 +44,7 @@ var scoring = {
     },
     drawScoreBoard: function(){
         var container = document.getElementById("scoreboard");
-        container.style = "position:absolute;left:560px;top:0;width:200px;";
+        container.style = "position:absolute;left:520px;top:0;width:240px;height:630px;";
 
         var button = container.getElementsByClassName("die").item(0);
         button.addEventListener("click", function(){

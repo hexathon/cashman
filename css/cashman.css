@@ -1,8 +1,17 @@
+.gamewrapper {
+    position: relative;
+    vertical-align: center;
+    margin: 50px auto 0;
+    width: 760px;
+    height: 630px;
+    padding: 20px;
+    border: 2px solid #ddd;
+}
+
 .gamecontainer {
     font-family: 'Press Start 2P', cursive;
     position: relative;
     vertical-align: center;
-    margin: 50px auto 0;
     width: 760px;
 }
 .gamecontainer a {
@@ -154,6 +163,18 @@
     margin-top: 0;
 }
 
+#scoreboard .soundToggle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#scoreboard .soundToggle a {
+    text-align: center;
+    width: 50px;
+    display: inline-block;
+}
+
 #intro h1,
 #intro h2,
 #intro h3,
@@ -192,5 +213,5 @@
 #mazemessage h3 {
     text-transform: uppercase;
     font-size: 12px;
-    margin-top: 113px;
+    margin-top: 106px;
 }

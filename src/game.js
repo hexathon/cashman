@@ -3,6 +3,11 @@ var game = {
     eatables: 192,
     eaten: 0,
     lives: 1,
+    colors: {
+        wall: "#454073",
+        wallInvert: "#eee",
+        cashDot: "orange"
+    },
     getSpeed: function(){
         return 200 - (this.level * 2);
     },
@@ -28,12 +33,12 @@ var game = {
         window.addEventListener('ghost.kill', (event) => {
             this.lives--;
 
-            if (this.lives > 0) {
-                let event = new CustomEvent("game.killed");
-                window.dispatchEvent(event);
-            } else {
-                let event = new CustomEvent("game.over");
-                window.dispatchEvent(event);
+            var customEvent = new CustomEvent("game.killed");
+            window.dispatchEvent(customEvent);
+
+            if (this.lives <= 0) {
+                customEvent = new CustomEvent("game.over");
+                window.dispatchEvent(customEvent);
             }
         }, true);
 

@@ -26,38 +26,37 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="gamecontainer">
-    <canvas id="maze"></canvas>
-    <div id="cookiejar"></div>
-    <div id="killzone"></div>
-    <div id="scoreboard">
-        <h2>Hi-Score</h2>
-        <h3 id="boardHigh">0</h3>
-        <h2>Score</h2>
-        <h3 id="boardScore">0</h3>
-        <h2>Level</h2>
-        <h3 id="boardLevel">1</h3>
-        <button class="die">RIP</button>
-        <button class="win">WIN</button>
-    </div>
-    <div id="mazemessage">
-        <h2></h2>
-        <h3></h3>
-    </div>
-    <div id="intro">
-        <h2>Hi-Score</h2>
-        <h3 id="boardHigh">0</h3>
-        <h1>Cash-Man</h1>
-        <a href="#">Start</a>
-        <h4>Celery</h4>
-    </div>
-    <script>
-        // Initialize the input controller
-        new InputController({type: 'keyboard'});
+<div class="gamewrapper">
+    <div class="gamecontainer">
+        <canvas id="maze"></canvas>
+        <div id="cookiejar"></div>
+        <div id="killzone"></div>
+        <div id="scoreboard">
+            <h2>Score</h2>
+            <h3 id="boardScore">0</h3>
+            <h2>Level</h2>
+            <h3 id="boardLevel">1</h3>
+            <button class="die">RIP</button>
+            <button class="win">WIN</button>
+            <div class="soundToggle">Sound is <a href="#">ON</a></div>
+        </div>
+        <div id="mazemessage">
+            <h2></h2>
+            <h3></h3>
+        </div>
+        <div id="intro">
+            <h1>Cash-Man</h1>
+            <a href="#">Start</a>
+            <h4>Celery</h4>
+        </div>
+        <script>
+            // Initialize the input controller
+            new InputController({type: 'keyboard'});
 
-        // Start the labyrinth
-        game.init();
-    </script>
+            // Start the labyrinth
+            game.init();
+        </script>
+    </div>
 </div>
 </body>
 </html>

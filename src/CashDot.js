@@ -21,7 +21,7 @@ CashDot.prototype.render = function () {
     this.elementInstance.style.height = this.size + 'px';
     this.elementInstance.style.left = centerX + 'px';
     this.elementInstance.style.top = centerY + 'px';
-    this.elementInstance.style.background = 'orange';
+    this.elementInstance.style.background = game.colors.cashDot;
     this.elementInstance.style.borderRadius = (this.size / 2) + 'px';
 
     this.container.appendChild(this.elementInstance);
