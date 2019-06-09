@@ -68,6 +68,7 @@ KeyboardInputController.prototype.registerEventListeners = function () {
         window.game.lives = 20;
         window.scoring.updateLives(window.game.lives);
         labyrinth.showMessage("God Mode", "ENABLED");
+        (new Audio('sounds/pacman_eatghost.wav')).play();
     }));
 };
 
