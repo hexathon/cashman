@@ -60,11 +60,7 @@
             }
         }, true);
 
-        global.addEventListener('game.killed', (event) => {
-            this.setState(STATE_KILLED);
-        }, true);
-
-        global.addEventListener('game.over', (event) => {
+        global.addEventListener('game.killed', () => {
             this.setState(STATE_KILLED);
         }, true);
 
