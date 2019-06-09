@@ -7,6 +7,7 @@ function Ghost (options) {
     this.y = options.y;
     this.color = options.color;
     this.container = options.container;
+    this.gameOver = false;
     this.eatable = false;
     this.speed = 200;
 
@@ -15,31 +16,40 @@ function Ghost (options) {
 
 Ghost.prototype.registerEventListeners = function () {
 
-    window.addEventListener('cashman.move.right', (event) => {
-        this.cashmanPos = event.dataset;
+    window.addEventListener('cashman.move', (event) => {
+        this.cashmanPos = event.detail.position;
         this.isCashmanMoving =  true;
-        this.eat();
-        this.keepMoving();
     }, true);
 
     window.addEventListener('cashman.move.failed', (event) => {
         this.isCashmanMoving =  false;
 }, true);
 
-    window.addEventListener('labyrinth.level.end', (event) => {
-        this.gameOver =  true;
-}, true);
-
-    window.addEventListener('powerpallet.activate', (event) => {
-        this.eatable =  true;
-}, true);
-
-    window.addEventListener('powerpallet.deactivate', (event) => {
-        this.eatable =  false;
-}, true);
-
     window.addEventListener('game.start', (event) => {
-        this.moveRandomly();
+         this.moveRandomly();
+        // this.keepMoving();
+    }, true);
+
+    window.addEventListener('ghost.eat.me',(event) => {
+        console.log("eatme");
+    }, true);
+
+    window.addEventListener('ghost.eat.cashman',(event) => {
+        console.log("eat cashman");
+    }, true);
+
+    window.addEventListener('eatable.eaten', (event) => {
+        console.log("eatable", event.detail.type);
+        if (event.detail.type === 'PowerPallet') {
+            var self = this;
+            this.eatable =  true;
+            this.speed = 300;
+            setTimeout(function(){
+                self.eatable =  false;
+                this.speed = 200;
+                console.log("eatable pp");
+            }, 5000);
+        }
     }, true);
 };
 
@@ -48,13 +58,16 @@ Ghost.prototype.registerEventListeners = function () {
  *  Move the Ghosts just to follow Cashman if it is in movement or randomly move on the labyrinth.
  */
 Ghost.prototype.keepMoving = function () {
+    var self = this;
     if (this.isCashmanMoving) {
         this.followCashman();
     } else {
         this.moveRandomly();
     }
     if (!this.gameOver) {
-        this.keepMoving();
+        setTimeout(function(){
+            self.keepMoving();
+        }, this.speed);
     }
 };
 
@@ -63,9 +76,12 @@ Ghost.prototype.cashmanCollision = function () {
 
     var myPos = {x:this.x, y:this.y};
 
-    if (this.cashmanPos == myPos) {
-        return true;
+    if(this.cashmanPos) {
+        if (this.cashmanPos.x === myPos.x && this.cashmanPos.y === myPos.y) {
+            return true;
+        }
     }
+
     return  false;
 
 }
@@ -74,9 +90,9 @@ Ghost.prototype.eat = function () {
 
    if (this.cashmanCollision()){
        if (this.eatable){
-           this.notify('ghost.eat.me');
+           this.notify('ghost.killed');
        } else {
-           this.notify('ghost.eat.cashman');
+           this.notify('ghost.kill');
            this.gameOver = true;
        }
    }
@@ -88,8 +104,11 @@ Ghost.prototype.eat = function () {
  */
 Ghost.prototype.followCashman =  function () {
 
+    var self = this;
     //get Next Best Step to follow cashman
     var nextPos = nextStepOnShortestRouteToDestination({ end: this.cashmanPos, start: {x:this.x, y:this.y}});
+
+    console.log(nextPos);
 
     if (this.x > nextPos.x) {
         this.move('left');
@@ -144,6 +163,7 @@ Ghost.prototype.moveRandomly = function() {
     var pos = Math.floor((Math.random() * movements.length));
     var moved = false;
 
+
     switch (movements[pos]) {
         case 'left':
             moved = this.move('left');
@@ -158,11 +178,12 @@ Ghost.prototype.moveRandomly = function() {
             moved = this.move('down');
             break;
     }
-
-    setTimeout(function(){
-        self.moveRandomly();
-    }, this.speed);
-
+    this.eat();
+    if(!this.gameOver) {
+        setTimeout(function(){
+            self.moveRandomly();
+        }, this.speed);
+    }
 }
 /**
  * eat Cashman
@@ -237,6 +258,11 @@ Ghost.prototype.updatePosition = function () {
     this.elementInstance.style = this.calculateCssProperties();
 };
 
+Ghost.prototype.destroy = function () {
+    this.gameOver = true;
+    this.elementInstance.remove();
+}
+
 Ghost.prototype.render = function () {
     this.elementInstance = document.createElement('div');
     this.elementInstance.className = 'ghost-instance transition';
@@ -250,4 +276,5 @@ Ghost.prototype.render = function () {
     this.elementInstance.appendChild(this.icon);
 
     this.container.appendChild(this.elementInstance);
+
 };

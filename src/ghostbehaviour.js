@@ -44,7 +44,7 @@ function nextStepOnShortestRouteToDestination(params) {
                 var newroute = route.slice();
                 newroute.push({ x: newx, y: newy });
                 newroutes.push(newroute);
-                beenthere[newy][newx]=true;;
+                beenthere[newy][newx]=true;
             }
             //go down
             var newx = x

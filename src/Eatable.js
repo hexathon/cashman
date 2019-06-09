@@ -62,7 +62,7 @@ Eatable.prototype.getValue = function () {
  * @returns {number}
  */
 Eatable.prototype.getType = function () {
-    return this.value;
+    return this.type;
 };
 
 /**
