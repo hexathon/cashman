@@ -52,6 +52,10 @@ var game = {
         window.addEventListener('game.start', (event) => {
             this.hideNextLife();
         }, true);
+
+        window.addEventListener('game.over', (event) => {
+            this.handleGameOver();
+        }, true);
     },
     showNextLife: function(){
         labyrinth.showMessage("Get ready", "Keep in munching");

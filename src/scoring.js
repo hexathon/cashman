@@ -28,12 +28,14 @@ var scoring = {
 
         var button = container.getElementsByClassName("die").item(0);
         button.addEventListener("click", function(){
-            game.handleGameOver();
+            let event = new CustomEvent("game.over");
+            window.dispatchEvent(event);
         });
 
         button = container.getElementsByClassName("win").item(0);
         button.addEventListener("click", function(){
-            game.handleLevelComplete();
+            let event = new CustomEvent("game.won");
+            window.dispatchEvent(event);
         });
     },
 };
