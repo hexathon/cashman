@@ -4,7 +4,7 @@ var game = {
     eatables: 192,
     eaten: 0,
     getSpeed: function(){
-        return 200 - (this.level * 10);
+        return 200 - (this.level * 2);
     },
     init: function(){
         this.registerEventListeners();
