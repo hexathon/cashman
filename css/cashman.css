@@ -6,7 +6,7 @@
     left: 15px;
 }
 .transition {
-    transition:left .15s linear, top .15s linear;
+    transition: left .15s linear, top .15s linear;
 }
 
 .cashmancontainer.goingright {
