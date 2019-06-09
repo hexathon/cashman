@@ -36,10 +36,7 @@ var game = {
         window.addEventListener('ghost.kill', (event) => {
             this.lives--;
 
-            var customEvent = new CustomEvent("game.stop");
-            window.dispatchEvent(customEvent);
-
-            customEvent = new CustomEvent("game.killed");
+            var customEvent = new CustomEvent("game.killed");
             window.dispatchEvent(customEvent);
 
             if (this.lives <= 0) {

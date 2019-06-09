@@ -51,8 +51,11 @@ var scoring = {
 
         var button = container.getElementsByClassName("die").item(0);
         button.addEventListener("click", function(){
-            let event = new CustomEvent("game.over");
-            window.dispatchEvent(event);
+            var customEvent = new CustomEvent("game.killed");
+            window.dispatchEvent(customEvent);
+
+            customEvent = new CustomEvent("game.over");
+            window.dispatchEvent(customEvent);
         });
 
         button = container.getElementsByClassName("win").item(0);
