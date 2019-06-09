@@ -96,10 +96,10 @@ Ghost.prototype.cashmanCollision = function () {
         }});
     window.dispatchEvent(event);
 
-    var cashmanWidth = 8;
-    var cashmanHeight = 8;
-    var ghostWidth = 8;
-    var ghostHeight = 8;
+    var cashmanWidth = 20;
+    var cashmanHeight = 20;
+    var ghostWidth = 20;
+    var ghostHeight = 20;
 
     let offsetX = labyrinth.positionToPixel(this.x) + ((28 / 2) - ( ghostWidth/2));
     let offsetY = labyrinth.positionToPixel(this.y) + ((31 / 2) - ( ghostHeight/2));
@@ -157,21 +157,14 @@ Ghost.prototype.goBackToTheCage = function () {
         return this.moveRandomly();
     }
 
-        if (this.x > nextPos.x) {
-            this.move('left');
-        } else {
-            this.move('right');
-        }
-        if (this.y > nextPos.y) {
-            this.move('up');
-        } else {
-            this.move('down');
-        }
+
+            this.move(nextPos);
+
         var self = this;
 
         setTimeout(function(){
             self.goBackToTheCage();
-        }, this.speed/6);
+        }, this.speed/4);
 }
 /**
  * Follow cashman through the best route...
