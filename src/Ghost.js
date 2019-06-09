@@ -244,7 +244,7 @@ Ghost.prototype.moveRandomly = function() {
                 break;
         }    
     }
-    this.eat();
+
     if(!this.gameOver) {
         setTimeout(function(){
              // if (self.alive) {
@@ -294,6 +294,7 @@ Ghost.prototype.move = function (direction) {
         this.facing = direction;
 
         this.updatePosition();
+        this.eat();
         return true;
     }
 
