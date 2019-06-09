@@ -79,10 +79,31 @@ Ghost.prototype.keepMoving = function () {
 
 Ghost.prototype.cashmanCollision = function () {
 
-    var myPos = {x:this.x, y:this.y};
+    var self = this;
+    var yourCallback = function (position) {
+        self.cashmanPos  = position;
+    };
+    var event = new CustomEvent('cashman.whereAreYou', {detail: {
+            callback: yourCallback
+        }});
+    window.dispatchEvent(event);
 
-    if(this.cashmanPos) {
-        if (this.cashmanPos.x === myPos.x && this.cashmanPos.y === myPos.y) {
+    var cashmanWidth = 40;
+    var cashmanHeight = 40;
+    var ghostWidth = 28;
+    var ghostHeight = 31;
+
+    var myPos = {x:window.labyrinth.positionToPixel(this.x),
+        y:window.labyrinth.positionToPixel(this.y)};
+
+    var pixelCashmanPos = {x:window.labyrinth.positionToPixel(this.cashmanPos.x),
+    y:window.labyrinth.positionToPixel(this.cashmanPos.y)};
+
+    if(pixelCashmanPos) {
+        if (pixelCashmanPos.x < myPos.x + ghostWidth &&
+            pixelCashmanPos.x + cashmanWidth > myPos.x &&
+            pixelCashmanPos.y < myPos.y + ghostHeight &&
+            pixelCashmanPos.y + cashmanHeight > myPos.y) {
             return true;
         }
     }
