@@ -46,18 +46,23 @@
             }
         }, 200), true);
 
-        global.addEventListener('game.reset', () => {
-            this.reset();
-        }, true);
-
-        global.addEventListener('game.start', () => {
-            this.speed = global.game.getSpeed();
-        }, true);
-
         global.addEventListener('cashman.whereAreYou', (event) => {
             if (typeof event.detail.callback === 'function') {
                 event.detail.callback(this.position());
             }
+        }, true);
+
+        global.addEventListener('game.reset', () => {
+            this.reset();
+        }, true);
+
+        global.addEventListener('game.won', () => {
+            this.setState(STATE_IDLE);
+            this.notify('cashman.stopped', {position: this.position()});
+        }, true);
+
+        global.addEventListener('game.start', () => {
+            this.speed = global.game.getSpeed();
         }, true);
 
         global.addEventListener('game.killed', () => {
@@ -187,6 +192,7 @@
         this.y = this.initialPosition.y;
 
         Transition.disable(this.elementInstance);
+        this.setState(STATE_IDLE);
         this.updatePosition();
     };
 
