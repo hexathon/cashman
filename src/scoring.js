@@ -11,6 +11,11 @@ var scoring = {
         window.addEventListener('game.reset', (event) => {
             this.updateLevel(game.level);
         }, true);
+
+        window.addEventListener('game.restart', (event) => {
+            this.globalScore = 0;
+            this.updateScore(this.globalScore);
+        }, true);
     },
     updateScore: function(score){
         this.globalScore += score;

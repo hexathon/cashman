@@ -28,6 +28,7 @@ var labyrinth = {
         this.placePowerPallets();
         this.placeGhosts();
         this.placeCashman();
+        this.hideMessage();
     },
     registerEventListeners: function () {
         window.addEventListener('game.won', (event) => {
@@ -139,8 +140,6 @@ var labyrinth = {
                 }
             }
         }
-
-        this.showMessage("", "");
     },
     placeCookies: function(){
         var container = document.getElementById("cookiejar");

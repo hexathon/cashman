@@ -1,5 +1,4 @@
 var game = {
-    resetTimer: null,
     level: 1,
     eatables: 192,
     eaten: 0,
@@ -21,10 +20,8 @@ var game = {
             this.eaten++;
 
             if (this.eaten === this.eatables) {
-                var self = this;
-                setTimeout(function () {
-                    self.handleLevelComplete();
-                }, 300);
+                let event = new CustomEvent("game.won");
+                window.dispatchEvent(event);
             }
         }, true);
 
@@ -55,6 +52,17 @@ var game = {
 
         window.addEventListener('game.over', (event) => {
             this.handleGameOver();
+        }, true);
+
+        window.addEventListener('game.won', (event) => {
+            this.handleLevelComplete();
+        }, true);
+
+        window.addEventListener('game.restart', (event) => {
+            this.start();
+
+            event = new CustomEvent("game.reset");
+            window.dispatchEvent(event);
         }, true);
     },
     showNextLife: function(){
@@ -98,20 +106,14 @@ var game = {
         }, 2000);
     },
     handleGameOver: function(){
-        var self = this;
-
         labyrinth.showMessage("Game Over", "Cya next time");
 
         let event = new CustomEvent("game.stop");
         window.dispatchEvent(event);
 
         window.setTimeout(function () {
-            window.clearInterval(self.resetTimer);
-
-            let event = new CustomEvent("game.reset");
+            let event = new CustomEvent("game.restart");
             window.dispatchEvent(event);
-
-            self.start();
         }, 4000);
     },
     handleLevelComplete: function () {
@@ -124,12 +126,11 @@ var game = {
         event = new CustomEvent('game.reset');
         window.dispatchEvent(event);
 
-        event = new CustomEvent('game.won');
-        window.dispatchEvent(event);
-
         setTimeout(function () {
             event = new CustomEvent("game.start");
             window.dispatchEvent(event);
         }, 5000);
+
+        labyrinth.showMessage("Good job!", "Get ready...");
     }
 };
