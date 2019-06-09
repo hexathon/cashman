@@ -3,6 +3,7 @@
  * @constructor
  */
 function Ghost (options) {
+    this.options = options;
     this.x = options.x;
     this.y = options.y;
     this.color = options.color;
@@ -21,25 +22,17 @@ Ghost.prototype.registerEventListeners = function () {
         this.isCashmanMoving =  true;
     }, true);
 
-    window.addEventListener('cashman.move.failed', (event) => {
-        this.isCashmanMoving =  false;
-}, true);
-
     window.addEventListener('game.start', (event) => {
          this.moveRandomly();
         // this.keepMoving();
     }, true);
 
-    window.addEventListener('ghost.eat.me',(event) => {
-        console.log("eatme");
-    }, true);
-
-    window.addEventListener('ghost.eat.cashman',(event) => {
-        console.log("eat cashman");
+    window.addEventListener('game.reset', (event) => {
+        this.reset();
     }, true);
 
     window.addEventListener('eatable.eaten', (event) => {
-        console.log("eatable", event.detail.type);
+
         if (event.detail.type === 'PowerPallet') {
             var self = this;
             this.eatable =  true;
@@ -71,7 +64,6 @@ Ghost.prototype.keepMoving = function () {
     }
 };
 
-
 Ghost.prototype.cashmanCollision = function () {
 
     var myPos = {x:this.x, y:this.y};
@@ -83,8 +75,7 @@ Ghost.prototype.cashmanCollision = function () {
     }
 
     return  false;
-
-}
+};
 
 Ghost.prototype.eat = function () {
 
@@ -97,7 +88,7 @@ Ghost.prototype.eat = function () {
        }
    }
 
-}
+};
 
 /**
  * Follow cashman through the best route...
@@ -133,7 +124,7 @@ Ghost.prototype.getOppositeDirection = function() {
         case 'down':
             return 'up';
     }
-}
+};
 
 Ghost.prototype.getPossibleTurns = function() {
     var movements = [];
@@ -152,7 +143,7 @@ Ghost.prototype.getPossibleTurns = function() {
     }
 
     return movements;
-}
+};
 
 /**
  * Move in no sence way in the labyrinth
@@ -184,20 +175,22 @@ Ghost.prototype.moveRandomly = function() {
             self.moveRandomly();
         }, this.speed);
     }
-}
+};
+
 /**
  * eat Cashman
  */
 Ghost.prototype.eatCashman = function() {
     //kill cashman
     this.active =  false;
-}
+};
+
 /**
  * disapear ghost
  */
 Ghost.prototype.dissapear = function() {
     this.active = false;
-}
+};
 
 Ghost.prototype.notify = function (name,data) {
     let event = new CustomEvent(name, data);
@@ -258,10 +251,11 @@ Ghost.prototype.updatePosition = function () {
     this.elementInstance.style = this.calculateCssProperties();
 };
 
-Ghost.prototype.destroy = function () {
-    this.gameOver = true;
-    this.elementInstance.remove();
-}
+Ghost.prototype.reset = function () {
+    this.x = this.options.x;
+    this.y = this.options.y;
+    this.gameOver = false;
+};
 
 Ghost.prototype.render = function () {
     this.elementInstance = document.createElement('div');
@@ -276,5 +270,4 @@ Ghost.prototype.render = function () {
     this.elementInstance.appendChild(this.icon);
 
     this.container.appendChild(this.elementInstance);
-
 };
