@@ -18,9 +18,12 @@ var game = {
         labyrinth.init();
         scoring.init();
 
-        this.start();
+        var customEvent = new CustomEvent("game.init");
+        window.dispatchEvent(customEvent);
     },
     registerEventListeners: function () {
+        var self = this;
+
         window.addEventListener('eatable.eaten', (event) => {
             this.eaten++;
 
@@ -33,41 +36,64 @@ var game = {
         window.addEventListener('ghost.kill', (event) => {
             this.lives--;
 
-            var customEvent = new CustomEvent("game.killed");
+            var customEvent = new CustomEvent("game.stop");
+            window.dispatchEvent(customEvent);
+
+            customEvent = new CustomEvent("game.killed");
             window.dispatchEvent(customEvent);
 
             if (this.lives <= 0) {
                 customEvent = new CustomEvent("game.over");
                 window.dispatchEvent(customEvent);
+            } else {
+                self.showNextLife();
+
+                setTimeout(function () {
+                    let event = new CustomEvent("game.restart");
+                    window.dispatchEvent(event);
+                }, 2000);
             }
         }, true);
 
         window.addEventListener('game.killed', (event) => {
-            this.showNextLife();
-
-            setTimeout(function () {
-                let event = new CustomEvent("game.start");
-                window.dispatchEvent(event);
-            }, 2000);
+            console.log("game.killed");
         }, true);
 
         window.addEventListener('game.start', (event) => {
+            console.log("game.start");
+
             this.hideNextLife();
         }, true);
 
         window.addEventListener('game.over', (event) => {
+            console.log("game.over");
+
             this.handleGameOver();
         }, true);
 
         window.addEventListener('game.won', (event) => {
+            console.log("game.won");
+
             this.handleLevelComplete();
         }, true);
 
+        window.addEventListener('game.stop', (event) => {
+            console.log("game.stop");
+        }, true);
+
         window.addEventListener('game.restart', (event) => {
+            console.log("game.restart");
+
             this.start();
 
             event = new CustomEvent("game.reset");
             window.dispatchEvent(event);
+        }, true);
+
+        window.addEventListener('game.init', (event) => {
+            console.log("game.init");
+
+            this.start();
         }, true);
     },
     showNextLife: function(){
@@ -107,9 +133,6 @@ var game = {
     handleGameOver: function(){
         labyrinth.showMessage("Game Over", "Cya next time");
 
-        let event = new CustomEvent("game.stop");
-        window.dispatchEvent(event);
-
         window.setTimeout(function () {
             let event = new CustomEvent("game.restart");
             window.dispatchEvent(event);
@@ -118,9 +141,6 @@ var game = {
     handleLevelComplete: function () {
         this.eaten = 0;
         this.level++;
-
-        var event = new CustomEvent('game.stop');
-        window.dispatchEvent(event);
 
         setTimeout(function () {
             event = new CustomEvent('game.reset');

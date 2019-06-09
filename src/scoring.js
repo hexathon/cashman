@@ -9,6 +9,8 @@ var scoring = {
         }, true);
 
         window.addEventListener('game.reset', (event) => {
+            console.log("game.reset");
+
             this.updateLevel(game.level);
         }, true);
 
