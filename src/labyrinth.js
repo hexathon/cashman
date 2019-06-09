@@ -28,8 +28,9 @@ var labyrinth = {
         this.placePowerPallets();
         this.placeGhosts();
         this.placeCashman();
+        this.drawIntro();
 
-        scoring.init();
+        this.start();
     },
     grid: [
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -138,6 +139,31 @@ var labyrinth = {
     drawScoreBoard: function(){
         var container = document.getElementById("scoreboard");
         container.style = "position:absolute;left:560px;top:0;width:200px;";
+
+        scoring.init();
+    },
+    drawIntro: function(){
+        var self = this;
+        var container = document.getElementById("intro");
+        var button = container.getElementsByTagName("button").item(0);
+
+        button.addEventListener("click", function(){
+            self.showGame();
+        });
+    },
+    start: function(){
+        document.getElementById("intro").style.display = "block";
+        document.getElementById("scoreboard").style.display = "none";
+        document.getElementById("cookiejar").style.display = "none";
+        document.getElementById("killzone").style.display = "none";
+        document.getElementById("maze").style.display = "none";
+    },
+    showGame: function(){
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("scoreboard").style.display = "block";
+        document.getElementById("cookiejar").style.display = "block";
+        document.getElementById("killzone").style.display = "block";
+        document.getElementById("maze").style.display = "block";
     },
     placeCookies: function(){
         var container = document.getElementById("cookiejar");

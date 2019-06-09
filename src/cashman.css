@@ -80,11 +80,39 @@
     }
 
 
+#intro h2,
 #scoreboard h2 {
     text-transform: uppercase;
     margin-bottom: 0;
 }
 
+#intro h3,
 #scoreboard h3 {
     margin-top: 0;
+}
+
+#intro h1,
+#intro h2,
+#intro h3,
+#intro h4
+{
+    text-align: center;
+}
+
+#intro h1,
+#intro h4
+{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#intro h1 {
+    font-size: 46px;
+}
+
+#intro button {
+    display: block;
+    margin: 0 auto;
+    font-size: 18px;
+    text-transform: uppercase;
 }

@@ -21,6 +21,7 @@ CashDot.prototype.render = function () {
     this.elementInstance.style.left = centerX + 'px';
     this.elementInstance.style.top = centerY + 'px';
     this.elementInstance.style.background = 'orange';
+    this.elementInstance.style.borderRadius = '4px';
 
     this.container.appendChild(this.elementInstance);
 };
