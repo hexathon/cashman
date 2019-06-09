@@ -131,6 +131,7 @@ CashMan.prototype.render = function () {
     this.elementInstance = document.createElement('div');
     this.elementInstance.className = "cashmancontainer transition going" + this.facing;
     this.elementInstance.innerHTML = `
+        <div id="deadcashman"></div>
         <div id="cashman">
             <div class="pants">
                 <img src="./images/cashman-pants.svg">
@@ -138,8 +139,14 @@ CashMan.prototype.render = function () {
             <div class="head">
                 <img src="./images/cashman-head.svg">
             </div>
+<<<<<<< Updated upstream
         </div>`;
     this.calculateCssProperties();
+=======
+        </div>
+        `;
+    this.elementInstance.style = this.calculateCssProperties();
+>>>>>>> Stashed changes
     this.container.appendChild(this.elementInstance);
 };
 

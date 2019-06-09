@@ -19,22 +19,42 @@
     top: 12px;
     left: 15px;
 }
+
+.cashmancontainer.killed{
+  overflow:hidden;
+} 
+
+
+
 .transition {
     /*transition: left .15s linear, top .15s linear;*/
 }
 
-.cashmancontainer.goingright {
+.cashmancontainer.goingright #cashman{
     transform: rotate(0deg) 
 }
-.cashmancontainer.goingleft {
+.cashmancontainer.goingleft #cashman{
     transform: scale(-1, 1);
 }
-.cashmancontainer.goingup {
+.cashmancontainer.goingup #cashman{
    transform: rotate(-90deg)
 }
-.cashmancontainer.goingdown {
+.cashmancontainer.goingdown #cashman{
     transform: rotate(90deg)
 }
+
+/*.cashmancontainer.goingright #deadcashman {
+    transform: rotate(0deg) 
+}
+.cashmancontainer.goingleft #deadcashman{
+    transform: scale(1, -1);
+}
+.cashmancontainer.goingup #deadcashman{
+   transform: rotate(90deg)
+}
+.cashmancontainer.goingdown #deadcashman{
+    transform: rotate(-90deg)
+}*/
 
 #cashman {
     width: 40px;
@@ -43,6 +63,30 @@
     top: 1px;
     left: 1px;
 }
+
+
+#deadcashman {
+   visibility:hidden;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    background:url(../images/headstone.png) -1px 0px
+}
+
+.cashmancontainer.killed #cashman{
+  top:40px!important;
+  transition: top 1.5s linear
+}
+
+.cashmancontainer.killed #deadcashman{
+  visibility:visible;
+  top:1px;
+  transition: top 1s linear;
+}
+
+
 #cashman .pants img {
     width: 40px;
     height: 20px;

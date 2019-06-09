@@ -42,7 +42,7 @@ window.addEventListener('game.start', (event) => {
 window.addEventListener('cashman.move', (event) => {
       soundmanager.start("chomp",true);
 }, true);
-window.addEventListener('cashman.stop', (event) => {
+window.addEventListener('cashman.stopped', (event) => {
     soundmanager.stop("chomp",true);
 }, true);
 window.addEventListener('game.killed', (event) => {

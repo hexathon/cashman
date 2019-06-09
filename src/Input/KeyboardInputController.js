@@ -30,6 +30,10 @@ KeyboardInputController.prototype.start = function () {
     }, true);
 
     function loop() {
+<<<<<<< Updated upstream
+=======
+        //console.log('Input heartbeat at 100ms');
+>>>>>>> Stashed changes
         // Arrow key is pressed
         if (!self.stop) {
             self.input();
