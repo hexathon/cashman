@@ -9,7 +9,7 @@ var game = {
         cashDot: "orange"
     },
     getSpeed: function(){
-        return 200 - (this.level * 2);
+        return 202 - (this.level * 2);
     },
     init: function(){
         this.registerEventListeners();
