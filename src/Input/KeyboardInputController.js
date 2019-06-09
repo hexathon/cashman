@@ -14,6 +14,11 @@ KeyboardInputController.prototype.start = function () {
         self.currentKeyState = event.detail.direction;
     }, true);
 
+    window.addEventListener('game.reset', function () {
+        self.nextKeyState = 'down';
+        self.currentKeyState = 'down';
+    }, true);
+
     function loop() {
         // Arrow key is pressed
         self.move();
