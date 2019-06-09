@@ -14,6 +14,10 @@ var scoring = {
             this.updateLevel(game.level);
         }, true);
 
+        window.addEventListener('game.killed', (event) => {
+            this.updateLives(game.lives);
+        }, true);
+
         var container = document.getElementById("scoreboard");
         var button = container.getElementsByClassName("soundToggle").item(0).getElementsByTagName("a").item(0);
 
@@ -34,6 +38,8 @@ var scoring = {
         } else {
             button.innerText = "OFF";
         }
+
+        this.updateLives(game.lives);
     },
     updateScore: function(score){
         this.globalScore += score;
@@ -45,16 +51,24 @@ var scoring = {
         var container = document.getElementById("boardLevel");
         container.innerText = level;
     },
+    updateLives: function(lives){
+        var container = document.getElementById("boardLives");
+        container.innerText = "";
+
+        for (var i = 0; i < lives; i++) {
+            var life = document.createElement("span");
+            life.className = "life";
+
+            container.appendChild(life);
+        }
+    },
     drawScoreBoard: function(){
         var container = document.getElementById("scoreboard");
         container.style = "position:absolute;left:520px;top:0;width:240px;height:630px;";
 
         var button = container.getElementsByClassName("die").item(0);
         button.addEventListener("click", function(){
-            var customEvent = new CustomEvent("game.killed");
-            window.dispatchEvent(customEvent);
-
-            customEvent = new CustomEvent("game.over");
+            var customEvent = new CustomEvent("ghost.kill");
             window.dispatchEvent(customEvent);
         });
 

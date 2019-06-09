@@ -2,7 +2,7 @@ var game = {
     level: 1,
     eatables: 192,
     eaten: 0,
-    lives: 1,
+    lives: 3,
     colors: {
         wall: "#454073",
         wallInvert: "#eee",
@@ -46,9 +46,14 @@ var game = {
                 self.showNextLife();
 
                 setTimeout(function () {
-                    let event = new CustomEvent("game.restart");
+                    event = new CustomEvent('game.reset');
                     window.dispatchEvent(event);
                 }, 2000);
+
+                setTimeout(function () {
+                    event = new CustomEvent('game.start');
+                    window.dispatchEvent(event);
+                }, 4000);
             }
         }, true);
 
@@ -94,7 +99,7 @@ var game = {
         }, true);
     },
     showNextLife: function(){
-        labyrinth.showMessage("Get ready", "Keep in munching");
+        labyrinth.showMessage("Get ready", "Keep on munching");
     },
     hideNextLife: function(){
         labyrinth.hideMessage();
@@ -114,6 +119,7 @@ var game = {
     start: function(){
         this.level = 1;
         this.eaten = 0;
+        this.lives = 3;
 
         document.getElementById("intro").style.display = "block";
     },

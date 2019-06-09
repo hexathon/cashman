@@ -73,8 +73,8 @@
     height: 40px;
     position: absolute;
     top: 40px;
-    left: 0px;
-    background:url(../images/headstone.png) -1px 0px
+    left: 0;
+    background:url(../images/headstone.png) -1px 0;
 }
 
 .cashmancontainer.state-killed {
@@ -180,6 +180,15 @@
     display: inline-block;
 }
 
+
+#scoreboard .life {
+    display: inline-block;
+    width: 31px;
+    height: 28px;
+    margin-right: 10px;
+    background: url(../images/cashman-tiny.png) -1px 0 no-repeat;
+}
+
 #intro h1,
 #intro h2,
 #intro h3,
@@ -217,6 +226,6 @@
 
 #mazemessage h3 {
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 10px;
     margin-top: 106px;
 }
