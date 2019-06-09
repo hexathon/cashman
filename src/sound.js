@@ -48,9 +48,6 @@ window.addEventListener('cashman.stopped', (event) => {
 window.addEventListener('game.killed', (event) => {
     soundmanager.start("deathcashman",false);
 }, true);
-window.addEventListener('game.over', (event) => {
-    soundmanager.start("deathcashman",false);
-}, true);
 window.addEventListener('ghost.killed', (event) => {
     soundmanager.start("deathghost",false);
 }, true);
