@@ -12,6 +12,7 @@ function Ghost (options) {
     this.eatable = false;
     this.speed = window.game.getSpeed();
     this.alive = true;
+    this.stupidity = 5//1 is going for it directly and 10 is going completely random
 
     this.registerEventListeners();
 }
@@ -204,15 +205,16 @@ Ghost.prototype.getOppositeDirection = function() {
     }
 };
 
-Ghost.prototype.getPossibleTurns = function() {
+Ghost.prototype.getPossibleTurns = function(oppsitedirectionAllowed) {
     var movements = [];
 
     var directions = ['left','right', 'up','down'];
-    var index = directions.indexOf(this.getOppositeDirection());
-    if (index > -1) {
-        directions.splice(index, 1);
+    if(!oppsitedirectionAllowed){
+        var index = directions.indexOf(this.getOppositeDirection());
+        if (index > -1) {
+            directions.splice(index, 1);
+        }
     }
-
     for (var i=0; i< directions.length; i++) {
         var coords = this.directionToCoordinates(directions[i]);
         if (window.labyrinth.canIGoThere(coords.x, coords.y) !== null) {

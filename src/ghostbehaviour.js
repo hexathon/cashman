@@ -4,9 +4,18 @@ function chasehimchasehimchasehim(){
         start: { x: this.x, y: this.y }
     });
     if(this.eatable){
+        let possibleMoves = this.getPossibleTurns(this.eatable);
         newdirection=flipdirection(newdirection);
+        if(possibleMoves.findIndex(function(value){return value==newdirection})===-1){
+            newdirection = possibleMoves[0]===this.facing?possibleMoves[possibleMoves.length-1]:possibleMoves[0]
+        }
+        return newdirection
     }
-    return newdirection;
+    else{
+        let possibleMoves = this.getPossibleTurns(false);
+        let dorandom = Math.floor(Math.random()*10)>this.stupidity
+        return dorandom?possibleMoves[Math.floor(Math.random()*possibleMoves.length)]:newdirection;
+    }
 }
 
 
@@ -149,6 +158,5 @@ function flipdirection(direction){
         break;
        
     }
-     console.log(direction);
      return direction;
 }
