@@ -5,7 +5,7 @@
     top: 12px;
     left: 15px;
 }
-.cashmancontainer.transition {
+.transition {
     transition:left 0.15s linear, top 0.15s linear;
 }
 .cashman {
