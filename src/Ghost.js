@@ -330,6 +330,6 @@ Ghost.prototype.render = function () {
 function chasehimchasehimchasehim(){
     let ghostx = this.options.x;
     let ghosty = this.options.y;
-    let cashmanx = window.tomssecretcashmanref_donttellrobin.position.x;
-    let cashmany = window.tomssecretcashmanref_donttellrobin.position.y;
+    let cashmanx = window.tomssecretcashmanref_donttellrobin.position().x;
+    let cashmany = window.tomssecretcashmanref_donttellrobin.position().y;
 }
