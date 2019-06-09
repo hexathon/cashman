@@ -8,13 +8,6 @@
 .transition {
     transition:left .15s linear, top .15s linear;
 }
-.cashman {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-}
 
 .cashmancontainer.goingright {
     transform: rotate(0deg) 
@@ -29,23 +22,32 @@
     transform: rotate(90deg)
 }
 
-.cashman .pants {
+#cashman {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+#cashman .pants {
     width: 40px;
     height: 20px;
     background: url(../images/cashman-pants.svg) no-repeat;
     position:absolute;
     top:20px;
-    animation-duration: 0.4s;
+}
+.cashmancontainer.moving #cashman .pants {
+    animation-duration: 0.2s;
     animation-name: closepants;
     animation-iteration-count: infinite;
-
 }
-.cashman .head {
+#cashman .head {
     width: 40px;
     height: 20px;
     background: url(../images/cashman-head.svg) no-repeat;
-
-    animation-duration: 0.4s;
+}
+.cashmancontainer.moving #cashman .head {
+    animation-duration: 0.2s;
     animation-name: closehead;
     animation-iteration-count: infinite;
 }

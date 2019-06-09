@@ -10,6 +10,7 @@
 function CashMan(options) {
     this.type = "CashMan";
     this.facing = 'right';
+    this.moving = false;
 
     // Initialize options
     this.x = options.x;
@@ -51,7 +52,7 @@ CashMan.prototype.move = function (direction) {
 
         this.x = newCoordinates.x;
         this.y = newCoordinates.y;
-
+        this.moving = true;
 
         this.notify('cashman.move', {position: this.position(), direction: direction});
         this.facing = direction;
@@ -61,6 +62,8 @@ CashMan.prototype.move = function (direction) {
         return true;
     }
 
+    this.moving = false;
+    this.updatePosition();
     return false;
 };
 
@@ -123,12 +126,22 @@ CashMan.prototype.calculateCssProperties = function () {
 CashMan.prototype.render = function () {
     this.elementInstance = document.createElement('div');
     this.elementInstance.className = "cashmancontainer transition going" + this.facing;
-    this.elementInstance.innerHTML = "<div class=\"cashman\"><div class=\"pants\"></div><div class=\"head\"></div></div>";
+    this.elementInstance.innerHTML = "<div id=\"cashman\"><div class=\"pants\"></div><div class=\"head\"></div></div>";
     this.elementInstance.style = this.calculateCssProperties();
     this.container.appendChild(this.elementInstance);
 };
 
 CashMan.prototype.updatePosition = function () {
     this.elementInstance.style = this.calculateCssProperties();
-    this.elementInstance.className = this.elementInstance.className.replace(/going\w*/, 'going' + this.facing);
+    var className = this.elementInstance.className;
+    className = className.replace(/going\w*/, 'going' + this.facing);
+    if (this.moving) {
+        if (className.indexOf('moving') === -1) {
+            className += ' moving';
+        }
+    } else {
+        className = className.replace(/moving/, '');
+    }
+
+    this.elementInstance.className = className.trim();
 };
