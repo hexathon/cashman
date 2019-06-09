@@ -79,6 +79,8 @@ var game = {
     drawIntro: function(){
         var self = this;
         var container = document.getElementById("intro");
+        container.style = "position:absolute;background:#fff;left:172px;top:200px;border:1px solid #000;padding:30px;";
+
         var button = container.getElementsByTagName("a").item(0);
 
         button.addEventListener("click", function (event){
@@ -91,18 +93,9 @@ var game = {
         this.eaten = 0;
 
         document.getElementById("intro").style.display = "block";
-        document.getElementById("scoreboard").style.display = "none";
-        document.getElementById("cookiejar").style.display = "none";
-        document.getElementById("killzone").style.display = "none";
-        document.getElementById("maze").style.display = "none";
-        document.getElementById("mazemessage").style.display = "none";
     },
     showGame: function(){
         document.getElementById("intro").style.display = "none";
-        document.getElementById("scoreboard").style.display = "block";
-        document.getElementById("cookiejar").style.display = "block";
-        document.getElementById("killzone").style.display = "block";
-        document.getElementById("maze").style.display = "block";
 
         labyrinth.showMessage("Get ready", "");
 
