@@ -119,18 +119,37 @@ Ghost.prototype.getOppositeDirection = function() {
             break;
     }
 }
-/**
- * Move in no sence way in the labyrinth
- */
-Ghost.prototype.moveRandomly = function() {
-    var self = this;
-    var movements = ["left", "right", "up", "down"];
 
+Ghost.prototype.getPossibleTurns = function() {
+    var self = this;
+    var movements = ['left','right', 'up','down'];
     var index = movements.indexOf(self.getOppositeDirection());
     if (index > -1) {
         movements.splice(index, 1);
     }
 
+    for (var i=0; i< movements.length; i++){
+        let coordinates = this.directionToCoordinates(movements[i]);
+        let targetX = coordinates.x;
+        let targetY = coordinates.y;
+
+        let newCoordinates = window.labyrinth.canIGoThere(targetX, targetY);
+        if (newCoordinates === null){
+            movements.splice(movements.indexOf(movements[i]),1);
+        }
+    }
+
+    console.log(movements);
+
+    return movements;
+}
+
+/**
+ * Move in no sence way in the labyrinth
+ */
+Ghost.prototype.moveRandomly = function() {
+    var self = this;
+    var movements = self.getPossibleTurns();
     var pos = Math.floor((Math.random() * movements.length));
     var moved = false;
 
