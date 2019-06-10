@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cash-Man</title>
+
+    <script src="src/Input/KeyboardInputController.js"></script>
+    <script src="src/Input/InputController.js"></script>
+
+    <!-- Base & Utility objects -->
+    <script src="src/Eatable.js"></script>
+    <script src="src/Utilities/Transition.js"></script>
+    <script src="src/Utilities/throttle.js"></script>
+    <script src="src/Utilities/toggleClass.js"></script>
+
+    <!-- Implemented objects -->
+    <script src="src/CashMan.js"></script>
+    <script src="src/CashDot.js"></script>
+    <script src="src/PowerPallet.js"></script>
+    <script src="src/Ghost.js"></script>
+    <script src="src/scoring.js"></script>
+    <script src="src/game.js"></script>
+    <script src="src/labyrinth.js"></script>
+    <script src="src/ghostbehaviour.js"></script>
+    <script src="src/sound.js"></script>
+
+    <link rel="stylesheet" href="css/cashman.css" media="all" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+<div class="gamewrapper">
+    <div class="gamecontainer">
+        <canvas id="maze"></canvas>
+        <div id="cookiejar"></div>
+        <div id="killzone"></div>
+        <div id="scoreboard">
+            <h2>Score</h2>
+            <h3 id="boardScore">0</h3>
+            <h2>Level</h2>
+            <h3 id="boardLevel">1</h3>
+            <h2>Lives</h2>
+            <h3 id="boardLives"></h3>
+
+            <button class="darkmode">DARK</button>
+            <div class="soundToggle">Sound is <a href="#">ON</a></div>
+        </div>
+        <div id="mazemessage">
+            <h2></h2>
+            <h3></h3>
+        </div>
+        <div id="intro">
+            <h2>Relax and play a game of</h2>
+            <h1>Cash-Man</h1>
+            <a href="#">Start</a>
+            <span class="pressSpace">[Press Spacebar]</span>
+        </div>
+        <script>
+            // Initialize the input controller
+            new InputController({ type: 'keyboard' });
+
+            // Start the labyrinth
+            game.init();
+        </script>
+    </div>
+</div>
+</body>
+</html>

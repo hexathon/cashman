@@ -1,0 +1,251 @@
+body.dark {
+    background: #000;
+}
+
+.gamewrapper {
+    position: relative;
+    vertical-align: center;
+    margin: 50px auto 0;
+    width: 760px;
+    height: 630px;
+    padding: 20px;
+    border: 2px solid #ddd;
+}
+
+.gamecontainer {
+    font-family: 'Press Start 2P', Arial, Verdana, sans-serif;
+    position: relative;
+    vertical-align: center;
+    width: 760px;
+}
+.gamecontainer a {
+    border: 1px solid #000;
+    text-decoration: none;
+    padding: 5px;
+    color: #000;
+}
+.dark #intro .gamecontainer a {
+    border-color: #fff;
+    color: #fff;
+}
+
+.cashmancontainer {
+    width: 35px;
+    height: 40px;
+    position: absolute;
+    top: 12px;
+    left: 15px;
+}
+
+.transition {
+    /*transition: left .15s linear, top .15s linear;*/
+}
+
+.cashmancontainer.goingright #cashman{
+    transform: rotate(0deg) 
+}
+.cashmancontainer.goingleft #cashman{
+    transform: scale(-1, 1);
+}
+.cashmancontainer.goingup #cashman{
+   transform: rotate(-90deg)
+}
+.cashmancontainer.goingdown #cashman{
+    transform: rotate(90deg)
+}
+
+/*.cashmancontainer.goingright #deadcashman {
+    transform: rotate(0deg) 
+}
+.cashmancontainer.goingleft #deadcashman{
+    transform: scale(1, -1);
+}
+.cashmancontainer.goingup #deadcashman{
+   transform: rotate(90deg)
+}
+.cashmancontainer.goingdown #deadcashman{
+    transform: rotate(-90deg)
+}*/
+
+#cashman {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+#deadcashman {
+   visibility:hidden;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background:url(../images/headstone.png) -1px 0;
+}
+
+.cashmancontainer.state-killed {
+    overflow:hidden;
+}
+
+.cashmancontainer.state-killed #cashman {
+  top:40px!important;
+  transition: top 1.5s linear
+}
+
+.cashmancontainer.state-killed #deadcashman {
+  visibility:visible;
+  top:1px;
+  transition: top 1s linear;
+}
+
+#cashman .pants img {
+    width: 40px;
+    height: 20px;
+}
+#cashman .pants {
+    position:absolute;
+    top:20px;
+}
+.cashmancontainer.state-moving #cashman .pants {
+    animation-duration: 0.2s;
+    animation-name: closepants;
+    animation-iteration-count: infinite;
+}
+#cashman .head img {
+    width: 40px;
+    height: 20px;
+}
+.cashmancontainer.state-moving #cashman .head {
+    animation-duration: 0.2s;
+    animation-name: closehead;
+    animation-iteration-count: infinite;
+}
+
+
+@keyframes closepants {
+  from {
+    transform: rotate(0deg) translateY(0px)
+  }
+50% {
+  transform: rotate(-10deg) translateY(-3px)
+}
+  to {
+    transform: rotate(0deg) translateY(0px)
+
+  }
+}
+
+@keyframes closehead {
+  from {
+   transform: rotate(0deg) translateY(0px) translateX(0px);
+  }
+
+  50% {
+    transform: rotate(22deg) translateY(6px) translateX(3px);
+
+  }
+
+  to {
+   transform: rotate(0deg) translateY(0px) translateX(0px);
+  }
+}
+
+.dark {
+    color: #fff;
+}
+#intro {
+    text-align: center;
+    color: #000;
+}
+
+#intro span.pressSpace {
+    display: block;
+    margin: 23px 0 0;
+    font-size: 11px;
+}
+
+#intro h1 {
+    margin-bottom: 50px;
+}
+
+#intro h2,
+#scoreboard h2 {
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+#intro h2 {
+    font-size: 12px;
+}
+
+#intro h3,
+#scoreboard h3 {
+    margin-top: 0;
+}
+
+#scoreboard .soundToggle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#scoreboard .soundToggle a {
+    text-align: center;
+    width: 50px;
+    display: inline-block;
+}
+.dark #scoreboard .soundToggle a {
+    border-color: #fff;
+    color: #fff;
+}
+
+#scoreboard .life {
+    display: inline-block;
+    width: 31px;
+    height: 28px;
+    margin-right: 9px;
+    background: url(../images/cashman-tiny.png) -1px 0 no-repeat;
+}
+
+#intro h1,
+#intro h2,
+#intro h3,
+#intro h4
+{
+    text-align: center;
+}
+
+#intro h1,
+#intro h4
+{
+    text-transform: uppercase;
+}
+
+#intro h4 {
+    margin-top: 50px;
+}
+
+#intro h1 {
+    font-size: 46px;
+}
+
+#intro button {
+    display: block;
+    margin: 0 auto;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+#mazemessage h2 {
+    text-transform: uppercase;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#mazemessage h3 {
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-top: 106px;
+}
