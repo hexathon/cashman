@@ -18,12 +18,10 @@ function Ghost (options) {
 }
 
 Ghost.prototype.registerEventListeners = function () {
-
     window.addEventListener('cashman.move', (event) => {
         this.cashmanPos = event.detail.position;
         this.isCashmanMoving =  true;
     }, true);
-
 
     window.addEventListener('game.start', (event) => {
         this.gameOver = false;
@@ -49,20 +47,35 @@ Ghost.prototype.registerEventListeners = function () {
     }, true);
 
     window.addEventListener('eatable.eaten', (event) => {
-
         if (event.detail.type === 'PowerPallet') {
             var self = this;
             this.eatable =  true;
             this.speed = window.game.getSpeed() + (window.game.getSpeed() * 0.35);
             Transition.enable(this.elementInstance, this.speed);
             self.icon.src = 'images/character-ghost-killable.png';
+            this.images = [ 'images/character-ghost-killable.png', 'images/edible-ghost.png'];
 
             window.clearTimeout(this.powerPalletTimer);
-            this.powerPalletTimer = window.setTimeout(function(){
-                 self.eatable =  false;
-                 self.icon.src = 'images/character-ghost-' + self.color + '.png';
-                self.speed = window.game.getSpeed();
-            }, 7000);
+            this.blinkTimer = window.setTimeout(function(){
+                clearTimeout(self.blinkTimer);
+                var i = 0;
+                self.cycleImagesTimer = setInterval(function(){
+                    if(self.images.length == i){
+                        i = 0;
+                    }
+                    else {
+                    self.icon.src = self.images[i]; 
+                    i++;
+                    }
+                },100);
+                this.powerPalletEndTimer = window.setTimeout(function(){
+                    clearTimeout(self.blinkTimer);
+                    clearTimeout(self.cycleImagesTimer);
+                    self.eatable =  false;
+                    self.icon.src = 'images/character-ghost-' + self.color + '.png';
+                    self.speed = window.game.getSpeed();
+                }, 3000);
+            }, 4000);
         }
     }, true);
 
@@ -141,7 +154,8 @@ Ghost.prototype.goBackToTheCage = function () {
     if ( this.options.x === this.x && this.options.y === this.y )
     {
         this.alive = true;
-        this.icon.src = 'images/character-ghost-'+this.color+'.png';
+        clearTimeout(this.cycleImagesTimer);
+        this.icon.src = 'images/character-ghost-' + this.color + '.png';
         this.eatable = false;
         return this.moveRandomly();
     }
